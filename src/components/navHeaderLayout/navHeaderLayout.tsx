@@ -23,8 +23,10 @@ function NavHeader({
     router.back();
   };
 
+  const backgroundColor = bgColor || theme.color.white;
+
   return (
-    <S.Wrapper bgColor={bgColor}>
+    <S.Wrapper bgColor={backgroundColor}>
       <div onClick={handleRouterBack}>
         <ArrowBackIosNewIcon sx={{ fontSize: "2.4rem", color: iconColor }} />
       </div>

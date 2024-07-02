@@ -34,7 +34,9 @@ const ValidatedInput = ({
         {...register(id, validation)}
         className={errors[id] ? "redline" : ""}
       />
-      {errorMessage && <S.ValidatedText>{errorMessage}</S.ValidatedText>}
+      {typeof errorMessage === "string" && (
+        <S.ValidatedText>{errorMessage}</S.ValidatedText>
+      )}
     </S.InputWrapper>
   );
 };
