@@ -13,7 +13,7 @@ import { FieldDefinitionsType } from "@/types/commentTypes";
 import { validationMessages } from "@/constant/validation/commentValidation";
 import { CheckboxForm } from "./_components/CheckLists/CheckboxType/CheckboxForm";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const CommentPage = () => {
   const {
@@ -25,6 +25,7 @@ const CommentPage = () => {
     setValue,
     formState: { errors },
   } = useForm<FieldDefinitionsType>();
+  const [selectedCommentIdx, setSelectedCommentIdx] = useState(0);
 
   const onSubmit = async (data: FieldDefinitionsType) => {
     alert(JSON.stringify(data));
@@ -36,6 +37,19 @@ const CommentPage = () => {
       clearErrors("rating");
     }
   }, [watch("rating")]);
+
+  const handleClick = (idx: number) => {
+    setSelectedCommentIdx(idx);
+  };
+
+  const allValues =
+    watch("rating") &&
+    watch("textReview") &&
+    watch("persistence") &&
+    watch("residualScent") &&
+    watch("season") &&
+    watch("gender") &&
+    watch("mood");
 
   return (
     <>
@@ -53,7 +67,13 @@ const CommentPage = () => {
         <Product />
         <S.CommentWrap>
           {Object.values(CommentType).map((comment, idx) => (
-            <div key={idx}>{comment}</div>
+            <S.CommentBtn
+              key={idx}
+              isSelected={idx === selectedCommentIdx}
+              onClick={() => handleClick(idx)}
+            >
+              {comment}
+            </S.CommentBtn>
           ))}
         </S.CommentWrap>
         <S.EvaluationWrap>
@@ -90,50 +110,55 @@ const CommentPage = () => {
             <ErrorMessage error={errors.textReview.message || ""} />
           )}
         </S.ReviewWrap>
-        <RadioForm
-          control={control}
-          options={FieldDefinitions.persistence.options}
-          name="persistence"
-          rules={validationMessages.persistence}
-          label={FieldDefinitions.persistence.label}
-          errors={errors}
-        />
-        <RadioForm
-          control={control}
-          options={FieldDefinitions.residualScent.options}
-          name="residualScent"
-          rules={validationMessages.residualScent}
-          label={FieldDefinitions.residualScent.label}
-          errors={errors}
-        />
-        <CheckboxForm
-          control={control}
-          options={FieldDefinitions.season.options}
-          name="season"
-          rules={validationMessages.season}
-          label={FieldDefinitions.season.label}
-          errors={errors}
-        />
-        <RadioForm
-          control={control}
-          options={FieldDefinitions.gender.options}
-          name="gender"
-          rules={validationMessages.gender}
-          label={FieldDefinitions.gender.label}
-          errors={errors}
-        />
-        <CheckboxForm
-          control={control}
-          options={FieldDefinitions.mood.options}
-          name="mood"
-          rules={validationMessages.mood}
-          label={FieldDefinitions.mood.label}
-          errors={errors}
-        />
+        {selectedCommentIdx === 1 && (
+          <>
+            <RadioForm
+              control={control}
+              options={FieldDefinitions.persistence.options}
+              name="persistence"
+              rules={validationMessages.persistence}
+              label={FieldDefinitions.persistence.label}
+              errors={errors}
+            />
+            <RadioForm
+              control={control}
+              options={FieldDefinitions.residualScent.options}
+              name="residualScent"
+              rules={validationMessages.residualScent}
+              label={FieldDefinitions.residualScent.label}
+              errors={errors}
+            />
+            <CheckboxForm
+              control={control}
+              options={FieldDefinitions.season.options}
+              name="season"
+              rules={validationMessages.season}
+              label={FieldDefinitions.season.label}
+              errors={errors}
+            />
+            <RadioForm
+              control={control}
+              options={FieldDefinitions.gender.options}
+              name="gender"
+              rules={validationMessages.gender}
+              label={FieldDefinitions.gender.label}
+              errors={errors}
+            />
+            <CheckboxForm
+              control={control}
+              options={FieldDefinitions.mood.options}
+              name="mood"
+              rules={validationMessages.mood}
+              label={FieldDefinitions.mood.label}
+              errors={errors}
+            />
+          </>
+        )}
         <S.CommentButton>
           <Button
             type="submit"
             buttonText="코멘트 등록"
+            disabled={!allValues}
             styleProps={{ fontWeight: "bold" }}
             size="primary"
           />
