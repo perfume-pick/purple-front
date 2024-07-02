@@ -26,7 +26,14 @@ function NavHeader({
   return (
     <S.Wrapper bgColor={bgColor}>
       <div onClick={handleRouterBack}>
-        <ArrowBackIosNewIcon sx={{ fontSize: "2rem", color: iconColor }} />
+        <ArrowBackIosNewIcon
+          sx={{
+            fontSize: "2rem",
+            color: iconColor,
+            position: "relative",
+            zIndex: 1,
+          }}
+        />
       </div>
       <div style={style}>
         <div>{children}</div>
@@ -41,6 +48,7 @@ const dynamicBgColorStyle = (props: { bgColor: string }) => ({
 });
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   padding: 1.2rem;
