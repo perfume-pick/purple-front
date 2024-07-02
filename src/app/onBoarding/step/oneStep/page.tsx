@@ -5,8 +5,7 @@ import { S } from "../styles";
 import { Card } from "./_components/Card/Card";
 import { useState } from "react";
 import ConfirmAlert from "@/components/alert/ConfirnAlert";
-import { ONBOARDING_ALERT, SEND_MAIL_ALERT } from "@/constant/alert/alertText";
-import Alert from "@/components/alert/Alert";
+import { ONBOARDING_ALERT } from "@/constant/alert/alertText";
 
 const OneStep = () => {
   const [openAlert, setOpenAlert] = useState(false);
