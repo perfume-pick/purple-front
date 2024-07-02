@@ -26,7 +26,7 @@ function NavHeader({
   return (
     <S.Wrapper bgColor={bgColor}>
       <div onClick={handleRouterBack}>
-        <ArrowBackIosNewIcon sx={{ fontSize: "2.4rem", color: iconColor }} />
+        <ArrowBackIosNewIcon sx={{ fontSize: "2rem", color: iconColor }} />
       </div>
       <div style={style}>
         <div>{children}</div>
@@ -43,8 +43,9 @@ const dynamicBgColorStyle = (props: { bgColor: string }) => ({
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 1.8rem;
+  padding: 1.2rem;
   width: 100%;
+  height: 4.8rem;
   ${dynamicBgColorStyle}
 
   & > div:first-of-type {
