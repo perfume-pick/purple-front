@@ -27,7 +27,7 @@ const ProfileSettingPage = () => {
     // setError,
     formState: { errors },
   } = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = (data: string) => {
+  const onSubmit: SubmitHandler<FormValues> = data => {
     console.log(data);
   };
   const handleClickProfile = () => {
