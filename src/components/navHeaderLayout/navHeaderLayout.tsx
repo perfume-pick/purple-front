@@ -48,13 +48,21 @@ const dynamicBgColorStyle = (props: { bgColor: string }) => ({
 });
 
 const Wrapper = styled.div`
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
   display: flex;
   align-items: center;
   padding: 1.2rem;
   width: 100%;
   height: 4.8rem;
   ${dynamicBgColorStyle}
+
+  @media (min-width: 441px) {
+    width: 440px;
+  }
 
   & > div:first-of-type {
     line-height: 1;
