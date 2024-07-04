@@ -42,7 +42,7 @@ const KakaoCallbackPage = (req: Req) => {
         .post<
           never,
           AuthLoginTryDTO
-        >(`/perpicks/auth/login/${type}/code=${searchParams.code}`)
+        >(`/perpicks/auth/login/${type.toUpperCase()}?code=${searchParams.code}`)
         .then((res: any) => {
           console.log(res);
         });

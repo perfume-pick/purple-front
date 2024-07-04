@@ -1,4 +1,4 @@
-const TOKEN_SAVE_KEY = "PERFUME_TOKEN";
+export const TOKEN_SAVE_KEY = "PERFUME_TOKEN";
 
 interface TokenServiceType {
   setToken(token: string): void;
