@@ -73,7 +73,7 @@
 
 import { useState } from "react";
 import styled from "@emotion/styled";
-import { UseFormSetValue, useFormContext } from "react-hook-form";
+import { UseFormSetValue } from "react-hook-form";
 import { FieldDefinitionsType } from "@/types/commentTypes";
 
 type RatingProps = {

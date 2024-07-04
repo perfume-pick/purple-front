@@ -3,6 +3,17 @@ import { S } from "./styles";
 function DetailInfo() {
   return (
     <S.Wrapper>
+      <S.PersistenceWrap>
+        <S.InfoTitle>
+          <img src="/assets/images/Vector.png" />
+          <span>메인어코드</span>
+        </S.InfoTitle>
+        <S.GraphWrap>
+          <div>
+            <span>amber</span>
+          </div>
+        </S.GraphWrap>
+      </S.PersistenceWrap>
       <S.NoteInfoWrap>
         <S.InfoTitle>
           <img src="/assets/images/Vector.png" />
@@ -23,13 +34,6 @@ function DetailInfo() {
           </S.NoteContent>
         </S.NoteInfo>
       </S.NoteInfoWrap>
-      <S.PersistenceWrap>
-        <S.InfoTitle>
-          <img src="/assets/images/Vector.png" />
-          <span>지속력</span>
-        </S.InfoTitle>
-        {/* 지속력 그래프 추가해야함 */}
-      </S.PersistenceWrap>
     </S.Wrapper>
   );
 }

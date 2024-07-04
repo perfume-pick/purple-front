@@ -45,7 +45,8 @@ const dynamicBgColorStyle = (props: { bgColor: string }) => ({
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 1.8rem;
+  position: fixed; // 모든 컴포넌트에 fixed라는 가정하에
+  padding: 1.1rem;
   width: 100%;
   ${dynamicBgColorStyle}
 

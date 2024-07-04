@@ -1,7 +1,6 @@
 import { AlertType } from "@/types/alertTypes";
 import ModalLayout from "../modalLayout/modalLayout";
 import { S } from "./styles";
-import { useRouter } from "next/navigation";
 
 const Alert = ({
   message,
@@ -10,8 +9,6 @@ const Alert = ({
   message: AlertType;
   setOpenAlert: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const router = useRouter();
-
   return (
     <ModalLayout>
       <S.AlertWrapper>
