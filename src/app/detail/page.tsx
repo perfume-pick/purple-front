@@ -5,6 +5,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import styled from "@emotion/styled";
 import DetailPageContent from "./_components";
+import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 
 function DetailPage() {
   return (
@@ -24,7 +25,9 @@ function DetailPage() {
           <FavoriteBorderIcon sx={{ fontSize: "2.4rem", marginLeft: "2rem" }} />
         </div>
       </NavHeader>
-      <DetailPageContent />
+      <HeaderBottomContents>
+        <DetailPageContent />
+      </HeaderBottomContents>
     </S.Wrapper>
   );
 }

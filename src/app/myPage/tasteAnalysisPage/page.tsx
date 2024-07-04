@@ -4,6 +4,7 @@ import { S } from "./styles";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import TasteStatisticBox from "@/components/organism/TasteStatisticBox/TasteStatisticBox";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
+import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 
 const TasteAnalysisPage = () => {
   {
@@ -38,24 +39,26 @@ const TasteAnalysisPage = () => {
       <NavHeader style={{ justifyContent: "center" }}>
         <NavHeaderInner text="취향분석" />
       </NavHeader>
-      <S.StaticsSection>
-        <S.Title>선호노트</S.Title>
-        <S.TasteStatisticsWrap>
-          <TasteStatisticBox chartData={tempChartData} reviewsNum={30} />
-        </S.TasteStatisticsWrap>
-      </S.StaticsSection>
-      <S.StaticsSection>
-        <S.Title>불호노트</S.Title>
-        <S.TasteStatisticsWrap>
-          <TasteStatisticBox chartData={tempChartData} reviewsNum={30} />
-        </S.TasteStatisticsWrap>
-      </S.StaticsSection>
-      <S.StaticsSection>
-        <S.Title>선호 브랜드</S.Title>
-        <S.TasteStatisticsWrap>
-          <TasteStatisticBox chartData={tempChartData} reviewsNum={30} />
-        </S.TasteStatisticsWrap>
-      </S.StaticsSection>
+      <HeaderBottomContents>
+        <S.StaticsSection>
+          <S.Title>선호노트</S.Title>
+          <S.TasteStatisticsWrap>
+            <TasteStatisticBox chartData={tempChartData} reviewsNum={30} />
+          </S.TasteStatisticsWrap>
+        </S.StaticsSection>
+        <S.StaticsSection>
+          <S.Title>불호노트</S.Title>
+          <S.TasteStatisticsWrap>
+            <TasteStatisticBox chartData={tempChartData} reviewsNum={30} />
+          </S.TasteStatisticsWrap>
+        </S.StaticsSection>
+        <S.StaticsSection>
+          <S.Title>선호 브랜드</S.Title>
+          <S.TasteStatisticsWrap>
+            <TasteStatisticBox chartData={tempChartData} reviewsNum={30} />
+          </S.TasteStatisticsWrap>
+        </S.StaticsSection>
+      </HeaderBottomContents>
     </>
   );
 };

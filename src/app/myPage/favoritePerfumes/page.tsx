@@ -1,5 +1,5 @@
-import NavHeader from "../../../components/navHeaderLayout/navHeaderLayout";
-import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
+import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
+import NavHeaderInner from "@/components/navHeaderLayout/NavHeaderInner";
 
 const favoritePerfumesPage = () => {
   return (
