@@ -17,14 +17,23 @@ const CommentWrap = styled.div`
   align-items: center;
   background-color: ${theme.color.grayColor[500]};
   height: 4.6rem;
-  width: 22.3rem;
+  width: 22rem;
   border-radius: 2.4rem;
   font-size: ${theme.fontSize.sm};
   margin: 2rem 0;
+  color: ${theme.color.textDisabled};
+`;
 
-  & > div {
-    padding: 1rem;
-  }
+const CommentBtn = styled.div<{ isSelected: boolean }>`
+  width: 100%;
+  display: flex;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 2.4rem;
+  background-color: ${props => (props.isSelected ? theme.color.primary : "")};
+  font-weight: ${props => (props.isSelected ? theme.fontWeight.bold : "")};
+  color: ${props => (props.isSelected ? theme.color.white : "")};
 `;
 
 const EvaluationWrap = styled.div`
@@ -93,6 +102,7 @@ const CommentButton = styled.div`
 export const S = {
   Wrapper,
   CommentWrap,
+  CommentBtn,
   EvaluationWrap,
   RatingWrap,
   ReviewWrap,

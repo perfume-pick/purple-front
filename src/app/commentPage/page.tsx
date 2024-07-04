@@ -13,8 +13,8 @@ import { FieldDefinitionsType } from "@/types/commentTypes";
 import { validationMessages } from "@/constant/validation/commentValidation";
 import { CheckboxForm } from "./_components/CheckLists/CheckboxType/CheckboxForm";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
-import { useEffect } from "react";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
+import { useEffect, useState } from "react";
 
 const CommentPage = () => {
   const {
@@ -26,6 +26,7 @@ const CommentPage = () => {
     setValue,
     formState: { errors },
   } = useForm<FieldDefinitionsType>();
+  const [selectedCommentIdx, setSelectedCommentIdx] = useState(0);
 
   const onSubmit = async (data: FieldDefinitionsType) => {
     alert(JSON.stringify(data));
@@ -37,6 +38,19 @@ const CommentPage = () => {
       clearErrors("rating");
     }
   }, [watch("rating")]);
+
+  const handleClick = (idx: number) => {
+    setSelectedCommentIdx(idx);
+  };
+
+  const allValues =
+    watch("rating") &&
+    watch("textReview") &&
+    watch("persistence") &&
+    watch("residualScent") &&
+    watch("season") &&
+    watch("gender") &&
+    watch("mood");
 
   return (
     <>
