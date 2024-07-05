@@ -36,11 +36,11 @@ const ButtonWrap = styled.div`
     color: ${theme.color.white};
   }
 
-  & > button:first-child {
+  & > button:first-of-type {
     background-color: ${theme.color.grayColor[200]};
   }
 
-  & > button:last-child {
+  & > button:last-of-type {
     background-color: ${theme.color.primary};
   }
 `;

@@ -7,16 +7,66 @@ const Wrapper = styled.div`
 `;
 
 const TotalComment = styled.div`
-  padding: 1.6rem;
-  padding-bottom: 2rem;
+  padding: 2rem 1.6rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: ${theme.fontSize.base};
-  font-weight: ${theme.fontWeight.bold};
+  border-bottom: 3px solid ${theme.color.grayColor[100]};
+  border-top: 3px solid ${theme.color.grayColor[100]};
+`;
 
-  & > div > span {
-    color: red;
+const CommentWrap = styled.div``;
+
+const CommentTitle = styled.div`
+  & > span:first-of-type {
+    font-weight: ${theme.fontWeight.bold};
+    margin-right: 0.5rem;
+  }
+
+  & > span:last-of-type {
+    font-size: ${theme.fontSize.sm};
+    color: ${theme.color.textDisabled};
+  }
+`;
+
+const CommentMsg = styled.div`
+  font-size: ${theme.fontSize.xs};
+`;
+
+// AverageScore
+const AverageScoreWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 8rem;
+  padding: 1.5rem 1rem;
+  border-bottom: 3px solid ${theme.color.grayColor[100]};
+`;
+
+const Score = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & > div:first-of-type {
+    font-size: 3.2rem;
+    font-weight: ${theme.fontWeight.bold};
+  }
+`;
+
+const OpenTopic = styled.div`
+  display: flex;
+  font-size: ${theme.fontSize.sm};
+  font-weight: ${theme.fontWeight.bold};
+  color: ${theme.color.red};
+  align-items: center;
+  justify-content: center;
+  height: 5.6rem;
+  border-bottom: 3px solid ${theme.color.grayColor[100]};
+
+  & > div {
+    margin-right: 1rem;
   }
 `;
 
@@ -66,6 +116,12 @@ const ReviewContent = styled.div`
 export const S = {
   Wrapper,
   TotalComment,
+  CommentWrap,
+  CommentTitle,
+  CommentMsg,
+  AverageScoreWrap,
+  Score,
+  OpenTopic,
   CommentButtonWrap,
   ReviewWrapper,
   Rating,

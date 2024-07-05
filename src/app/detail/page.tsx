@@ -21,8 +21,8 @@ function DetailPage() {
             display: "flex",
           }}
         >
-          <IosShareIcon sx={{ fontSize: "2.4rem" }} />
-          <FavoriteBorderIcon sx={{ fontSize: "2.4rem", marginLeft: "2rem" }} />
+          <FavoriteBorderIcon sx={{ fontSize: "2.4rem" }} />
+          <IosShareIcon sx={{ fontSize: "2.4rem", marginLeft: "2.4rem" }} />
         </div>
       </NavHeader>
       <HeaderBottomContents>
