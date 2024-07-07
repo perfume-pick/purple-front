@@ -7,6 +7,7 @@ import FilterBox from "@/components/organism/FilterBox/FilterBox";
 import Rating from "@/components/atom/Rating/Rating";
 import MoreButton from "../../../components/molecule/MoreButton/MoreButton";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
+import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 
 const MyCommentsPage = () => {
   const handleDeleteComment = () => {
@@ -18,7 +19,7 @@ const MyCommentsPage = () => {
       <NavHeader style={{ justifyContent: "center" }}>
         <NavHeaderInner text="작성한 코멘트" />
       </NavHeader>
-      <div>
+      <HeaderBottomContents>
         <FilterBox />
         <CommentBox>
           <S.BrandCommentTopArea>
@@ -36,7 +37,7 @@ const MyCommentsPage = () => {
             />
           </S.BrandCommentTopArea>
         </CommentBox>
-      </div>
+      </HeaderBottomContents>
     </>
   );
 };

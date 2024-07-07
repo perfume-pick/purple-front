@@ -13,7 +13,7 @@ export default function SignInPage() {
 
   return (
     <S.Wrapper>
-      <div>Img</div>
+      <img src="/assets/images/logo.png" alt="로고이미지" />
       {/* <OAuthLoginButton type={OauthType.KAKAO} onClick={onClickLoginType} /> */}
     </S.Wrapper>
   );

@@ -6,6 +6,7 @@ import { Card } from "./_components/Card/Card";
 import { useState } from "react";
 import ConfirmAlert from "@/components/alert/ConfirnAlert";
 import { ONBOARDING_ALERT } from "@/constant/alert/alertText";
+import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 
 const OneStep = () => {
   const [openAlert, setOpenAlert] = useState(false);
@@ -19,29 +20,34 @@ const OneStep = () => {
           건너뛰기
         </span>
       </NavHeader>
-      {openAlert && (
-        <ConfirmAlert setOpenAlert={setOpenAlert} message={ONBOARDING_ALERT} />
-      )}
-      <S.Wrapper>
-        <S.StepWrap>
-          <div>취향 분석</div>
-          {/* TODO : 글자 사이 스타일 | 수정 */}
-          <div> | </div>
-          <div>STEP 1</div>
-        </S.StepWrap>
-        <S.StepTitleWrap>
-          <div>
-            보유하고 있는 브랜드를
-            <br /> 선택해주세요.
-          </div>
-          <div>내가 기린 그림은 진짜 잘 그린 기린입니다.</div>
-        </S.StepTitleWrap>
-      </S.Wrapper>
-      <S.CardWrap>
-        <Card />
-        <Card />
-        <Card />
-      </S.CardWrap>
+      <HeaderBottomContents>
+        {openAlert && (
+          <ConfirmAlert
+            setOpenAlert={setOpenAlert}
+            message={ONBOARDING_ALERT}
+          />
+        )}
+        <S.Wrapper>
+          <S.StepWrap>
+            <div>취향 분석</div>
+            {/* TODO : 글자 사이 스타일 | 수정 */}
+            <div> | </div>
+            <div>STEP 1</div>
+          </S.StepWrap>
+          <S.StepTitleWrap>
+            <div>
+              보유하고 있는 브랜드를
+              <br /> 선택해주세요.
+            </div>
+            <div>내가 기린 그림은 진짜 잘 그린 기린입니다.</div>
+          </S.StepTitleWrap>
+        </S.Wrapper>
+        <S.CardWrap>
+          <Card />
+          <Card />
+          <Card />
+        </S.CardWrap>
+      </HeaderBottomContents>
     </>
   );
 };
