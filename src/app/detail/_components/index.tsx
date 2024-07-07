@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import styled from "@emotion/styled";
-import BottomBtn from "./BottomBtn/BottomBtn";
 import DetailComment from "./Comment/DetailComment";
 import DetailInfo from "./DetailInfo/DetailInfo";
 import DetailTop from "./DetailTop";
@@ -25,16 +24,17 @@ function DetailPageContent() {
     setSelectedComponent(value);
   };
 
-  const renderSelectedComponent = () => {
-    switch (selectedComponent) {
-      case "INFO":
-        return <DetailInfo />;
-      case "COMMENT":
-        return <DetailComment />;
-      default:
-        return null;
-    }
-  };
+  // TODO: 나중에 작업 끝나면 필요없을 시 삭제.
+  // const renderSelectedComponent = () => {
+  //   switch (selectedComponent) {
+  //     case "INFO":
+  //       return <DetailInfo />;
+  //     case "COMMENT":
+  //       return <DetailComment />;
+  //     default:
+  //       return null;
+  //   }
+  // };
 
   return (
     <>
@@ -50,8 +50,9 @@ function DetailPageContent() {
           </S.FocusComponent>
         ))}
       </S.SelectBtnWrapper>
-      {renderSelectedComponent()}
-      <BottomBtn />
+      {/* {renderSelectedComponent()} */}
+      <DetailInfo />
+      <DetailComment />
     </>
   );
 }

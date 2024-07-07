@@ -1,5 +1,6 @@
 "use client";
 import { FC, useMemo } from "react";
+import { theme } from "@/styles/theme";
 import useDeviceType, { MAX_MOBILE_WIDTH } from "@/hook/screen/useDeviceType";
 import { EmptyPropsChildren } from "@/constant/commonTypes";
 import { AppBar } from "@mui/material";
@@ -36,8 +37,16 @@ const MobileTemplate: FC<EmptyPropsChildren> = ({ children }) => {
 
 const Main = styled.main`
   display: flex;
-  height: 100%;
   flex-direction: column;
+  overflow-y: scroll;
+  width: 100%;
+  height: 100vh;
+  background: ${theme.color.white};
+
+  @media (min-width: 441px) {
+    width: 440px;
+    margin: 0 auto;
+  }
 `;
 
 const Header = styled.header``;

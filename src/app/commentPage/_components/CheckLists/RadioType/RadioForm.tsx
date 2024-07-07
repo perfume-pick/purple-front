@@ -31,12 +31,10 @@ interface RadioProps {
 export const RadioForm: React.FC<RadioProps> = ({
   name,
   control,
-  value,
   label,
   options,
   errors,
   rules,
-  ...children
 }) => {
   return (
     <S.Wrap>

@@ -40,7 +40,7 @@ const TitleButton = styled.div`
 `;
 
 const ProfileBoxOuter = styled.div`
-  padding-bottom: 4.4rem;
+  padding: 2.4rem 0 4.4rem 0;
 `;
 
 const TasteStatisticsWrap = styled.div`

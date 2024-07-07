@@ -1,6 +1,4 @@
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
-import RadioBtnGroup from "@/components/Radio/RadioGroup";
-import { RadioBtnOption } from "@/components/Radio/radio.type";
 import { theme } from "@/styles/theme";
 import { CheckboxType, FieldDefinitionsType } from "@/types/commentTypes";
 import styled from "@emotion/styled";
@@ -32,12 +30,10 @@ interface CheckboxProps {
 export const CheckboxForm: React.FC<CheckboxProps> = ({
   name,
   control,
-  value,
   label,
   options,
   errors,
   rules,
-  ...children
 }) => {
   const [selectBtn, setSelectedValues] = useState<string[]>([]);
   return (

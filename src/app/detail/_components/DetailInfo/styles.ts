@@ -6,9 +6,9 @@ const Wrapper = styled.div`
   padding: 2rem;
 `;
 
-const NoteInfoWrap = styled.div``;
-
-const PersistenceWrap = styled.div``;
+const PersistenceWrap = styled.div`
+  margin: 2rem 0;
+`;
 
 const InfoTitle = styled.div`
   display: flex;
@@ -20,6 +20,22 @@ const InfoTitle = styled.div`
     margin-left: 1rem;
   }
 `;
+
+const GraphWrap = styled.div`
+  margin: 2rem 0;
+
+  & > div {
+    background-color: #bc4d0f;
+    display: flex;
+    height: 2.4rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 1rem 1rem 0;
+  }
+`;
+
+// Note Info
+const NoteInfoWrap = styled.div``;
 
 const NoteInfo = styled.div`
   display: flex;
@@ -42,6 +58,7 @@ const NoteContent = styled.div`
 export const S = {
   Wrapper,
   InfoTitle,
+  GraphWrap,
   NoteInfoWrap,
   PersistenceWrap,
   NoteInfo,

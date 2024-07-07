@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   background-color: ${theme.color.white};
   box-shadow: 0px 4rem 3.2rem 0px #0000000d;
   border-radius: 6px;
-  padding: 3.6rem 0;
+  padding: 3rem 0;
 
   ul {
     width: 64%;

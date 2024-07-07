@@ -23,10 +23,19 @@ function NavHeader({
     router.back();
   };
 
+  const backgroundColor = bgColor || theme.color.white;
+
   return (
-    <S.Wrapper bgColor={bgColor}>
+    <S.Wrapper bgColor={backgroundColor}>
       <div onClick={handleRouterBack}>
-        <ArrowBackIosNewIcon sx={{ fontSize: "2.4rem", color: iconColor }} />
+        <ArrowBackIosNewIcon
+          sx={{
+            fontSize: "2rem",
+            color: iconColor,
+            position: "relative",
+            zIndex: 1,
+          }}
+        />
       </div>
       <div style={style}>
         <div>{children}</div>
@@ -41,11 +50,21 @@ const dynamicBgColorStyle = (props: { bgColor: string }) => ({
 });
 
 const Wrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
   display: flex;
   align-items: center;
-  padding: 1.8rem;
+  padding: 1.2rem;
   width: 100%;
+  height: 4.8rem;
   ${dynamicBgColorStyle}
+
+  @media (min-width: 441px) {
+    width: 440px;
+  }
 
   & > div:first-of-type {
     line-height: 1;
