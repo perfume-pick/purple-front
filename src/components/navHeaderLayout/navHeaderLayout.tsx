@@ -59,7 +59,7 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 1.2rem;
   width: 100%;
-  height: 4.8rem;
+  height: 6rem;
   ${dynamicBgColorStyle}
 
   @media (min-width: 441px) {

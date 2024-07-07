@@ -8,7 +8,6 @@ const BannerWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: 4.6rem;
   border-bottom: 5px solid ${theme.color.grayColor[100]};
 `;
 
