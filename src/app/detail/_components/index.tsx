@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import DetailComment from "./Comment/DetailComment";
 import DetailInfo from "./DetailInfo/DetailInfo";
@@ -10,10 +10,18 @@ import {
   SelectButtonType,
   SelectButtonValueType,
 } from "@/constant/detail.const";
+import { scrollRef } from "@/utils/scrollUtil";
 
 function DetailPageContent() {
   const [selectedComponent, setSelectedComponent] =
     useState<SelectButtonValueType>("INFO");
+  const infoRef = useRef<HTMLDivElement>(null);
+  const commentRef = useRef<HTMLDivElement>(null);
+
+  const sectionRefs = {
+    INFO: infoRef,
+    COMMENT: commentRef,
+  };
 
   const sections: { [key in SelectButtonType]: SelectButtonValueType } = {
     "제품 정보": "INFO",
@@ -22,6 +30,7 @@ function DetailPageContent() {
 
   const handleSelectClick = (value: SelectButtonValueType) => {
     setSelectedComponent(value);
+    scrollRef(sectionRefs[value]);
   };
 
   // TODO: 나중에 작업 끝나면 필요없을 시 삭제.
@@ -51,8 +60,8 @@ function DetailPageContent() {
         ))}
       </S.SelectBtnWrapper>
       {/* {renderSelectedComponent()} */}
-      <DetailInfo />
-      <DetailComment />
+      <DetailInfo ref={infoRef} />
+      <DetailComment ref={commentRef} />
     </>
   );
 }

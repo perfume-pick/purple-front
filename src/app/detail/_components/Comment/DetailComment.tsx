@@ -2,14 +2,14 @@ import DetailReview from "./DetailReview/DetailReview";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-
+import React, { forwardRef } from "react";
 import { S } from "./styles";
 import { useState } from "react";
 import Topic from "./Topic/Topic";
 import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
 import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
 
-function DetailComment() {
+const DetailComment = forwardRef<HTMLDivElement>((props, ref) => {
   const [openTopic, setOpenTopic] = useState(false);
 
   // TODO: 서버에서 받아올 데이터. 점수 순서는 상관없음
@@ -42,7 +42,7 @@ function DetailComment() {
   ];
 
   return (
-    <S.Wrapper>
+    <S.Wrapper ref={ref}>
       <S.TotalComment>
         <S.CommentWrap>
           <S.CommentTitle>
@@ -82,5 +82,5 @@ function DetailComment() {
       </S.CommentButtonWrap>
     </S.Wrapper>
   );
-}
+});
 export default DetailComment;

@@ -1,8 +1,9 @@
 import { S } from "./styles";
+import React, { forwardRef } from "react";
 
-function DetailInfo() {
+const DetailInfo = forwardRef<HTMLDivElement>((props, ref) => {
   return (
-    <S.Wrapper>
+    <S.Wrapper ref={ref}>
       <S.PersistenceWrap>
         <S.InfoTitle>
           <img src="/assets/images/Vector.png" />
@@ -36,5 +37,5 @@ function DetailInfo() {
       </S.NoteInfoWrap>
     </S.Wrapper>
   );
-}
+});
 export default DetailInfo;

@@ -12,7 +12,7 @@ const HeaderBottomContents = ({ children }: Props) => {
 export default HeaderBottomContents;
 
 const Wrapper = styled.div`
-  padding-top: 4.8rem;
+  padding-top: 6rem;
 `;
 
 const S = {

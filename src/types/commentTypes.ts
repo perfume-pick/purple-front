@@ -13,8 +13,8 @@ export interface FieldDefinitionsType {
   rating?: number;
   textReview?: string;
   persistence?: string;
-  residualScent: string;
+  residualScent?: string;
   season?: string;
-  gender: string;
+  gender?: string;
   mood?: string;
 }
