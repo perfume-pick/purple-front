@@ -9,6 +9,7 @@ const ReviewText = styled.p`
   font-size: ${theme.fontSize.sm};
   color: ${theme.color.textColor[200]};
   line-height: 2.24rem;
+  padding-top: 1.2rem;
 
   &.brief-text {
     text-overflow: ellipsis;

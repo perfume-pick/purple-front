@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { theme } from "@/styles/theme";
 import { COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
+import { DropdownType } from "@/types/dropdownTypes";
 import Dropdown from "@/components/molecule/Dropdown/Dropdown";
 
-const FilterBox = () => {
-  const [selectedFilter, setSelectedFilter] = useState(
-    COMMENT_FILTER_LIST[0].code,
-  );
+type Props = {
+  filterList: DropdownType[];
+};
+
+const FilterBox = ({ filterList }: Props) => {
+  const [selectedFilter, setSelectedFilter] = useState(filterList[0].code);
 
   const handleChangeSelectedFilter = (code: string) => {
     setSelectedFilter(code);
@@ -17,11 +20,15 @@ const FilterBox = () => {
       <p>
         전체 <span>25</span>건
       </p>
-      <Dropdown
-        selectedCode={selectedFilter}
-        handleChangeSelectedFilter={handleChangeSelectedFilter}
-        filterList={COMMENT_FILTER_LIST}
-      />
+      <S.Filters>
+        <input type="checkbox" id="only-detail" />
+        <label htmlFor="only-detail">자세한 리뷰만</label>
+        <Dropdown
+          selectedCode={selectedFilter}
+          handleChangeSelectedFilter={handleChangeSelectedFilter}
+          filterList={filterList}
+        />
+      </S.Filters>
     </S.FilterWrap>
   );
 };
@@ -45,6 +52,23 @@ const FilterWrap = styled.div`
   }
 `;
 
+const Filters = styled.div`
+  display: flex;
+  align-items: center;
+
+  input[type="checkbox"] {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 0.4rem;
+  }
+
+  label {
+    font-size: ${theme.fontSize.sm};
+    margin-right: 1.4rem;
+  }
+`;
+
 const S = {
   FilterWrap,
+  Filters,
 };
