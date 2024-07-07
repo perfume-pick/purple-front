@@ -1,7 +1,9 @@
 import { theme } from "@/styles/theme";
 import styled from "@emotion/styled";
 
-const StaticsSection = styled.section``;
+const StaticsSection = styled.section`
+  background-color: ${theme.color.white};
+`;
 
 const Title = styled.span`
   display: block;
