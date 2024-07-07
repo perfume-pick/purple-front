@@ -1,6 +1,10 @@
 "use client";
 
 import styled from "@emotion/styled";
+import {
+  COMMENT_BOX_FILTER,
+  COMMENT_FILTER_LIST,
+} from "@/constant/dropdown/commentFilterList";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import CommentBox from "../../../components/organism/CommentBox/CommentBox";
 import FilterBox from "@/components/organism/FilterBox/FilterBox";
@@ -20,7 +24,7 @@ const MyCommentsPage = () => {
         <NavHeaderInner text="작성한 코멘트" />
       </NavHeader>
       <HeaderBottomContents>
-        <FilterBox />
+        <FilterBox filterList={COMMENT_FILTER_LIST} />
         <CommentBox>
           <S.BrandCommentTopArea>
             <img
@@ -32,7 +36,7 @@ const MyCommentsPage = () => {
               <Rating />
             </S.RatingWrap>
             <MoreButton
-              text="코멘트 삭제"
+              selectList={COMMENT_BOX_FILTER}
               handleDropdown={handleDeleteComment}
             />
           </S.BrandCommentTopArea>

@@ -6,11 +6,11 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useEffect, useRef, useState } from "react";
 
 type Props = {
-  text: string;
+  selectList: string[];
   handleDropdown: () => void;
 };
 
-const MoreButton = ({ text, handleDropdown }: Props) => {
+const MoreButton = ({ selectList, handleDropdown }: Props) => {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const dropDownRef = useRef<HTMLDivElement | null>(null);
 
@@ -44,7 +44,9 @@ const MoreButton = ({ text, handleDropdown }: Props) => {
         onClick={handleClickBox}
         ref={dropDownRef}
       >
-        <p>{text}</p>
+        {selectList.map((text, index) => {
+          return <p key={index}>{text}</p>;
+        })}
       </S.DropdownWrap>
     </S.MoreButtonWrap>
   );
@@ -63,7 +65,6 @@ const DropdownWrap = styled.div`
   border: 1px solid #dbdbdb;
   background: ${theme.color.white};
   text-align: center;
-  padding: 0.8rem 1rem;
   border-radius: 0.6rem;
   font-size: ${theme.fontSize.sm};
   color: ${theme.color.textColor[100]};
@@ -72,6 +73,10 @@ const DropdownWrap = styled.div`
 
   &.active {
     display: block;
+  }
+  & > p {
+    padding: 0.8rem 1rem;
+    font-size: ${theme.fontSize.sm};
   }
 `;
 
