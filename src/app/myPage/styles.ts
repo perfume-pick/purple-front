@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 
 const Wrapper = styled.div`
   padding-bottom: 2.4rem;
+  background-color: ${theme.color.white};
 `;
 
 const Title = styled.span`
