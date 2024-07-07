@@ -1,9 +1,7 @@
 import "./global.css";
-import "@/styles/customReset.css";
 import type { Metadata } from "next";
 import ReactQueryProviders from "@/provider/reactQueryProviders";
 import { ReactNode } from "react";
-import { CssBaseline } from "@mui/material";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,10 +12,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
-        <ReactQueryProviders>
-          <CssBaseline />
-          {children}
-        </ReactQueryProviders>
+        <ReactQueryProviders>{children}</ReactQueryProviders>
       </body>
     </html>
   );
