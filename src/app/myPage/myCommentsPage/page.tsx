@@ -12,6 +12,7 @@ import Rating from "@/components/atom/Rating/Rating";
 import MoreButton from "../../../components/molecule/MoreButton/MoreButton";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
+import Rating_2 from "@/components/atom/Rating/Rating_2";
 
 const MyCommentsPage = () => {
   const handleDeleteComment = () => {
@@ -33,7 +34,8 @@ const MyCommentsPage = () => {
             />
             <S.RatingWrap>
               <p>{`${"브랜드명"}﹒${"브랜드명"}`}</p>
-              <Rating />
+              {/* <Rating /> */}
+              <Rating_2 />
             </S.RatingWrap>
             <MoreButton
               selectList={COMMENT_BOX_FILTER}
