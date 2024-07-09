@@ -5,16 +5,23 @@ import {
   COMMENT_BOX_FILTER,
   COMMENT_FILTER_LIST,
 } from "@/constant/dropdown/commentFilterList";
+import { useState } from "react";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import CommentBox from "../../../components/organism/CommentBox/CommentBox";
 import FilterBox from "@/components/organism/FilterBox/FilterBox";
-import Rating from "@/components/atom/Rating/Rating";
 import MoreButton from "../../../components/molecule/MoreButton/MoreButton";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
-import Rating_2 from "@/components/atom/Rating/Rating_2";
+import ReadOnlyRating from "@/components/atom/Rating/ReadOnlyRating";
+import EditableRating from "../../../components/atom/Rating/EditableRating";
 
 const MyCommentsPage = () => {
+  const [rating, setRating] = useState(1.5);
+
+  const handleRateChange = (newRate: number) => {
+    setRating(newRate);
+  };
+
   const handleDeleteComment = () => {
     console.log("delete");
   };
@@ -28,15 +35,23 @@ const MyCommentsPage = () => {
         <FilterBox filterList={COMMENT_FILTER_LIST} />
         <CommentBox>
           <S.BrandCommentTopArea>
-            <img
-              src="https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9&s=dd060fe209b4a56733a1dcc9b5aea53a"
-              alt="purfume image"
-            />
-            <S.RatingWrap>
-              <p>{`${"브랜드명"}﹒${"브랜드명"}`}</p>
-              {/* <Rating /> */}
-              <Rating_2 />
-            </S.RatingWrap>
+            <div>
+              <img
+                src="https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9&s=dd060fe209b4a56733a1dcc9b5aea53a"
+                alt="purfume image"
+              />
+              <S.RatingWrap>
+                <p>{`${"브랜드명"}﹒${"브랜드명"}`}</p>
+                <ReadOnlyRating rate={2.5} size={33} gap="0.35rem" />
+                <EditableRating
+                  rate={rating}
+                  size={33}
+                  gap="0.35rem"
+                  onRateChange={handleRateChange}
+                />
+              </S.RatingWrap>
+            </div>
+
             <MoreButton
               selectList={COMMENT_BOX_FILTER}
               handleDropdown={handleDeleteComment}
@@ -55,12 +70,15 @@ const BrandCommentTopArea = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  & > img {
+  img {
     width: 5.4rem;
     height: 5.4rem;
     border-radius: 0.54rem;
     object-fit: cover;
     margin-right: 0.4rem;
+  }
+  & > div {
+    display: flex;
   }
 `;
 
