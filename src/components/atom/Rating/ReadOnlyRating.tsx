@@ -7,13 +7,14 @@ import styled from "@emotion/styled";
 type Props = {
   rate: number;
   size: number;
+  gap: string;
 };
 
-const ReadOnlyRating = ({ rate, size }: Props) => {
+const ReadOnlyRating = ({ rate, size, gap }: Props) => {
   const ratesResArr = calcStarRates(rate, size);
 
   return (
-    <S.RatingWrap>
+    <S.RatingWrap gap={gap}>
       {ratesResArr.map((value, index) => {
         return <Star size={size} value={value} index={index} key={index} />;
       })}
@@ -23,8 +24,9 @@ const ReadOnlyRating = ({ rate, size }: Props) => {
 
 export default ReadOnlyRating;
 
-const RatingWrap = styled.div`
+const RatingWrap = styled.div<{ gap: string }>`
   display: flex;
+  column-gap: ${({ gap }) => gap};
 `;
 
 const S = {
