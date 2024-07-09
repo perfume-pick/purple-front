@@ -7,10 +7,11 @@ import styled from "@emotion/styled";
 type Props = {
   rate: number;
   size: number;
+  gap: string;
   onRateChange: (newRate: number) => void;
 };
 
-const EditableRating = ({ rate, size, onRateChange }: Props) => {
+const EditableRating = ({ rate, size, gap, onRateChange }: Props) => {
   const [ratesResArr, setRatesResArr] = useState([0, 0, 0, 0, 0]); // 별점 리스트 상태입니다.
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const EditableRating = ({ rate, size, onRateChange }: Props) => {
   };
 
   return (
-    <S.RatingWrap>
+    <S.RatingWrap gap={gap}>
       {ratesResArr.map((value, index) => {
         return (
           <Star
@@ -49,8 +50,9 @@ const EditableRating = ({ rate, size, onRateChange }: Props) => {
 
 export default EditableRating;
 
-const RatingWrap = styled.div`
+const RatingWrap = styled.div<{ gap: string }>`
   display: flex;
+  column-gap: ${({ gap }) => gap};
 `;
 
 const S = {
