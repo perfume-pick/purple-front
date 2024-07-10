@@ -12,7 +12,7 @@ import FilterBox from "@/components/organism/FilterBox/FilterBox";
 import MoreButton from "../../../components/molecule/MoreButton/MoreButton";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
-import ReadOnlyRating from "@/components/atom/Rating/ReadOnlyRating";
+import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
 import EditableRating from "../../../components/atom/Rating/EditableRating";
 
 const MyCommentsPage = () => {
@@ -42,7 +42,7 @@ const MyCommentsPage = () => {
               />
               <S.RatingWrap>
                 <p>{`${"브랜드명"}﹒${"브랜드명"}`}</p>
-                <ReadOnlyRating rate={2.5} size={33} gap="0.35rem" />
+                <ReadonlyRating rate={2.5} size={33} gap="0.35rem" />
                 <EditableRating
                   rate={rating}
                   size={33}

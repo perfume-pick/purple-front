@@ -7,7 +7,7 @@ type Props = {
   onClick?: (index: number, isHalf: boolean, isEnd: boolean) => void;
 };
 
-const Star = ({ size, value, index, onClick }: Props) => {
+const EditableStar = ({ size, value, index, onClick }: Props) => {
   const handleClick = (event: React.MouseEvent<SVGSVGElement>) => {
     if (onClick) {
       const { clientX, currentTarget } = event;
@@ -31,10 +31,10 @@ const Star = ({ size, value, index, onClick }: Props) => {
         onClick={handleClick}
       >
         <defs>
-          <clipPath id={`halfStarClip-${index}`}>
+          <clipPath id={`edit-halfStarClip-${index}`}>
             <rect width="50%" height="100%" />
           </clipPath>
-          <clipPath id={`fullStarClip-${index}`}>
+          <clipPath id={`edit-fullStarClip-${index}`}>
             <rect width="100%" height="100%" />
           </clipPath>
         </defs>
@@ -46,9 +46,9 @@ const Star = ({ size, value, index, onClick }: Props) => {
         <g
           clipPath={
             value >= size
-              ? `url(#fullStarClip-${index})`
+              ? `url(#edit-fullStarClip-${index})`
               : value >= size / 2
-                ? `url(#halfStarClip-${index})`
+                ? `url(#edit-halfStarClip-${index})`
                 : ""
           }
         >
@@ -62,4 +62,4 @@ const Star = ({ size, value, index, onClick }: Props) => {
   );
 };
 
-export default Star;
+export default EditableStar;
