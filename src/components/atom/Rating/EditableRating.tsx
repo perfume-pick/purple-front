@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Star from "@/components/atom/svg/Star/Star";
+import EditableStar from "@/components/atom/svg/Star/EditableStar";
 import styled from "@emotion/styled";
 
 type Props = {
@@ -33,7 +33,7 @@ const EditableRating = ({ rate, size, gap, onRateChange }: Props) => {
     <S.RatingWrap gap={gap}>
       {ratesResArr.map((value, index) => {
         return (
-          <Star
+          <EditableStar
             size={size}
             value={value}
             index={index}

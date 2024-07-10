@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Star from "@/components/atom/svg/Star/Star";
+import ReadonlyStar from "@/components/atom/svg/Star/ReadonlyStar";
 import styled from "@emotion/styled";
 
 type Props = {
@@ -10,19 +10,21 @@ type Props = {
   gap: string;
 };
 
-const ReadOnlyRating = ({ rate, size, gap }: Props) => {
+const ReadonlyRating = ({ rate, size, gap }: Props) => {
   const ratesResArr = calcStarRates(rate, size);
 
   return (
     <S.RatingWrap gap={gap}>
       {ratesResArr.map((value, index) => {
-        return <Star size={size} value={value} index={index} key={index} />;
+        return (
+          <ReadonlyStar size={size} value={value} index={index} key={index} />
+        );
       })}
     </S.RatingWrap>
   );
 };
 
-export default ReadOnlyRating;
+export default ReadonlyRating;
 
 const RatingWrap = styled.div<{ gap: string }>`
   display: flex;
