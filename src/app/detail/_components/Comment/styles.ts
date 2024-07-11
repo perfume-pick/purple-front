@@ -113,6 +113,11 @@ const ReviewContent = styled.div`
   text-overflow: ellipsis;
 `;
 
+const ChartWrap = styled.div`
+  width: 14rem;
+  height: 6.6rem;
+`;
+
 export const S = {
   Wrapper,
   TotalComment,
@@ -126,4 +131,5 @@ export const S = {
   ReviewWrapper,
   Rating,
   ReviewContent,
+  ChartWrap,
 };
