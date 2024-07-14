@@ -1,56 +1,58 @@
 "use client";
 
 import React from "react";
-import ReadonlyStar from "@/components/atom/svg/Star/ReadonlyStar";
 import styled from "@emotion/styled";
 
 type Props = {
   rate: number;
   size: number;
-  gap: string;
+  gap: number;
 };
 
 const ReadonlyRating = ({ rate, size, gap }: Props) => {
-  const ratesResArr = calcStarRates(rate, size);
+  const percentage = (rate / 5) * 100;
 
   return (
-    <S.RatingWrap gap={gap}>
-      {ratesResArr.map((value, index) => {
-        return (
-          <ReadonlyStar size={size} value={value} index={index} key={index} />
-        );
-      })}
+    <S.RatingWrap size={size} gap={gap}>
+      {[...Array(5)].map((_, index) => (
+        <S.Star size={size} key={index}></S.Star>
+      ))}
+      <S.RatingBgColorBlock width={percentage} />
     </S.RatingWrap>
   );
 };
 
 export default ReadonlyRating;
 
-const RatingWrap = styled.div<{ gap: string }>`
+const RatingWrap = styled.div<{ size: number; gap: number; }>`
+  position: relative;
   display: flex;
-  column-gap: ${({ gap }) => gap};
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  height: ${({ size }) => `${size / 10}rem`};
+  column-gap: ${({ gap }) => `${gap}rem`};
+`;
+
+const RatingBgColorBlock = styled.div<{ width: number }>`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: ${({ width }) => `${width}%`}; /* 평점에 따라 너비 조정 */
+  height: 100%;
+  background-color: #4b3434; /* 채워질 부분의 색상 설정 */
+  mix-blend-mode: color-burn;
+  opacity: unset;
+`;
+
+const Star = styled.div<{ size: number }>`
+  width: ${({ size }) => `${size / 10}rem`};
+  height: ${({ size }) => `${size / 10}rem`};
+  background: url("/assets/images/icon_star.png") no-repeat center top / 100%;
 `;
 
 const S = {
   RatingWrap,
-};
-
-const NUM_STARS = 5; // 별의 최대 개수
-
-const calcStarRates = (rate: number, size: number) => {
-  let tempStarRatesArr = Array(NUM_STARS).fill(0);
-  let starVerScore = (rate / NUM_STARS) * (size * NUM_STARS); // 평점을 별의 전체 크기로 변환
-  let idx = 0;
-
-  while (starVerScore > size) {
-    tempStarRatesArr[idx] = size;
-    idx += 1;
-    starVerScore -= size;
-  }
-
-  if (idx < NUM_STARS) {
-    tempStarRatesArr[idx] = starVerScore;
-  }
-
-  return tempStarRatesArr;
+  RatingBgColorBlock,
+  Star,
 };

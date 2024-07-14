@@ -58,7 +58,7 @@ function DetailComment() {
       <S.AverageScoreWrap>
         <S.Score>
           <div>4.8</div>
-          <ReadonlyRating rate={4.1} size={23} gap="0.7rem" />
+          <ReadonlyRating rate={4.8} size={23} gap={0.7} />
         </S.Score>
         <S.ChartWrap>
           <RatingDistributionChart chartData={chartData} />

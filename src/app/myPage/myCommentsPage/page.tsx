@@ -42,11 +42,11 @@ const MyCommentsPage = () => {
               />
               <S.RatingWrap>
                 <p>{`${"브랜드명"}﹒${"브랜드명"}`}</p>
-                <ReadonlyRating rate={2.5} size={33} gap="0.35rem" />
+                <ReadonlyRating rate={2.5} size={33} gap={0} />
                 <EditableRating
                   rate={rating}
                   size={33}
-                  gap="0.35rem"
+                  gap={0.35}
                   onRateChange={handleRateChange}
                 />
               </S.RatingWrap>
