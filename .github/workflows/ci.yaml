@@ -12,12 +12,26 @@ jobs:
       - name: Check Out Repository
         uses: actions/checkout@v2
 
+        - name: Get Github Actions IP Addresses
+        id: publicip
+        run: |
+          response=$(curl -s canhazip.com)
+          echo "ip=$response" >> "$GITHUB_OUTPUT"
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
+      - name: Add GitHub Actions IP
+        run: |
+          aws ec2 authorize-security-group-ingress \
+            --group-id ${{ secrets.SECURITY_GROUP_ID }} \
+            --protocol tcp \
+            --port 22 \
+            --cidr ${{ steps.publicip.outputs.ip }}/32
 
       - name: Login to Amazon ECR Public
         id: login-ecr-public
@@ -68,3 +82,11 @@ jobs:
             fi
             docker pull $TAG
             docker run -d -p 3000:3000 $TAG
+
+      - name: Remove GitHub Actions IP
+      run: |
+        aws ec2 revoke-security-group-ingress \
+            --group-id ${{ secrets.SECURITY_GROUP_ID }} \
+            --protocol tcp \
+            --port 22 \
+            --cidr ${{ steps.publicip.outputs.ip }}/32
