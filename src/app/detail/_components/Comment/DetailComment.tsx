@@ -6,9 +6,40 @@ import React, { forwardRef } from "react";
 import { S } from "./styles";
 import { useState } from "react";
 import Topic from "./Topic/Topic";
+import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
+import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
 
 const DetailComment = forwardRef<HTMLDivElement>((props, ref) => {
   const [openTopic, setOpenTopic] = useState(false);
+
+  // TODO: 서버에서 받아올 데이터. 점수 순서는 상관없음
+  const chartData = [
+    {
+      rate: 5,
+      percentage: 65,
+      userNumber: 100,
+    },
+    {
+      rate: 4,
+      percentage: 10,
+      userNumber: 100,
+    },
+    {
+      rate: 3,
+      percentage: 8,
+      userNumber: 100,
+    },
+    {
+      rate: 2,
+      percentage: 2,
+      userNumber: 100,
+    },
+    {
+      rate: 1,
+      percentage: 15,
+      userNumber: 100,
+    },
+  ];
 
   return (
     <S.Wrapper ref={ref}>
@@ -27,9 +58,11 @@ const DetailComment = forwardRef<HTMLDivElement>((props, ref) => {
       <S.AverageScoreWrap>
         <S.Score>
           <div>4.8</div>
-          <div>⭐️ ⭐️ ⭐️ ⭐️ ⭐️</div>
+          <ReadonlyRating rate={4.8} size={23} gap={0.7} />
         </S.Score>
-        <div>그래프</div>
+        <S.ChartWrap>
+          <RatingDistributionChart chartData={chartData} />
+        </S.ChartWrap>
       </S.AverageScoreWrap>
       <S.OpenTopic onClick={() => setOpenTopic(prev => !prev)}>
         <div>코멘트 토픽 열기</div>

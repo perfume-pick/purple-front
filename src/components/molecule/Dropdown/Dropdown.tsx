@@ -67,6 +67,7 @@ export default Dropdown;
 
 const Wrapper = styled.div`
   position: relative;
+  z-index: 1;
 
   & > p {
     font-size: ${theme.fontSize.sm};

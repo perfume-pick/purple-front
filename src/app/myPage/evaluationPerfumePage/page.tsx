@@ -1,6 +1,7 @@
 "use client";
 
 import styled from "@emotion/styled";
+import { USER_COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
 import ProductCardGrid from "@/components/organism/ProductCardGrid/ProductCardGrid";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
@@ -14,7 +15,7 @@ const EvaluationPerfumePage = () => {
         <NavHeaderInner text="평가향수" />
       </NavHeader>
       <HeaderBottomContents>
-        <FilterBox />
+        <FilterBox filterList={USER_COMMENT_FILTER_LIST} />
         <ProductCardGrid />
       </HeaderBottomContents>
     </S.Wrapper>

@@ -56,6 +56,11 @@ ul {
   list-style-type: none;
 }
 
+
+li {
+  list-style: none;
+}
+
 input,
 button {
   outline: none;
