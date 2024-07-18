@@ -6,9 +6,9 @@ const Wrapper = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem 2rem;
+  padding: 1rem 2rem 11rem 2rem;
   position: relative;
-  margin-bottom: 11rem;
+  background-color: ${theme.color.white};
 `;
 
 const CommentWrap = styled.div`
@@ -27,7 +27,7 @@ const CommentWrap = styled.div`
 const CommentBtn = styled.div<{ isSelected: boolean }>`
   width: 100%;
   display: flex;
-  padding: 1rem;
+  height: 100%;
   justify-content: center;
   align-items: center;
   border-radius: 2.4rem;
@@ -67,7 +67,6 @@ const ReviewTitle = styled.div`
 const TextAreaWrap = styled.div`
   width: 100%;
   border: none;
-  resize: none;
   height: 11.4rem;
   box-shadow: 0px 0px 18px -10px #821919;
   border-radius: 2rem;
@@ -79,6 +78,7 @@ const TextAreaWrap = styled.div`
     width: 100%;
     border: none;
     height: 80%;
+    resize: none;
   }
 
   & > div {
@@ -95,8 +95,14 @@ const CommentButton = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  transform: translateX(-50%);
+  left: 50%;
   height: 11rem;
   background-color: ${theme.color.white};
+
+  @media (min-width: 440px) {
+    width: 440px;
+  }
 `;
 
 export const S = {

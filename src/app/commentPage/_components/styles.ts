@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 const Wrapper = styled.div`
   height: 5.4rem;
   display: flex;
-  width: 36.1rem;
+  width: 100%;
   background-color: ${theme.color.white};
 
   & > img {
