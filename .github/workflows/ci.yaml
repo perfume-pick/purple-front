@@ -12,11 +12,11 @@ jobs:
       - name: Check Out Repository
         uses: actions/checkout@v2
 
-        - name: Get Github Actions IP Addresses
-        id: publicip
-        run: |
-          response=$(curl -s canhazip.com)
-          echo "ip=$response" >> "$GITHUB_OUTPUT"
+      - name: Get Github Actions IP Addresses
+      id: publicip
+      run: |
+        response=$(curl -s canhazip.com)
+        echo "ip=$response" >> "$GITHUB_OUTPUT"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
