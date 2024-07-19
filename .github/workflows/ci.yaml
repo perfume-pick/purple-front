@@ -13,10 +13,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get Github Actions IP Addresses
-      id: publicip
-      run: |
-        response=$(curl -s canhazip.com)
-        echo "ip=$response" >> "$GITHUB_OUTPUT"
+        id: publicip
+        run: |
+          response=$(curl -s canhazip.com)
+          echo "ip=$response" >> "$GITHUB_OUTPUT"
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -84,8 +84,8 @@ jobs:
             docker run -d -p 3000:3000 $TAG
 
       - name: Remove GitHub Actions IP
-      run: |
-        aws ec2 revoke-security-group-ingress \
+        run: |
+          aws ec2 revoke-security-group-ingress \
             --group-id ${{ secrets.SECURITY_GROUP_ID }} \
             --protocol tcp \
             --port 22 \
