@@ -10,7 +10,8 @@ const Wrapper = styled.div`
   border-radius: 0.6rem;
   overflow: hidden;
   width: 100%;
-  max-width: 36rem;
+  margin: 2rem 0;
+  box-shadow: 0px 1px 15px 0px #d9d9d9;
 `;
 
 const BannerImg = styled.img`
