@@ -1,5 +1,5 @@
-import PublicBanners from "@/components/banner";
+import MainPage from "./mainPage/page";
 
-export default function MainPage() {
-  return <PublicBanners />;
+export default function Main() {
+  return <MainPage />;
 }
