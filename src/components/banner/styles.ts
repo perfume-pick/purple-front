@@ -11,7 +11,8 @@ const Wrapper = styled.div`
   overflow: hidden;
   width: 100%;
   margin: 2rem 0;
-  box-shadow: 0px 1px 15px 0px #d9d9d9;
+  box-shadow: 0px 5px 10px 0px #f5f5f5;
+  cursor: pointer;
 `;
 
 const BannerImg = styled.img`
@@ -27,6 +28,7 @@ const ContentWrap = styled.div`
   width: 100%;
   & > span {
     color: ${theme.color.textDisabled};
+    font-size: ${theme.fontSize.xs};
   }
 `;
 
@@ -43,6 +45,7 @@ const Title = styled.div`
 const Score = styled.div`
   display: flex;
   color: ${theme.color.textDisabled};
+  margin: 0.8rem 0;
 `;
 
 const CategoryWrap = styled.div`

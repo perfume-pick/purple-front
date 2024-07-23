@@ -1,18 +1,36 @@
 "use client";
 
-import { useState } from "react";
-import styled from "@emotion/styled";
-import { theme } from "@/styles/theme";
 import SearchBar from "@/components/atom/SearchBar/SearchBar";
-import Banner from "@/components/banner/Banner";
+import NoteMainPage from "./_components/note/NoteMainPage";
+import { S } from "./styles";
+import { useState } from "react";
+import { MainPageType, MainPageValueType } from "@/constant/mainPage.const";
+import CommentMainPage from "./_components/comment/CommentMainPage";
 
-// 임시 테스트. map돌리는곳. 나중에 api 연동하면 데이터로 교체하고 삭제.
 function MainPage() {
   const [keyword, setKeyword] = useState("");
+  const [selectedComponent, setSelectedComponent] =
+    useState<MainPageValueType>("NOTE");
 
-  // const handleChipClick = (text: string) => {
-  //   setKeyword(text);
-  // };
+  const sections: { [key in MainPageType]: MainPageValueType } = {
+    "노트 기반": "NOTE",
+    "코멘트 수": "COMMENT",
+  };
+
+  const renderSelectedComponent = () => {
+    switch (selectedComponent) {
+      case "NOTE":
+        return <NoteMainPage />;
+      case "COMMENT":
+        return <CommentMainPage />;
+      default:
+        return null;
+    }
+  };
+
+  const handleSelectClick = (value: MainPageValueType) => {
+    setSelectedComponent(value);
+  };
 
   return (
     <S.Wrapper>
@@ -26,42 +44,19 @@ function MainPage() {
           onChange={e => setKeyword(e.target.value)}
         />
       </S.TopWrap>
-      <Banner />
-      <Banner />
-      <Banner />
-      <Banner />
-      <Banner />
+      <S.SelectBtnWrapper>
+        {Object.entries(sections).map(([key, value]) => (
+          <S.FocusComponent
+            focus={selectedComponent === value}
+            key={key}
+            onClick={() => handleSelectClick(value)}
+          >
+            <div>{key}</div>
+          </S.FocusComponent>
+        ))}
+      </S.SelectBtnWrapper>
+      {renderSelectedComponent()}
     </S.Wrapper>
   );
 }
 export default MainPage;
-
-const Wrapper = styled.div`
-  display: grid;
-  /* grid-template-columns: 1fr 1fr; */
-  width: 100%;
-  gap: 10px;
-  justify-content: center;
-  background-color: ${theme.color.white};
-  overflow-y: hidden;
-`;
-
-const TopWrap = styled.div`
-  padding: 2rem;
-`;
-
-const LogoWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 2rem 0;
-
-  & > img {
-    width: 15rem;
-  }
-`;
-
-const S = {
-  Wrapper,
-  TopWrap,
-  LogoWrap,
-};
