@@ -8,20 +8,7 @@ import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 
 function NoteMainPage() {
-  const currentTime = dayjs();
   const route = useRouter();
-
-  //   const [currentTime, setCurrentTime] = useState(dayjs());
-
-  //   const updateCurrentTime = () => {
-  //     setCurrentTime(dayjs());
-  //   };
-
-  //   useEffect(() => {
-  //     updateCurrentTime();
-  //     const intervalId = setInterval(updateCurrentTime, 60000);
-  //     return () => clearInterval(intervalId);
-  //   }, []);
 
   return (
     <S.BannerWrap>
@@ -36,7 +23,7 @@ function NoteMainPage() {
           <span>3위 구아망드</span>
         </S.NoteRanking>
         <S.PreferenceInfo>
-          <div>{currentTime.format("MM.DD HH:mm")}기준</div>
+          <div>07.23 10:00기준</div>
           <S.MyPreference>
             <div onClick={() => route.push("/myPage")}>내 취향 보기</div>
             <KeyboardArrowRightIcon />
