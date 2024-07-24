@@ -7,3 +7,7 @@ export interface AlertType {
 export interface ConfirmAlertType extends AlertType {
   cancel: string;
 }
+
+export interface ProfileAlertType extends AlertType {
+  delete: string;
+}
