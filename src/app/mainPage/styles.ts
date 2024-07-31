@@ -20,7 +20,8 @@ const LogoWrap = styled.div`
   margin: 2rem 0;
 
   & > img {
-    width: 15rem;
+    width: 130%;
+    cursor: pointer;
   }
 `;
 
