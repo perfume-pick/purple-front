@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import { theme } from "@/styles/theme";
@@ -9,6 +9,8 @@ import Profile from "@/components/Profile/Profile";
 import ValidatedInput from "./_components/ValidatedInput/ValidatedInput";
 import { VALIDATED_PROFILE_NICKNAME } from "@/constant/validation/validatedProfileText";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
+import ProfileAlert from "@/components/alert/profileAlert";
+import { EDIT_PROFILE_ALERT } from "@/constant/alert/alertText";
 
 type FormValues = {
   nickname: string;
@@ -27,11 +29,15 @@ const ProfileSettingPage = () => {
     // setError,
     formState: { errors },
   } = useForm<FormValues>();
+
+  const [openAlert, setOpenAlert] = useState(false);
+
   const onSubmit: SubmitHandler<FormValues> = data => {
     console.log(data);
   };
   const handleClickProfile = () => {
     console.log("click profile");
+    setOpenAlert(true);
   };
 
   return (
@@ -58,6 +64,7 @@ const ProfileSettingPage = () => {
             isEdit
             onClick={handleClickProfile}
           />
+          {openAlert && <ProfileAlert message={EDIT_PROFILE_ALERT} />}
           <form onSubmit={handleSubmit(onSubmit)}>
             <ValidatedInput
               labelText="닉네임"
