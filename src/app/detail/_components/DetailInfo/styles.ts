@@ -55,6 +55,36 @@ const NoteContent = styled.div`
   }
 `;
 
+const EvaluationWrap = styled.div``;
+
+const EvaluationInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+`;
+
+const InfoWrap = styled.div`
+  display: flex;
+  margin: 2rem 0;
+  align-items: center;
+
+  & > span {
+    font-size: ${theme.fontSize.sm};
+    color: ${theme.color.grayColor[300]};
+    width: 30%;
+  }
+
+  & > div {
+    height: 3.2rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border-radius: 2rem;
+    background-color: pink;
+    padding: 1.5rem;
+  }
+`;
+
 export const S = {
   Wrapper,
   InfoTitle,
@@ -63,4 +93,7 @@ export const S = {
   PersistenceWrap,
   NoteInfo,
   NoteContent,
+  EvaluationWrap,
+  EvaluationInfo,
+  InfoWrap,
 };
