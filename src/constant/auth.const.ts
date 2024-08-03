@@ -3,3 +3,5 @@ export enum OauthType {
   //GOOGLE = "GOOGLE",
   //NAVER = "NAVER",
 }
+
+export const AccessTokenKey = "accessToken";

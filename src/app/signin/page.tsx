@@ -14,8 +14,6 @@ export default function SignInPage() {
   return (
     <S.Wrapper>
       <img src="/assets/images/logo.png" alt="로고이미지" />
-      {/* <OAuthLoginButton type={OauthType.KAKAO} onClick={onClickLoginType} /> */}
-      <div>Img</div>
       <OAuthLoginButton type={OauthType.KAKAO} onClick={onClickLoginType} />
     </S.Wrapper>
   );
