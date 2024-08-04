@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AccessTokenKey } from "./constant/auth.const";
+import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
 
 // 로그인이 필요 없는 페이지 경로
 const AUTH_PAGES = ["/signin", "/perpicks/auth/"];
@@ -7,7 +7,7 @@ const AUTH_PAGES = ["/signin", "/perpicks/auth/"];
 export async function middleware(req: NextRequest) {
   const { nextUrl, cookies } = req;
   const { origin, pathname, basePath } = nextUrl;
-  const accessToken = cookies.get(AccessTokenKey);
+  const accessToken = cookies.get(TOKEN_SAVE_KEY);
 
   // 로그인이 필요 없는 페이지
   if (AUTH_PAGES.some(page => pathname.startsWith(page))) {
@@ -33,5 +33,9 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|static|favicon.ico).*)"],
+  matcher: [
+    "/((?!api|_next|static|favicon.ico).*)",
+    "/signin",
+    "/perpicks/auth/:path*",
+  ],
 };
