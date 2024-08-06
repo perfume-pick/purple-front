@@ -3,8 +3,10 @@ export interface AuthLoginTryDTO {
 }
 
 export interface AuthJwtTokenDTO {
-  timeStamp: string;
-  responseData: {
-    jwtToken: string;
+  data: {
+    timeStamp: string;
+    responseData: {
+      jwtToken: string;
+    };
   };
 }

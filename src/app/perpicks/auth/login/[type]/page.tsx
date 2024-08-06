@@ -1,9 +1,8 @@
 "use client";
-import { AuthLoginTryDTO } from "@/dto/authDTO";
-import clientHttp from "@/utils/http/clientHttp";
 
+import { getJwtToken } from "@/service/client/signInService";
 import { useEffect } from "react";
-// import { TOKEN_SAVE_KEY } from "@/constant/session";
+import { useRouter } from "next/navigation";
 
 type Req = {
   params: {
@@ -15,22 +14,40 @@ type Req = {
   };
 };
 
-const KakaoCallbackPage = (req: Req) => {
-  useEffect(() => {
-    const type = req.params.type;
-    const { searchParams } = req;
+const KakaoCallbackPage = (req: Req, res: any) => {
+  const router = useRouter();
+  const type = req.params.type;
+  const { searchParams } = req;
 
-    // 임시 코드
-    setTimeout(() => {
-      clientHttp
-        .post<
-          never,
-          AuthLoginTryDTO
-        >(`/perpicks/auth/login/${type.toUpperCase()}?code=${searchParams.code}`, null)
-        .then((res: any) => {
-          console.log(res);
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const response = await getJwtToken(
+          type.toUpperCase(),
+          searchParams.code,
+        );
+        const token = response.data.responseData.jwtToken;
+
+        await fetch("/api/set-token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token }),
+        }).then(res => {
+          if (res.ok) {
+            router.push("/");
+          }
         });
-    }, 5000);
+      } catch (error) {
+        {
+          /* TODO: 404 페이지 이동 필요 */
+        }
+        console.error("Error fetching token:", error);
+      }
+    };
+
+    fetchToken();
   }, []);
 
   return <div>카카오 로그인 중...</div>;

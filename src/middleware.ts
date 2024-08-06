@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
+import { getCookie } from "cookies-next";
 
 // 로그인이 필요 없는 페이지 경로
 const AUTH_PAGES = ["/signin", "/perpicks/auth/"];
 
 export async function middleware(req: NextRequest) {
-  const { nextUrl, cookies } = req;
+  const { nextUrl } = req;
   const { origin, pathname, basePath } = nextUrl;
-  const accessToken = cookies.get(TOKEN_SAVE_KEY);
+  const res = new NextResponse();
+  const accessToken = getCookie(TOKEN_SAVE_KEY, { res, req });
 
   // 로그인이 필요 없는 페이지
   if (AUTH_PAGES.some(page => pathname.startsWith(page))) {
@@ -20,14 +22,12 @@ export async function middleware(req: NextRequest) {
       return NextResponse.next();
     }
   }
-
   // 로그인이 필요한 페이지
   if (!accessToken) {
     const signInUrl = new URL(`${basePath}/signin`, origin);
     // 로그인 페이지로 리다이렉트
     return NextResponse.redirect(signInUrl);
   }
-
   // 로그인 되어 있는 경우 요청 페이지로 진행
   return NextResponse.next();
 }
