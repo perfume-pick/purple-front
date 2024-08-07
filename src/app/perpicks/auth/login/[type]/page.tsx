@@ -26,14 +26,14 @@ const KakaoCallbackPage = (req: Req, res: any) => {
           type.toUpperCase(),
           searchParams.code,
         );
-        const token = response.data.responseData.jwtToken;
+        const jwtToken = response.data.responseData.jwtToken;
 
         await fetch("/api/set-token", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ token }),
+          body: JSON.stringify({ jwtToken }),
         }).then(res => {
           if (res.ok) {
             router.push("/");
