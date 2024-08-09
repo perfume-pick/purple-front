@@ -1,10 +1,15 @@
 import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { RestResponseType } from "@/types/res/response";
-// import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
+// import { getCookie } from "cookies-next";
+import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
 
 export function httpConfigHelper(config: InternalAxiosRequestConfig) {
-  // const token = window.localStorage.getItem(TOKEN_SAVE_KEY);
-  // token && config.headers.set("x-authentication-header", `Bearer ${token}`);
+  const token = window.localStorage.getItem(TOKEN_SAVE_KEY);
+  // const accessToken = getCookie(TOKEN_SAVE_KEY);
+  // console.log("accessToken");
+  // console.log(accessToken);
+  // console.log(window);
+  token && config.headers.set("x-authentication-header", `Bearer ${token}`);
   return config;
 }
 

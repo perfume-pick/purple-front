@@ -3,6 +3,7 @@
 import { S } from "./styles";
 import { useRouter } from "next/navigation";
 // import { useState } from "react";
+import { getSearchHistories } from "@/service/client/test";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import ProfileBox from "./_components/ProfileBox/ProfileBox";
@@ -11,8 +12,18 @@ import TasteStatisticBox from "@/components/organism/TasteStatisticBox/TasteStat
 import Link from "next/link";
 import NavHeaderInner from "../../components/navHeaderLayout/NavHeaderInner";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
+import { getCookie } from "cookies-next";
+import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
 
 const MyPage = () => {
+  {
+    /*TODO: 테스트 코드. 추후 삭제 예정 */
+  }
+  const accessToken = getCookie(TOKEN_SAVE_KEY);
+  console.log(accessToken);
+  getSearchHistories().then(res => {
+    console.log(res);
+  });
   const route = useRouter();
   // const [pageButtonList, setPageButtonList] = useState([
   //   {
