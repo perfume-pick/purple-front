@@ -71,7 +71,7 @@ const InfoWrap = styled.div`
   & > span {
     font-size: ${theme.fontSize.sm};
     color: ${theme.color.grayColor[300]};
-    width: 30%;
+    width: 25%;
   }
 
   & > div {
@@ -80,7 +80,7 @@ const InfoWrap = styled.div`
     align-items: center;
     width: 100%;
     border-radius: 2rem;
-    background-color: pink;
+    background-color: ${theme.color.grayColor[500]};
     padding: 1.5rem;
   }
 `;
