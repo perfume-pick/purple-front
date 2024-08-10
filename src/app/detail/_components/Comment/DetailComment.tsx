@@ -1,4 +1,3 @@
-import DetailReview from "./DetailReview/DetailReview";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
@@ -6,8 +5,10 @@ import React, { forwardRef } from "react";
 import { S } from "./styles";
 import { useState } from "react";
 import Topic from "./Topic/Topic";
-import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
+import ReadonlyRating from "@/components/atom/Rating/ReadOnlyRating";
 import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
+import CommentBox from "@/components/organism/CommentBox/CommentBox";
+import DetailCommentBox from "@/components/organism/CommentBox/DetailCommentBox";
 
 const DetailComment = forwardRef<HTMLDivElement>((props, ref) => {
   const [openTopic, setOpenTopic] = useState(false);
@@ -46,6 +47,15 @@ const DetailComment = forwardRef<HTMLDivElement>((props, ref) => {
       <S.TotalComment>
         <S.CommentWrap>
           <S.CommentTitle>
+            <span>코멘트 토픽</span>
+          </S.CommentTitle>
+          <S.CommentMsg>퍼픽 유저들이 꼽은 향수 특징이에요</S.CommentMsg>
+        </S.CommentWrap>
+      </S.TotalComment>
+      {/*  */}
+      <S.TotalComment>
+        <S.CommentWrap>
+          <S.CommentTitle>
             <span>코멘트</span>
             <span>(25)</span>
           </S.CommentTitle>
@@ -73,10 +83,9 @@ const DetailComment = forwardRef<HTMLDivElement>((props, ref) => {
         )}
       </S.OpenTopic>
       {openTopic && <Topic />}
-      {/* TODO: 아래는 임시 컴포넌트. 리뷰 컴포넌트 제작 끝나면 변경 예정 */}
-      <DetailReview />
-      <DetailReview />
-      <DetailReview />
+      <CommentBox />
+      <CommentBox />
+      <DetailCommentBox />
       <S.CommentButtonWrap>
         <button> 23개 코멘트 전체보기</button>
       </S.CommentButtonWrap>
