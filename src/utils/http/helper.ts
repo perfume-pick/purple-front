@@ -5,11 +5,8 @@ import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
 
 export function httpConfigHelper(config: InternalAxiosRequestConfig) {
   const token = window.localStorage.getItem(TOKEN_SAVE_KEY);
-  // const accessToken = getCookie(TOKEN_SAVE_KEY);
-  // console.log("accessToken");
-  // console.log(accessToken);
-  // console.log(window);
-  token && config.headers.set("x-authentication-header", `Bearer ${token}`);
+  // token && config.headers.set("x-authentication-header", `Bearer ${token}`);
+  token && config.headers.set("Authorization", `Bearer ${token}`);
   return config;
 }
 
