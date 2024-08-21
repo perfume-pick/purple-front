@@ -81,8 +81,8 @@ const DetailCommentBox = () => {
       </S.CommentInfoWrap>
       {/* 아래는 임시데이터 돌려놓음 */}
       <S.Keyword>
-        {Data.map(data => (
-          <div>#{data}</div>
+        {Data.map((data, idx) => (
+          <div key={idx}>#{data}</div>
         ))}
       </S.Keyword>
       <S.ReviewText className={isShowAllText ? "" : "brief-text"}>

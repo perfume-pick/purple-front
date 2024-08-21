@@ -64,7 +64,12 @@ const ProfileSettingPage = () => {
             isEdit
             onClick={handleClickProfile}
           />
-          {openAlert && <ProfileAlert message={EDIT_PROFILE_ALERT} />}
+          {openAlert && (
+            <ProfileAlert
+              message={EDIT_PROFILE_ALERT}
+              setOpenAlert={setOpenAlert}
+            />
+          )}
           <form onSubmit={handleSubmit(onSubmit)}>
             <ValidatedInput
               labelText="닉네임"

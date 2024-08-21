@@ -3,7 +3,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import React, { forwardRef } from "react";
 import { S } from "./styles";
-import { useState } from "react";
 import Topic from "./Topic/Topic";
 import ReadonlyRating from "@/components/atom/Rating/ReadOnlyRating";
 import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
@@ -11,8 +10,6 @@ import CommentBox from "@/components/organism/CommentBox/CommentBox";
 import DetailCommentBox from "@/components/organism/CommentBox/DetailCommentBox";
 
 const DetailComment = forwardRef<HTMLDivElement>((props, ref) => {
-  const [openTopic, setOpenTopic] = useState(false);
-
   // TODO: 서버에서 받아올 데이터. 점수 순서는 상관없음
   const chartData = [
     {
@@ -53,6 +50,24 @@ const DetailComment = forwardRef<HTMLDivElement>((props, ref) => {
         </S.CommentWrap>
       </S.TotalComment>
       {/*  */}
+      <S.AverageScoreWrap>
+        <S.Score>
+          <div>4.8</div>
+          <ReadonlyRating rate={4.8} size={23} gap={0.7} />
+        </S.Score>
+        <S.ChartWrap>
+          <RatingDistributionChart chartData={chartData} />
+        </S.ChartWrap>
+      </S.AverageScoreWrap>
+      {/* <S.OpenTopic onClick={() => setOpenTopic(prev => !prev)}>
+        <div>코멘트 토픽 열기</div>
+        {openTopic ? (
+          <ExpandLessIcon style={{ fontSize: "2.7rem" }} />
+        ) : (
+          <ExpandMoreIcon style={{ fontSize: "2.7rem" }} />
+        )}
+      </S.OpenTopic> */}
+      <Topic />
       <S.TotalComment>
         <S.CommentWrap>
           <S.CommentTitle>
@@ -65,24 +80,6 @@ const DetailComment = forwardRef<HTMLDivElement>((props, ref) => {
         </S.CommentWrap>
         <ArrowForwardIosIcon style={{ color: "#9b9b9e", fontSize: "1.2rem" }} />
       </S.TotalComment>
-      <S.AverageScoreWrap>
-        <S.Score>
-          <div>4.8</div>
-          <ReadonlyRating rate={4.8} size={23} gap={0.7} />
-        </S.Score>
-        <S.ChartWrap>
-          <RatingDistributionChart chartData={chartData} />
-        </S.ChartWrap>
-      </S.AverageScoreWrap>
-      <S.OpenTopic onClick={() => setOpenTopic(prev => !prev)}>
-        <div>코멘트 토픽 열기</div>
-        {openTopic ? (
-          <ExpandLessIcon style={{ fontSize: "2.7rem" }} />
-        ) : (
-          <ExpandMoreIcon style={{ fontSize: "2.7rem" }} />
-        )}
-      </S.OpenTopic>
-      {openTopic && <Topic />}
       <CommentBox />
       <CommentBox />
       <DetailCommentBox />
