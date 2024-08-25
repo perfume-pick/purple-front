@@ -18,12 +18,13 @@ const TotalComment = styled.div`
 const CommentWrap = styled.div``;
 
 const CommentTitle = styled.div`
-  & > span:first-of-type {
+  & > span:nth-of-type(1) {
     font-weight: ${theme.fontWeight.bold};
     margin-right: 0.5rem;
+    color: ${theme.color.textColor[100]};
   }
 
-  & > span:last-of-type {
+  & > span:nth-of-type(2) {
     font-size: ${theme.fontSize.sm};
     color: ${theme.color.textDisabled};
   }

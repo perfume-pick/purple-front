@@ -1,3 +1,4 @@
+import { EvaluationType } from "@/constant/detail.const";
 import { S } from "./styles";
 import React, { forwardRef } from "react";
 
@@ -6,7 +7,7 @@ const DetailInfo = forwardRef<HTMLDivElement>((props, ref) => {
     <S.Wrapper ref={ref}>
       <S.PersistenceWrap>
         <S.InfoTitle>
-          <img src="/assets/images/Vector.png" />
+          <img src="/assets/images/test.svg" />
           <span>메인어코드</span>
         </S.InfoTitle>
         <S.GraphWrap>
@@ -17,7 +18,7 @@ const DetailInfo = forwardRef<HTMLDivElement>((props, ref) => {
       </S.PersistenceWrap>
       <S.NoteInfoWrap>
         <S.InfoTitle>
-          <img src="/assets/images/Vector.png" />
+          <img src="/assets/images/test.svg" />
           <span>노트정보</span>
         </S.InfoTitle>
         <S.NoteInfo>
@@ -35,6 +36,20 @@ const DetailInfo = forwardRef<HTMLDivElement>((props, ref) => {
           </S.NoteContent>
         </S.NoteInfo>
       </S.NoteInfoWrap>
+      <S.EvaluationWrap>
+        <S.InfoTitle>
+          <img src="/assets/images/test.svg" />
+          <span>프라그란티카 평가</span>
+        </S.InfoTitle>
+        <S.EvaluationInfo>
+          {Object.values(EvaluationType).map((title, idx) => (
+            <S.InfoWrap key={idx}>
+              <span>{title}</span>
+              <div>그래프</div>
+            </S.InfoWrap>
+          ))}
+        </S.EvaluationInfo>
+      </S.EvaluationWrap>
     </S.Wrapper>
   );
 });

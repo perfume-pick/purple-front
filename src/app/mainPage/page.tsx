@@ -36,7 +36,7 @@ function MainPage() {
     <S.Wrapper>
       <S.TopWrap>
         <S.LogoWrap>
-          <img src="/assets/images/colorLogo.png" />
+          <img src="/assets/images/colorLogo.png" alt="colorLogo" />
         </S.LogoWrap>
         <SearchBar
           placeholderText="나의 향을 검색해보세요"
