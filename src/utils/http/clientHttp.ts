@@ -10,8 +10,6 @@ type response = {
   };
 };
 
-const REFRESH_URL = "/perpicks/auth/refresh";
-
 const getRefreshToken = async (): Promise<string | void> => {
   try {
     const originToken = localStorage.getItem(TOKEN_SAVE_KEY);
@@ -20,54 +18,63 @@ const getRefreshToken = async (): Promise<string | void> => {
       data: {
         responseData: { jwtToken },
       },
-    } = await clientHttp.post<never, response>(REFRESH_URL, {
-      jwtToken: originToken,
-    });
-
+    } = await axios.post(
+      "/perpicks/auth/refresh",
+      {
+        jwtToken: originToken,
+      },
+      {
+        baseURL: process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL,
+      },
+    );
     if (jwtToken) {
       localStorage.setItem(TOKEN_SAVE_KEY, jwtToken);
-      fetch("/api/set-token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ jwtToken }),
+      // fetch("/api/set-token", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ jwtToken }),
+      // });
+
+      axios.post("/api/set-token", {
+        jwtToken,
       });
     }
     return jwtToken;
   } catch (e) {
-    // 리프레시 토큰이 유효하지 않은 경우, 로그아웃 처리
-    localStorage.removeItem(TOKEN_SAVE_KEY);
-    fetch("/api/delete-token", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    logout();
   }
+};
+
+const logout = () => {
+  localStorage.removeItem(TOKEN_SAVE_KEY);
+  fetch("/api/delete-token", {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  // 미들웨어에서 인식 못히는지 확인
+  setTimeout(() => {
+    window.location.href = "/signin";
+  }, 1000);
 };
 
 const clientHttp = axios.create({
   baseURL: process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL,
 });
 
+// 요청을 보내기 전 실행
 clientHttp.interceptors.request.use(httpConfigHelper, () => {});
+// 요청을 받은 후 실행
 clientHttp.interceptors.response.use(
   httpParserHelper,
   async (error: AxiosError) => {
-    /*
-     * 토큰 만료일 때
-     * if(error.status === 401) {
-     * 리프레시 토큰이 유효하지 않은 경우, 로그아웃 처리
-     *   window.localStorage.removeItem(TOKEN_SAVE_KEY);
-     * }
-     * 401(아마도) 에러 발생했을때 로컬 스토리지에서 jwt 토큰삭제. + 액세스 토큰
-     * UI 적인건 개별 컴포넌트 혹은 페이지에서 처리.
-     * */
     const { config } = error;
     const status = error.response ? error.response.status : null;
 
-    if (status !== 401 || status !== 403) {
+    if (config?.sent) {
       return Promise.reject(error);
     }
 
@@ -84,8 +91,7 @@ clientHttp.interceptors.response.use(
       // 실패한 요청을 다시 시도
       return clientHttp.request(config);
     } catch (refreshError) {
-      // 필요 시 로그인 페이지로 리디렉션
-      window.location.href = "/signin";
+      logout();
       return Promise.reject(refreshError);
     }
   },

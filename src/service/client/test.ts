@@ -17,20 +17,11 @@ type response = {
   };
 };
 
-export async function getSearchHistories() {
+async function getSearchHistories() {
   const response = await clientHttp.get<never, response>(
     `${endPoint.SEARCH_HISTORY}`,
   );
-  // const response = await fetch("/api/test", {
-  //   method: "GET",
-  // });
-  //   const response = await fetch(
-  //     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.SEARCH_HISTORY}`,
-  //     {
-  //       method: "GET",
-  //       credentials: "include",
-  //     },
-  //   );
-  console.log(response);
   return response;
 }
+
+export { getSearchHistories };

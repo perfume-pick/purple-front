@@ -4,10 +4,14 @@ import { RestResponseType } from "@/types/res/response";
 import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
 
 export function httpConfigHelper(config: InternalAxiosRequestConfig) {
-  const token = window.localStorage.getItem(TOKEN_SAVE_KEY);
-  // token && config.headers.set("x-authentication-header", `Bearer ${token}`);
-  token && config.headers.set("Authorization", `Bearer ${token}`);
-  return config;
+  try {
+    const token = window.localStorage.getItem(TOKEN_SAVE_KEY);
+    // token && config.headers.set("x-authentication-header", `Bearer ${token}`);
+    token && config.headers.set("Authorization", `Bearer ${token}`);
+    return config;
+  } catch (error) {
+    return Promise.reject(error);
+  }
 }
 
 export function httpParserHelper(response: AxiosResponse<RestResponseType>) {

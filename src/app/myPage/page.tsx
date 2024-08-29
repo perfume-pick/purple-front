@@ -17,7 +17,8 @@ const MyPage = () => {
   {
     /*TODO: 테스트 코드. 추후 삭제 예정 */
   }
-  getSearchHistories();
+  const data = getSearchHistories();
+  console.log(data);
   const route = useRouter();
   // const [pageButtonList, setPageButtonList] = useState([
   //   {
