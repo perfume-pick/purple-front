@@ -19,7 +19,7 @@ const MyPage = () => {
   }
   const data = getSearchHistories();
   console.log(data);
-  const route = useRouter();
+  const router = useRouter();
   // const [pageButtonList, setPageButtonList] = useState([
   //   {
   //     title: "평가향수",
@@ -66,7 +66,7 @@ const MyPage = () => {
       </NavHeader>
       <HeaderBottomContents>
         <S.ProfileBoxOuter>
-          <ProfileBox onClick={() => route.push("/myPage/profileSetting")} />
+          <ProfileBox onClick={() => router.push("/myPage/profileSetting")} />
         </S.ProfileBoxOuter>
         <S.Title>취향통계</S.Title>
         <S.TasteStatisticsWrap>

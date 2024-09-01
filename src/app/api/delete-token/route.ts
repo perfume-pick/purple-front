@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import TokenService from "@/utils/TokenService";
+import TokenService from "@/utils/tokenService";
 
 export async function DELETE(req: NextRequest, res: NextResponse) {
   try {
