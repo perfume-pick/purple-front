@@ -59,14 +59,6 @@ const DetailComment = forwardRef<HTMLDivElement>((props, ref) => {
           <RatingDistributionChart chartData={chartData} />
         </S.ChartWrap>
       </S.AverageScoreWrap>
-      {/* <S.OpenTopic onClick={() => setOpenTopic(prev => !prev)}>
-        <div>코멘트 토픽 열기</div>
-        {openTopic ? (
-          <ExpandLessIcon style={{ fontSize: "2.7rem" }} />
-        ) : (
-          <ExpandMoreIcon style={{ fontSize: "2.7rem" }} />
-        )}
-      </S.OpenTopic> */}
       <Topic />
       <S.TotalComment>
         <S.CommentWrap>
