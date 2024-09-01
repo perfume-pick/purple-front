@@ -74,7 +74,7 @@ clientHttp.interceptors.response.use(
     const { config } = error;
     const status = error.response ? error.response.status : null;
 
-    if (config?.sent) {
+    if (config?.sent || status !== 401 || status !== 403) {
       return Promise.reject(error);
     }
 

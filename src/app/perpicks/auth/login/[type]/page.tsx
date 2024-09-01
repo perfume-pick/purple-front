@@ -27,7 +27,9 @@ const KakaoCallbackPage = (req: Req, res: any) => {
           type.toUpperCase(),
           searchParams.code,
         );
-        const jwtToken = response.data.responseData.jwtToken;
+        const {
+          responseData: { jwtToken, isSignUp },
+        } = response.data;
 
         await fetch("/api/set-token", {
           method: "POST",
@@ -38,7 +40,12 @@ const KakaoCallbackPage = (req: Req, res: any) => {
         }).then(res => {
           if (res.ok) {
             localStorage.setItem(TOKEN_SAVE_KEY, jwtToken);
-            router.push("/");
+
+            if (isSignUp) {
+              router.push("/onBoarding/nickName");
+            } else {
+              router.push("/");
+            }
           }
         });
       } catch (error) {
