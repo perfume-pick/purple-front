@@ -2,8 +2,6 @@
 
 import { S } from "./styles";
 import { useRouter } from "next/navigation";
-// import { useState } from "react";
-import { getSearchHistories } from "@/service/client/test";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import ProfileBox from "./_components/ProfileBox/ProfileBox";
@@ -14,11 +12,6 @@ import NavHeaderInner from "../../components/navHeaderLayout/NavHeaderInner";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 
 const MyPage = () => {
-  {
-    /*TODO: 테스트 코드. 추후 삭제 예정 */
-  }
-  const data = getSearchHistories();
-  console.log(data);
   const router = useRouter();
   // const [pageButtonList, setPageButtonList] = useState([
   //   {

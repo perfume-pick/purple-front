@@ -1,20 +1,8 @@
 import clientHttp from "@/utils/http/clientHttp";
+import { UpdateNicknameRequestDTO } from "../../types/req/userInfo";
 
 const endPoint = {
   UPDATE_NICKNAME: "/perpicks/users/profile",
-};
-
-type response = {
-  timeStamp: string;
-  responseData: {
-    userSearchHistories: [
-      {
-        id: number;
-        searchName: string;
-        searchAt: string;
-      },
-    ];
-  };
 };
 
 async function updateUserNickname(payload: {
@@ -23,7 +11,7 @@ async function updateUserNickname(payload: {
   picture: string | null;
 }) {
   const { nickname, isChanged, picture } = payload;
-  const response = await clientHttp.patch(
+  const response = await clientHttp.patch<UpdateNicknameRequestDTO, void>(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.UPDATE_NICKNAME}?nickname=${nickname}&isChanged=${isChanged}`,
     {
       picture,

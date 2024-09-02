@@ -3,13 +3,6 @@ import axios, { AxiosError } from "axios";
 import { httpConfigHelper, httpParserHelper } from "@/utils/http/helper";
 import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
 
-type response = {
-  timeStamp: string;
-  responseData: {
-    jwtToken: string;
-  };
-};
-
 const getRefreshToken = async (): Promise<string | void> => {
   try {
     const originToken = localStorage.getItem(TOKEN_SAVE_KEY);
@@ -29,14 +22,6 @@ const getRefreshToken = async (): Promise<string | void> => {
     );
     if (jwtToken) {
       localStorage.setItem(TOKEN_SAVE_KEY, jwtToken);
-      // fetch("/api/set-token", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ jwtToken }),
-      // });
-
       axios.post("/api/set-token", {
         jwtToken,
       });

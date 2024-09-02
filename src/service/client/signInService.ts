@@ -1,6 +1,6 @@
 import clientHttp from "@/utils/http/clientHttp";
 import { OauthType } from "@/constant/auth.const";
-import { AuthLoginTryDTO, AuthJwtTokenDTO } from "@/dto/authDTO";
+import { AuthLoginTryDTO, AuthJwtTokenDTO } from "@/types/authTypes.ts";
 
 export async function clientCreateLoginTry(type: OauthType) {
   console.log(type);

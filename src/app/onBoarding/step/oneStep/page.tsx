@@ -3,13 +3,28 @@
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import { S } from "../styles";
 import { Card } from "./_components/Card/Card";
-import { useState } from "react";
-import ConfirmAlert from "@/components/alert/ConfirnAlert";
+import { useState, useEffect } from "react";
+import ConfirmAlert from "@/components/alert/ConfirmAlert";
 import { ONBOARDING_ALERT } from "@/constant/alert/alertText";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
+import { getPurfumeBrands } from "@/service/client/onBoarding";
 
 const OneStep = () => {
   const [openAlert, setOpenAlert] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getPurfumeBrands();
+      const {
+        data: { responseData: {
+          perfumeBrands
+        } },
+      } = response;
+      console.log(perfumeBrands);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>

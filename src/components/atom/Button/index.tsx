@@ -28,7 +28,10 @@ function Button({
         css={size ? sizeCSS[size] : undefined}
         style={{ ...styleProps }}
         disabled={disabled}
-        onClick={() => clickCallback?.()}
+        onClick={e => {
+          e.preventDefault();
+          clickCallback?.();
+        }}
         type={type ?? "button"}
       >
         {buttonText}
