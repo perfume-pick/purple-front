@@ -7,18 +7,18 @@ import { useState, useEffect } from "react";
 import ConfirmAlert from "@/components/alert/ConfirmAlert";
 import { ONBOARDING_ALERT } from "@/constant/alert/alertText";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
-import { getPurfumeBrands } from "@/service/client/onBoarding";
+import { getPerfumeBrands } from "@/service/client/onBoarding";
 
 const OneStep = () => {
   const [openAlert, setOpenAlert] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getPurfumeBrands();
+      const response = await getPerfumeBrands();
       const {
-        data: { responseData: {
-          perfumeBrands
-        } },
+        data: {
+          responseData: { perfumeBrands },
+        },
       } = response;
       console.log(perfumeBrands);
     };

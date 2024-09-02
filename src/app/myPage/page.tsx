@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import ProfileBox from "./_components/ProfileBox/ProfileBox";
-import PurfumeScroll from "./_components/PurfumeScroll/PurfumeScroll";
+import PerfumeScroll from "./_components/PerfumeScroll/PerfumeScroll";
 import TasteStatisticBox from "@/components/organism/TasteStatisticBox/TasteStatisticBox";
 import Link from "next/link";
 import NavHeaderInner from "../../components/navHeaderLayout/NavHeaderInner";
@@ -94,7 +94,7 @@ const MyPage = () => {
             </S.TitleButton>
           );
         })}
-        <PurfumeScroll />
+        <PerfumeScroll />
       </HeaderBottomContents>
     </S.Wrapper>
   );
