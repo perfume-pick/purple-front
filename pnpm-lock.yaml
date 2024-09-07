@@ -4076,6 +4076,10 @@ snapshots:
       }
     dev: false
 
+  /dayjs@1.11.12:
+    resolution: {integrity: sha512-Rt2g+nTbLlDWZTwwrIXjy9MeiZmSDI375FvZs72ngxx8PDC6YXOeR3q5LAuPzjZQxhiWdRKac7RKV+YyQYfYIg==}
+    dev: false
+
   /debug@3.2.7:
     resolution:
       {
