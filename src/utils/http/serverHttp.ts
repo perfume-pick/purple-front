@@ -1,11 +1,124 @@
-// "use server";
-// import axios from "axios";
-// import { httpParserHelper } from "@/utils/http/helper";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import { NextResponse, NextRequest } from "next/server";
+import { httpParserHelper } from "@/utils/http/helper";
+import { cookies } from "next/headers";
+import TokenService, { TOKEN_SAVE_KEY } from "@/utils/tokenService";
+import { setCookie, getCookie, deleteCookie, getCookies } from "cookies-next";
 
-// const serverHttp = axios.create({
-//   baseURL: process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL,
-// });
+// import { redirect } from "next/navigation";
 
-// serverHttp.interceptors.response.use(httpParserHelper, () => {});
+type response = {
+  timeStamp: string;
+  responseData: {
+    jwtToken: string;
+  };
+};
 
-// export default serverHttp;
+const cookieStore = cookies();
+const baseUrl = "http://localhost:3000";
+
+// const getRefreshToken = async (): Promise<string | void> => {
+//   try {
+//     const originToken = cookieStore.get(TOKEN_SAVE_KEY)?.value;
+//     console.log("originToken!!!!!");
+//     console.log(originToken);
+
+//     const {
+//       data: {
+//         responseData: { jwtToken },
+//       },
+//     } = await axios.post(
+//       "/perpicks/auth/refresh",
+//       {
+//         jwtToken: originToken,
+//       },
+//       {
+//         baseURL: process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL,
+//       },
+//     );
+
+//     if (jwtToken) {
+//       axios.post("/api/set-token", {
+//         jwtToken,
+//       });
+//     }
+//     return jwtToken;
+//   } catch (e) {
+//     logout();
+//   }
+// };
+const logout = async (error: AxiosError) => {
+  console.log("cookie1 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
+
+  await fetch(`${baseUrl}/api/delete-token`, {
+    method: "DELETE",
+  }).then(res => {
+    console.log("cookie2 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
+  });
+
+  // return NextResponse.redirect(`${baseUrl}/signin`);
+
+  // setTimeout(() => {
+  //   {
+  //     /** TODO: 환경변수 분리 후 baseurl 변경 */
+  //   }
+  //   // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+  //   //쿠키가 삭제가 안되는건지 리다이렉트가 안먹는건지...
+  //   // return NextResponse.redirect(`${baseUrl}/signin`);
+  //   // redirect("/signin");
+  // return Promise.reject(error);
+  // }, 2000);
+};
+
+const serverHttp = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL,
+});
+
+serverHttp.interceptors.request.use(
+  (config: AxiosRequestConfig) => {
+    const token = cookieStore.get(TOKEN_SAVE_KEY)?.value;
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error: AxiosError) => {
+    return Promise.reject(error);
+  },
+);
+
+serverHttp.interceptors.response.use(
+  httpParserHelper,
+  async (error: AxiosError) => {
+    logout(error);
+    // const { config } = error;
+    // // const status = error.response ? error.response.status : null;
+
+    // if (config?.sent) {
+    //   return Promise.reject(error);
+    // }
+
+    // try {
+    //   setTimeout(async () => {
+    //     config.sent = true;
+    //     // 토큰 재설정
+    //     const jwtToken = await getRefreshToken();
+
+    //     if (jwtToken) {
+    //       config.headers.Authorization = `Bearer ${jwtToken}`;
+    //     }
+
+    //     // 실패한 요청을 다시 시도
+    //     return serverHttp.request(config);
+    //   }, 10000);
+    // } catch (refreshError) {
+    //   logout();
+    //   return Promise.reject(refreshError);
+    // }
+  },
+);
+
+export default serverHttp;

@@ -2,18 +2,17 @@
 
 import { S } from "./styles";
 import { useRouter } from "next/navigation";
-// import { useState } from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import ProfileBox from "./_components/ProfileBox/ProfileBox";
-import PurfumeScroll from "./_components/PurfumeScroll/PurfumeScroll";
+import PerfumeScroll from "./_components/PerfumeScroll/PerfumeScroll";
 import TasteStatisticBox from "@/components/organism/TasteStatisticBox/TasteStatisticBox";
 import Link from "next/link";
 import NavHeaderInner from "../../components/navHeaderLayout/NavHeaderInner";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 
 const MyPage = () => {
-  const route = useRouter();
+  const router = useRouter();
   // const [pageButtonList, setPageButtonList] = useState([
   //   {
   //     title: "평가향수",
@@ -60,7 +59,7 @@ const MyPage = () => {
       </NavHeader>
       <HeaderBottomContents>
         <S.ProfileBoxOuter>
-          <ProfileBox onClick={() => route.push("/myPage/profileSetting")} />
+          <ProfileBox onClick={() => router.push("/myPage/profileSetting")} />
         </S.ProfileBoxOuter>
         <S.Title>취향통계</S.Title>
         <S.TasteStatisticsWrap>
@@ -95,7 +94,7 @@ const MyPage = () => {
             </S.TitleButton>
           );
         })}
-        <PurfumeScroll />
+        <PerfumeScroll />
       </HeaderBottomContents>
     </S.Wrapper>
   );

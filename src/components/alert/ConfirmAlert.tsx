@@ -1,3 +1,5 @@
+"use client";
+
 import { ConfirmAlertType } from "@/types/alertTypes";
 import ModalLayout from "../modalLayout/modalLayout";
 import { S } from "./styles";
