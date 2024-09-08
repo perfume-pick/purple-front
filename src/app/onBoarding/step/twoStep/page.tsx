@@ -1,12 +1,35 @@
 "use client";
 
-import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import { S } from "../styles";
-import EvaluationBanner from "@/components/Evaluation/EvaluatoinBanner";
+import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import { FilterType } from "@/constant/onBoarding.const";
+import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
+import EvaluationBanner from "@/components/Evaluation/EvaluatoinBanner";
+import { getSelectedBrandPerfumeList } from "@/service/client/onBoarding";
 
 const TwoStep = () => {
+  const searchParams = useSearchParams();
+  const selectedBrands = searchParams.get("selectedBrands");
+
+  const [perfumesRatesList, setPerfumesRatesList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getSelectedBrandPerfumeList(selectedBrands);
+      const {
+        data: {
+          responseData: { perfumes },
+        },
+      } = response;
+      setPerfumesRatesList(perfumes);
+      console.log(perfumesRatesList);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
       {/* TODO : 모바일 헤더 템플릿 삭제 시 한번 더 수정 필요 */}

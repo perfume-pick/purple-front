@@ -5,7 +5,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${theme.color.white};
-  padding: 2rem;
+  padding: 1.6rem 1.6rem 3.2rem 1.6rem;
 `;
 
 const StepWrap = styled.div`
@@ -19,27 +19,36 @@ const StepWrap = styled.div`
   font-weight: ${theme.fontWeight.semiBold};
   color: ${theme.color.textColor[200]};
   background-color: ${theme.color.grayColor[400]};
+
+  .middle-line {
+    color: #d8d8dc;
+    padding: 0 0.8rem;
+  }
 `;
 
 const StepTitleWrap = styled.div`
   height: 11.3rem;
   margin-top: 2rem;
 
-  & > div:first-of-type {
+  & > h1 {
     font-size: ${theme.fontSize.lg};
     font-weight: ${theme.fontWeight.bold};
+    padding-bottom: 0.8rem;
   }
 
-  & > div:last-of-type {
+  & > h2 {
     color: ${theme.color.textColor[200]};
     font-size: ${theme.fontSize.md};
     font-weight: ${theme.fontWeight.regular};
+    line-height: 1.4;
   }
 `;
 
 const CardWrap = styled.div`
   /* TODO : grid로 변경해야함 */
-  display: flex;
+  display: grid;
+  /* grid-template-columns: repeat(3, 1fr); */
+  grid-template-columns: repeat(3, 33.3%);
 `;
 
 const BottomFilterWrap = styled.div`

@@ -7,6 +7,7 @@ import { setOnboardingRatingRequestDTO } from "@/types/req/onboarding";
 const endPoint = {
   GET_PERFUME_BRANDS: "/perpicks/perfume-brands",
   SET_RATINGS_ONBOARDING: "/perpicks/ratings/onboarding",
+  GET_SELECTED_BRANDS_PERFUMES: "/perpicks/perfumes",
 };
 
 async function getPerfumeBrands() {
@@ -34,4 +35,17 @@ async function setOnboardingRating(payload: setOnboardingRatingRequestDTO) {
   return response;
 }
 
-export { getPerfumeBrands, setOnboardingRating };
+async function getSelectedBrandPerfumeList(selectedPerfumesString: string) {
+  const queryParams = selectedPerfumesString
+    .split("/")
+    .map(brand => `request=${brand}`)
+    .join("&");
+
+  const response = await clientHttp.get<never, RestResponseType<perfumeBrands>>(
+    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.GET_SELECTED_BRANDS_PERFUMES}?${queryParams}`,
+  );
+
+  return response;
+}
+
+export { getPerfumeBrands, setOnboardingRating, getSelectedBrandPerfumeList };
