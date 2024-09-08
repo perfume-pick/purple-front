@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import styled from "@emotion/styled";
+import { theme } from "@/styles/theme";
 
 type Props = {
   children: ReactNode;
@@ -12,7 +13,8 @@ const HeaderBottomContents = ({ children }: Props) => {
 export default HeaderBottomContents;
 
 const Wrapper = styled.div`
-  padding-top: 6rem;
+  padding-top: 4.8rem;
+  background-color: ${theme.color.white};
 `;
 
 const S = {
