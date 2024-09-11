@@ -40,8 +40,10 @@ function NickNameOnBoarding() {
     if (response) {
       const { status, data } = response;
 
-      if (status === 204) {
-        router.push("/onBoarding/step/oneStep");
+      if (status === 200) {
+        router.push(
+          `/onBoarding/step/oneStep?username=${data.responseData.nickname}`,
+        );
       } else {
         setError("nickName", {
           type: "manual",

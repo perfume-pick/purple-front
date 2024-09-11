@@ -2,7 +2,7 @@ import clientHttp from "@/utils/http/clientHttp";
 import { UpdateNicknameRequestDTO } from "../../types/req/userInfo";
 
 const endPoint = {
-  UPDATE_NICKNAME: "/perpicks/users/profile",
+  UPDATE_NICKNAME: "/perpicks/users/my/profile",
 };
 
 async function updateUserNickname(payload: {

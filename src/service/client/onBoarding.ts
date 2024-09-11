@@ -7,7 +7,7 @@ import { setOnboardingRatingRequestDTO } from "@/types/req/onboarding";
 const endPoint = {
   GET_PERFUME_BRANDS: "/perpicks/perfume-brands",
   SET_RATINGS_ONBOARDING: "/perpicks/ratings/onboarding",
-  GET_SELECTED_BRANDS_PERFUMES: "/perpicks/perfumes",
+  GET_SELECTED_BRANDS_PERFUMES: "/perpicks/perfumes/perfume-brands",
 };
 
 async function getPerfumeBrands() {

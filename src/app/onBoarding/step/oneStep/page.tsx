@@ -3,6 +3,7 @@
 import { S } from "../styles";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { ONBOARDING_ALERT } from "@/constant/alert/alertText";
 import { getPerfumeBrands } from "@/service/client/onBoarding";
 import ConfirmAlert from "@/components/alert/ConfirmAlert";
@@ -12,6 +13,9 @@ import Card from "./_components/Card/Card";
 
 const OneStep = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nickname = searchParams.get("username");
+
   const [openAlert, setOpenAlert] = useState(false);
   const [perfumeBrands, setPerfumeBrands] = useState([]);
   const [selectedBrandList, setSelectedBrandList] = useState<string[]>([]);
@@ -83,7 +87,7 @@ const OneStep = () => {
             </h1>
             <h2>
               얼마나 많은 향을 시향해보셨나요?
-              <br /> %NAME%님의 향수 취향이 궁금해요!
+              <br /> {nickname}님의 향수 취향이 궁금해요!
             </h2>
           </S.StepTitleWrap>
         </S.Wrapper>
