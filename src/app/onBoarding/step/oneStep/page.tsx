@@ -76,7 +76,6 @@ const OneStep = () => {
         <S.Wrapper>
           <S.StepWrap>
             <div>취향 분석</div>
-            {/* TODO : 글자 사이 스타일 | 수정 */}
             <div className="middle-line"> | </div>
             <div>STEP 1</div>
           </S.StepWrap>

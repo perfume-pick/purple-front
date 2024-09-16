@@ -5,10 +5,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${theme.color.white};
-  padding: 1.6rem 1.6rem 3.2rem 1.6rem;
+  padding: 1.6rem 0 3.2rem 0;
 `;
 
 const StepWrap = styled.div`
+  margin: 0 1.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,6 +30,7 @@ const StepWrap = styled.div`
 const StepTitleWrap = styled.div`
   height: 11.3rem;
   margin-top: 2rem;
+  margin: 2rem 1.6rem 0 1.6rem;
 
   & > h1 {
     font-size: ${theme.fontSize.lg};
@@ -45,31 +47,53 @@ const StepTitleWrap = styled.div`
 `;
 
 const CardWrap = styled.div`
-  /* TODO : grid로 변경해야함 */
   display: grid;
-  /* grid-template-columns: repeat(3, 1fr); */
   grid-template-columns: repeat(3, 33.3%);
 `;
 
 const BottomFilterWrap = styled.div`
   display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin: 2rem 0;
+  padding: 0 1.6rem;
 `;
 
 const FilterWrap = styled.div`
   display: flex;
-  margin: 2rem 0;
+  width: 100%;
+  height: 3rem;
+  padding: 0.8rem 1.2rem;
+
+  background-color: ${theme.color.grayColor[500]};
+  border-radius: 5px;
+  & + div {
+    margin-left: 1rem;
+  }
+  &.active {
+    background-color: #131313;
+    color: ${theme.color.white};
+  }
 
   & > div {
+    width: max-content;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 6.3rem;
-    height: 3rem;
+    text-align: center;
     font-size: ${theme.fontSize.xs};
-    background-color: ${theme.color.grayColor[500]};
-    margin-right: 1rem;
-    border-radius: 5px;
   }
+`;
+
+const PerfumeListWrap = styled.div`
+  margin: 0 1.6rem;
+  > div + div {
+    margin-top: 1.6rem;
+  }
+`;
+
+const MovePageBtn = styled.button`
+  font-weight: ${theme.fontWeight.bold};
 `;
 
 export const S = {
@@ -79,4 +103,6 @@ export const S = {
   CardWrap,
   BottomFilterWrap,
   FilterWrap,
+  PerfumeListWrap,
+  MovePageBtn,
 };

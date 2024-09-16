@@ -9,20 +9,23 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 const BannerImg = styled.img`
-  width: 11rem;
-  height: 11rem;
+  object-fit: contain;
+  width: 10rem;
+  height: 10rem;
 `;
 
 const ContentsWrapper = styled.div`
-  padding: 1rem;
+  width: calc(100% - 10rem);
+  padding: 0.4rem 0;
   & > span {
     font-size: ${theme.fontSize.xs};
     color: ${theme.color.grayColor[300]};
   }
 
-  & > div {
+  & > p {
     font-size: ${theme.fontSize.sm};
     font-weight: ${theme.fontWeight.bolder};
+    padding-bottom: 0.4rem;
   }
 `;
 
