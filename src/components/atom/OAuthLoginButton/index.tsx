@@ -2,6 +2,8 @@ import { OauthType } from "@/constant/auth.const";
 import { FC } from "react";
 import { theme } from "@/styles/theme";
 import styled from "@emotion/styled";
+import Image from "next/image";
+import kakaoLogoImg from "/public/assets/images/kakao_logo.png";
 
 interface PropTypes {
   type: OauthType;
@@ -28,7 +30,7 @@ const OAuthLoginButton: FC<PropTypes> = ({ type, onClick }) => {
   const { img, color, text } = buttonAsset[type];
   return (
     <Wrapper bgColor={color} onClick={() => onClick(type)}>
-      <LoginLogo src={img} alt={text} />
+      <Image src={kakaoLogoImg} alt={text} />
       <LoginText>{text}</LoginText>
     </Wrapper>
   );
@@ -43,13 +45,19 @@ const Wrapper = styled.div<{ bgColor: string }>`
   width: 100%;
   display: flex;
   align-items: center;
+
+  > img {
+    max-width: 1.8rem;
+    max-height: 1.8rem;
+    object-fit: cover;
+  }
 `;
 
-const LoginLogo = styled.img`
-  max-width: 1.8rem;
-  max-height: 1.8rem;
-  object-fit: cover;
-`;
+// const LoginLogo = styled.Image`
+//   max-width: 1.8rem;
+//   max-height: 1.8rem;
+//   object-fit: cover;
+// `;
 
 const LoginText = styled.span`
   font-size: 1.5rem;
