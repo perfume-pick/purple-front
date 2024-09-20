@@ -17,19 +17,19 @@ export function httpConfigHelper(config: InternalAxiosRequestConfig) {
 export function httpParserHelper(response: AxiosResponse<RestResponseType>) {
   const code = response.status;
   // 상태값이 200대로 오지 않는 경우도 있어 임시처리
-  // if (code != 200 || code !== 204) {
-  //   const error = new Error();
-  //   error.name = code;
-  //   error.message = "Internal Error";
-  //   error.cause = "DEFINED";
-  //   throw error;
-  // }
-  if (code === 500) {
+  if (code !== 200 && code !== 204) {
     const error = new Error();
     error.name = code;
     error.message = "Internal Error";
     error.cause = "DEFINED";
     throw error;
   }
+  // if (code === 500) {
+  //   const error = new Error();
+  //   error.name = code;
+  //   error.message = "Internal Error";
+  //   error.cause = "DEFINED";
+  //   throw error;
+  // }
   return response;
 }

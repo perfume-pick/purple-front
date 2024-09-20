@@ -31,7 +31,8 @@ const KakaoCallbackPage = (req: Req, res: any) => {
           responseData: { jwtToken, isSignUp },
         } = response.data;
 
-        await fetch("/api/set-token", {
+        // const baseUrl = "http://localhost:3000";
+        await fetch(`/api/set-token`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

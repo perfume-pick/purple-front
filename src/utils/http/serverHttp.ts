@@ -1,9 +1,10 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { NextResponse, NextRequest } from "next/server";
 import { httpParserHelper } from "@/utils/http/helper";
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import TokenService, { TOKEN_SAVE_KEY } from "@/utils/tokenService";
 import { setCookie, getCookie, deleteCookie, getCookies } from "cookies-next";
+import { logout } from "./logout";
 
 // import { redirect } from "next/navigation";
 
@@ -14,7 +15,6 @@ type response = {
   };
 };
 
-const cookieStore = cookies();
 const baseUrl = "http://localhost:3000";
 
 // const getRefreshToken = async (): Promise<string | void> => {
@@ -47,29 +47,15 @@ const baseUrl = "http://localhost:3000";
 //     logout();
 //   }
 // };
-const logout = async (error: AxiosError) => {
-  console.log("cookie1 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
+// const logout = async (error: AxiosError) => {
+//   console.log("cookie1 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
 
-  await fetch(`${baseUrl}/api/delete-token`, {
-    method: "DELETE",
-  }).then(res => {
-    console.log("cookie2 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
-  });
-
-  // return NextResponse.redirect(`${baseUrl}/signin`);
-
-  // setTimeout(() => {
-  //   {
-  //     /** TODO: 환경변수 분리 후 baseurl 변경 */
-  //   }
-  //   // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-  //   //쿠키가 삭제가 안되는건지 리다이렉트가 안먹는건지...
-  //   // return NextResponse.redirect(`${baseUrl}/signin`);
-  //   // redirect("/signin");
-  // return Promise.reject(error);
-  // }, 2000);
-};
+//   await fetch(`${baseUrl}/api/delete-token`, {
+//     method: "DELETE",
+//   }).then(res => {
+//     console.log("cookie2 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
+//   });
+// };
 
 const serverHttp = axios.create({
   baseURL: process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL,
@@ -77,7 +63,7 @@ const serverHttp = axios.create({
 
 serverHttp.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    const token = cookieStore.get(TOKEN_SAVE_KEY)?.value;
+    const token = getCookie(TOKEN_SAVE_KEY, { cookies });
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -93,7 +79,7 @@ serverHttp.interceptors.request.use(
 serverHttp.interceptors.response.use(
   httpParserHelper,
   async (error: AxiosError) => {
-    logout(error);
+    logout();
     // const { config } = error;
     // // const status = error.response ? error.response.status : null;
 
