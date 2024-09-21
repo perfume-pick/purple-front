@@ -12,6 +12,8 @@ import { BrandPerfumeInfo, DetailPerfumeInfo } from "@/types/res/perfume";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 import EvaluationBanner from "@/components/Evaluation/EvaluatoinBanner";
+import ProgressBar from "@/components/atom/ProgressBar/ProgressBar";
+import { RATING_MESSAGE_LIST } from "@/constant/onBoarding/step2RatingMessage";
 
 type filterType = {
   brandName: string;
@@ -27,6 +29,8 @@ const TwoStep = () => {
     BrandPerfumeInfo[]
   >([]);
   const [filterBtnList, setFilterBtnList] = useState<filterType[]>([]);
+  const [selectedRatingCount, setSelectedRatingCount] = useState(0);
+  const [ratingMessage, setRatingMessage] = useState("");
 
   // 데이터 fetching 및 초기 필터 버튼 설정
   useEffect(() => {
@@ -95,6 +99,27 @@ const TwoStep = () => {
     );
   };
 
+  useEffect(() => {
+    // 선택된 별점 갯수 업데이트
+    const selectedPerfumeCount = perfumesBrandList.reduce(
+      (totalCount, brand: BrandPerfumeInfo) => {
+        const ratedPerfumesCount = brand.perfumes.filter(
+          (perfume: DetailPerfumeInfo) => perfume.score && perfume.score > 0,
+        ).length;
+        return totalCount + ratedPerfumesCount;
+      },
+      0,
+    );
+    setSelectedRatingCount(selectedPerfumeCount);
+
+    // 별점 갯수에 맞는 텍스트 업데이트
+    const matchedItem = RATING_MESSAGE_LIST.filter(
+      item => item.value <= selectedPerfumeCount,
+    ).sort((a, b) => b.value - a.value)[0];
+
+    setRatingMessage(matchedItem ? matchedItem.text : "기본 안내 메시지");
+  }, [perfumesBrandList]);
+
   const handleClickFilterBtn = (brandName: string) => {
     setFilterBtnList(prevList =>
       prevList.map(btn => ({
@@ -105,11 +130,12 @@ const TwoStep = () => {
   };
 
   const isMoveButtonDisabled = useMemo(() => {
-    return !perfumesBrandList.some((brand: BrandPerfumeInfo) =>
-      brand.perfumes.some(
+    return !perfumesBrandList.some((brand: BrandPerfumeInfo) => {
+      const ratedPerfumesCount = brand.perfumes.filter(
         (perfume: DetailPerfumeInfo) => perfume.score && perfume.score > 0,
-      ),
-    );
+      ).length;
+      return ratedPerfumesCount >= 5;
+    });
   }, [perfumesBrandList]);
 
   const saveRatingValues = () => {
@@ -153,11 +179,17 @@ const TwoStep = () => {
             <div className="middle-line"> | </div>
             <div>STEP 2</div>
           </S.StepWrap>
-          <S.StepTitleWrap>
-            <h1>경험한 향수를 평가해주세요</h1>
-            <h2>N개 이상 선택하면 취향을 분석해드려요!</h2>
-          </S.StepTitleWrap>
-          <div>그래프</div>
+          <S.ProgressBarArea>
+            <b>{selectedRatingCount}개</b>
+            <ProgressBar
+              progressValue={
+                (selectedRatingCount / 5) * 100 > 100
+                  ? 100
+                  : (selectedRatingCount / 5) * 100
+              }
+            />
+            <p>{ratingMessage}</p>
+          </S.ProgressBarArea>
           <S.BottomFilterWrap>
             {filterBtnList.map(el => (
               <S.FilterWrap

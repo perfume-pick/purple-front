@@ -5,7 +5,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: ${theme.color.white};
-  padding: 1.6rem 0 3.2rem 0;
+  padding-top: 1.6rem;
 `;
 
 const StepWrap = styled.div`
@@ -46,6 +46,27 @@ const StepTitleWrap = styled.div`
   }
 `;
 
+const ProgressBarArea = styled.div`
+  padding: 2rem 1.6rem;
+
+  b {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-size: 2.4rem;
+    font-weight: ${theme.fontWeight.semiBold};
+    padding-bottom: 1.6rem;
+    color: ${theme.color.textColor[100]};
+  }
+
+  p {
+    padding: 1rem 0;
+    font-size: ${theme.fontSize.sm};
+    color: ${theme.color.textColor[200]};
+    word-break: keep-all;
+  }
+`;
+
 const CardWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 33.3%);
@@ -55,7 +76,7 @@ const BottomFilterWrap = styled.div`
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
-  margin: 2rem 0;
+  margin-bottom: 2rem;
   padding: 0 1.6rem;
 `;
 
@@ -87,6 +108,8 @@ const FilterWrap = styled.div`
 
 const PerfumeListWrap = styled.div`
   margin: 0 1.6rem;
+  height: calc(100vh - 4.8rem - 19.15rem - 5rem);
+  overflow-y: auto;
   > div + div {
     margin-top: 1.6rem;
   }
@@ -105,4 +128,5 @@ export const S = {
   FilterWrap,
   PerfumeListWrap,
   MovePageBtn,
+  ProgressBarArea,
 };
