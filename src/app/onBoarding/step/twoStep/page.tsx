@@ -195,10 +195,9 @@ const TwoStep = () => {
               <S.FilterWrap
                 key={el.brandName}
                 className={el.isSelected ? "active" : ""}
+                onClick={() => handleClickFilterBtn(el.brandName)}
               >
-                <div onClick={() => handleClickFilterBtn(el.brandName)}>
-                  {el.brandName}
-                </div>
+                <div>{el.brandName}</div>
               </S.FilterWrap>
             ))}
           </S.BottomFilterWrap>
