@@ -11,11 +11,13 @@ function NavHeader({
   style,
   iconColor,
   bgColor,
+  hasBackBtn = true,
 }: {
   children?: ReactNode;
   style?: CSSProperties;
   iconColor?: string;
   bgColor?: string;
+  hasBackBtn?: boolean;
 }) {
   const router = useRouter();
 
@@ -28,14 +30,16 @@ function NavHeader({
   return (
     <S.Wrapper bgColor={backgroundColor}>
       <div onClick={handleRouterBack}>
-        <ArrowBackIosNewIcon
-          sx={{
-            fontSize: "2rem",
-            color: iconColor,
-            position: "relative",
-            zIndex: 1,
-          }}
-        />
+        {hasBackBtn && (
+          <ArrowBackIosNewIcon
+            sx={{
+              fontSize: "2rem",
+              color: iconColor,
+              position: "relative",
+              zIndex: 1,
+            }}
+          />
+        )}
       </div>
       <div style={style}>
         <div>{children}</div>
@@ -59,7 +63,7 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 1.2rem;
   width: 100%;
-  height: 6rem;
+  height: 4.8rem;
   ${dynamicBgColorStyle}
 
   @media (min-width: 441px) {

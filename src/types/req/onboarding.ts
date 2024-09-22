@@ -4,6 +4,6 @@ export interface ratingInfo {
   score: number;
 }
 
-export interface setOnboardingRatingRequestDTO {
+export interface postOnboardingRatingRequestDTO {
   ratingInfos: ratingInfo[];
 }

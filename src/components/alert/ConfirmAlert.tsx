@@ -23,9 +23,7 @@ const ConfirmAlert = ({
         </S.ContentsWrap>
         <S.ButtonWrap>
           <button onClick={() => setOpenAlert(false)}>{message.cancel}</button>
-          <button onClick={() => router.push("/onBoarding/step/twoStep")}>
-            {message.ok}
-          </button>
+          <button onClick={() => router.push("/")}>{message.ok}</button>
         </S.ButtonWrap>
       </S.Wrapper>
     </ModalLayout>

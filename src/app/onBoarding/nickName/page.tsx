@@ -7,6 +7,9 @@ import { TEXT_LENGTH } from "@/constant/common/textLength";
 import { updateUserNickname } from "@/service/client/userInfo";
 import { useRouter } from "next/navigation";
 import Button from "@/components/atom/Button";
+import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
+import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
+import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 
 function NickNameOnBoarding() {
   const router = useRouter();
@@ -24,8 +27,10 @@ function NickNameOnBoarding() {
   const nickName = watch("nickName", "");
 
   const onSubmit = async (data: { nickName: string }) => {
+    const cleanedNickName = data.nickName.replace(/\s+/g, "");
+
     const params = {
-      nickname: data.nickName.trim(),
+      nickname: cleanedNickName,
       isChanged: false,
       picture: null,
     };
@@ -35,8 +40,10 @@ function NickNameOnBoarding() {
     if (response) {
       const { status, data } = response;
 
-      if (status === 204) {
-        router.push("/onBoarding/step/oneStep");
+      if (status === 200) {
+        router.push(
+          `/onBoarding/step/oneStep?username=${data.responseData.nickname}`,
+        );
       } else {
         setError("nickName", {
           type: "manual",
@@ -48,39 +55,44 @@ function NickNameOnBoarding() {
 
   return (
     <>
-      <div>NavHeader</div>
-      <S.Wrapper>
-        <S.NicknameLabel>
-          반가워요! 당신을 뭐라고 부르면 좋을까요?
-        </S.NicknameLabel>
-        <S.FormWrap>
-          <S.NickNameInputWrap className={errors.nickName ? "has-error" : ""}>
-            <input
-              maxLength={TEXT_LENGTH}
-              placeholder="2~10자 닉네임을 입력해주세요"
-              {...register("nickName", {
-                required: true,
-                maxLength: TEXT_LENGTH,
-              })}
-              onFocus={() => setFocusInput(true)}
-              onBlur={() => setFocusInput(false)}
-            />
-            {focusInput && <span>{nickName.length}/10</span>}
-          </S.NickNameInputWrap>
-          <S.ErrorText className={errors.nickName?.message ? "has-text" : ""}>
-            {errors.nickName?.message ?? ""}
-          </S.ErrorText>
-          <S.ButtonWrap>
-            <Button
-              type="submit"
-              disabled={nickName.length === 0}
-              buttonText="다음으로"
-              size="primary"
-              clickCallback={handleSubmit(onSubmit)}
-            />
-          </S.ButtonWrap>
-        </S.FormWrap>
-      </S.Wrapper>
+      <NavHeader hasBackBtn={false} style={{ justifyContent: "center" }}>
+        <NavHeaderInner text="평가향수" />
+      </NavHeader>
+      <HeaderBottomContents>
+        <S.Wrapper>
+          <S.NicknameLabel>
+            반가워요! 당신을 뭐라고 부르면 좋을까요?
+          </S.NicknameLabel>
+          <S.FormWrap>
+            <S.NickNameInputWrap className={errors.nickName ? "has-error" : ""}>
+              <input
+                maxLength={TEXT_LENGTH}
+                placeholder="2~10자 닉네임을 입력해주세요"
+                {...register("nickName", {
+                  required: true,
+                  maxLength: TEXT_LENGTH,
+                })}
+                autoComplete="off"
+                onFocus={() => setFocusInput(true)}
+                onBlur={() => setFocusInput(false)}
+              />
+              {focusInput && <span>{nickName.length}/10</span>}
+            </S.NickNameInputWrap>
+            <S.ErrorText className={errors.nickName?.message ? "has-text" : ""}>
+              {errors.nickName?.message ?? ""}
+            </S.ErrorText>
+            <S.ButtonWrap>
+              <Button
+                type="submit"
+                disabled={nickName.length === 0}
+                buttonText="다음으로"
+                size="primary"
+                clickCallback={handleSubmit(onSubmit)}
+              />
+            </S.ButtonWrap>
+          </S.FormWrap>
+        </S.Wrapper>
+      </HeaderBottomContents>
     </>
   );
 }

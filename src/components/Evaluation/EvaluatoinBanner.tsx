@@ -1,16 +1,41 @@
 "use client";
 
-import Rating from "../atom/Rating/Rating";
 import { S } from "./styles";
+import EditableRating from "../atom/Rating/EditableRating";
 
-function EvaluationBanner() {
+type Props = {
+  brandName: string;
+  perfumeName: string;
+  perfumeId: number;
+  imageUrl: string;
+  rating: number;
+  setRating: (newRate: number, brandName: string, perfumeId: number) => void;
+};
+
+function EvaluationBanner({
+  brandName,
+  perfumeName,
+  perfumeId,
+  imageUrl,
+  rating,
+  setRating,
+}: Props) {
+  const handleRateChange = (newRate: number) => {
+    setRating(newRate, brandName, perfumeId);
+  };
+
   return (
     <S.Wrapper>
-      <S.BannerImg src="/assets/images/bannerImg.png" />
+      <S.BannerImg src={imageUrl} />
       <S.ContentsWrapper>
-        <span>바이레도</span>
-        <div>모하비고스트</div>
-        <Rating />
+        <span>{brandName}</span>
+        <p>{perfumeName}</p>
+        <EditableRating
+          rate={rating}
+          size={43}
+          gap={0.35}
+          onRateChange={handleRateChange}
+        />
       </S.ContentsWrapper>
     </S.Wrapper>
   );
