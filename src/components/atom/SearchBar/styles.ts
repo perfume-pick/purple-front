@@ -24,6 +24,10 @@ const SearchInput = styled.input`
   outline: 0;
   font-size: ${theme.fontSize.base};
   margin-left: 1rem;
+
+  &::placeholder {
+    color: ${theme.color.textDisabled};
+  }
 `;
 
 export const S = {
