@@ -1,8 +1,20 @@
 import { S } from "./styles";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import { useRouter } from "next/navigation";
+import { DetailPerfumeInfo } from "@/types/res/perfume";
 
-const ProductCard = () => {
+type Props = { perfumeInfo: DetailPerfumeInfo };
+
+const ProductCard = ({ perfumeInfo }: Props) => {
+  console.log(perfumeInfo);
+  const {
+    perfumeId,
+    perfumeName,
+    brandName,
+    imageUrl,
+    averageScore,
+    accordName,
+  } = perfumeInfo || {};
   const router = useRouter();
 
   const handleClickProduct = () => {
@@ -13,14 +25,14 @@ const ProductCard = () => {
     <S.Wrapper onClick={handleClickProduct}>
       <S.Card>
         <S.ImageBox>
-          <img src="/assets/images/bannerImg.png" alt="Product Image" />
+          <img src={imageUrl} alt={perfumeName} />
         </S.ImageBox>
         <S.TextBox>
-          <span>바이레도</span>
-          <p>모하비 고스트 오 드 퍼퓸</p>
+          <span>{brandName}</span>
+          <p>{perfumeName}</p>
           <S.RatingWrap>
             <StarRateIcon sx={{ fontSize: "1.2rem", color: "#FF4647" }} />
-            4.8 ∙ 플로럴
+            {averageScore} ∙ {accordName}
           </S.RatingWrap>
         </S.TextBox>
       </S.Card>

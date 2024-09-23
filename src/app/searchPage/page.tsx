@@ -2,11 +2,14 @@
 
 import React, { useState } from "react";
 import { S } from "./styles";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import ProductCardGrid from "@/components/organism/ProductCardGrid/ProductCardGrid";
 import SearchBar from "@/components/atom/SearchBar/SearchBar";
 import ProductHorizontalScroll from "./_components/ProductList/ProductHorizontalScroll";
 import ChipList from "@/components/organism/ChipList/ChipList";
+import useDebounce from "@/hook/useDebounce";
+import { getSearchPerfumes } from "@/service/client/searchPerfume";
 // import { goHome } from "@/utils/routerUtil";
 
 const tempCurrentSearchList = [
@@ -23,6 +26,22 @@ const tempCurrentSearchList = [
 const SearchPage = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState("");
+
+  const debouncedKeyword = useDebounce(keyword);
+
+  const {
+    data: resultData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["searchPerfume", debouncedKeyword], // 키와 의존성 전달
+    queryFn: () => getSearchPerfumes(debouncedKeyword), // 함수 참조 전달
+    enabled: !!debouncedKeyword,
+    staleTime: 2000, // 5분 동안 캐싱
+    keepPreviousData: true,
+  });
+
+  console.log(resultData?.data.responseData);
 
   const handleChipClick = (text: string) => {
     setKeyword(text);
@@ -59,7 +78,7 @@ const SearchPage = () => {
           <ProductHorizontalScroll />
         </div>
       )}
-      {true && keyword && (
+      {/* {true && keyword && (
         <S.SearchAutoCompleteArea>
           <ul>
             {["test1", "test2", "test3"].map(text => (
@@ -69,8 +88,9 @@ const SearchPage = () => {
             ))}
           </ul>
         </S.SearchAutoCompleteArea>
-      )}
-      {false && keyword && (
+      )} */}
+      {isLoading && <p>로딩중...</p>}
+      {keyword && (
         <div>
           {/* TODO : 메인의 scroll 위치를 기억해야하는 경우 */}
           {false && (
@@ -83,7 +103,11 @@ const SearchPage = () => {
               </div>
             </S.EmptyWrap>
           )}
-          {true && <ProductCardGrid />}
+          {true && (
+            <ProductCardGrid
+              dataList={resultData?.data?.responseData.perfumes}
+            />
+          )}
         </div>
       )}
     </>

@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
+import { theme } from "@/styles/theme";
 
 const Wrapper = styled.div`
   overflow-y: auto;
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none; /* Firefox */
+  /* background-color: ${theme.color.white}; */
 
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
