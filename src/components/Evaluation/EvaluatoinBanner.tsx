@@ -6,10 +6,10 @@ import EditableRating from "../atom/Rating/EditableRating";
 type Props = {
   brandName: string;
   perfumeName: string;
-  perfumeId: number;
+  perfumeId: string;
   imageUrl: string;
   rating: number;
-  setRating: (newRate: number, brandName: string, perfumeId: number) => void;
+  setRating: (newRate: number, brandName: string, perfumeId: string) => void;
 };
 
 function EvaluationBanner({

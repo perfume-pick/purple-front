@@ -3,14 +3,19 @@ export interface PerfumeInfo {
   imageUrl: string;
 }
 
-export interface PerfumeBrands {
-  perfumeInfo: PerfumeInfo[];
+export interface brandListPerfumeInfo extends PerfumeInfo {
+  name: string;
+  perfumeId: string;
+  score?: number;
 }
 
-export interface brandPerfumesDTOs {}
+export interface PerfumeBrands {
+  brandName: string;
+  perfumes: brandListPerfumeInfo[];
+}
 
 export interface DetailPerfumeInfo extends PerfumeInfo {
-  perfumeId: number;
+  perfumeId: string;
   perfumeName: string;
   score?: number;
   averageScore?: number;
@@ -18,6 +23,7 @@ export interface DetailPerfumeInfo extends PerfumeInfo {
 }
 
 export interface BrandPerfumeInfo {
-  brandName: string;
-  perfumes: DetailPerfumeInfo[];
+  name: string;
+  imageUrl: string;
+  order?: number;
 }

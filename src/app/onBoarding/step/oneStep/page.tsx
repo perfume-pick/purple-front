@@ -25,10 +25,10 @@ const OneStep = () => {
       const response = await getPerfumeBrands();
       const {
         data: {
-          responseData: { perfumeBrands },
+          responseData: { brands },
         },
       } = response;
-      setPerfumeBrands(perfumeBrands);
+      setPerfumeBrands(brands);
     };
 
     fetchData();
@@ -91,14 +91,14 @@ const OneStep = () => {
           </S.StepTitleWrap>
         </S.Wrapper>
         <S.CardWrap>
-          {perfumeBrands.map(({ brandName, imageUrl }, index) => {
+          {perfumeBrands.map(({ name, imageUrl, order }) => {
             return (
               <Card
-                key={index}
-                brandName={brandName}
+                key={order}
+                brandName={name}
                 imageUrl={imageUrl}
-                isSelected={selectedBrandList.some(item => item === brandName)}
-                handleClickCard={() => handleClickCard(brandName)}
+                isSelected={selectedBrandList.some(item => item === name)}
+                handleClickCard={() => handleClickCard(name)}
               />
             );
           })}

@@ -82,7 +82,6 @@ const BottomFilterWrap = styled.div`
 
 const FilterWrap = styled.div`
   display: flex;
-  width: 100%;
   height: 3rem;
   padding: 0.8rem 1.2rem;
 
