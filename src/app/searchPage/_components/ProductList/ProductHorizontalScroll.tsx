@@ -7,8 +7,9 @@ const ProductHorizontalScroll = () => {
     <S.Wrapper>
       <ul>
         <ProductCard
+          type="SCROLL"
           perfumeInfo={{
-            perfumeId: 2024092116592374500,
+            perfumeId: "2024092116592374500",
             perfumeName: "Gabrielle Essence Chanel",
             brandName: "샤넬",
             imageUrl: "https://fimgs.net/mdimg/perfume/m.56076.jpg",
@@ -17,8 +18,9 @@ const ProductHorizontalScroll = () => {
           }}
         />
         <ProductCard
+          type="SCROLL"
           perfumeInfo={{
-            perfumeId: 2024092116592374500,
+            perfumeId: "2024092116592374500",
             perfumeName: "Gabrielle Essence Chanel",
             brandName: "샤넬",
             imageUrl: "https://fimgs.net/mdimg/perfume/m.56076.jpg",
@@ -27,8 +29,9 @@ const ProductHorizontalScroll = () => {
           }}
         />
         <ProductCard
+          type="SCROLL"
           perfumeInfo={{
-            perfumeId: 2024092116592374500,
+            perfumeId: "2024092116592374500",
             perfumeName: "Gabrielle Essence Chanel",
             brandName: "샤넬",
             imageUrl: "https://fimgs.net/mdimg/perfume/m.56076.jpg",
@@ -37,8 +40,9 @@ const ProductHorizontalScroll = () => {
           }}
         />
         <ProductCard
+          type="SCROLL"
           perfumeInfo={{
-            perfumeId: 2024092116592374500,
+            perfumeId: "2024092116592374500",
             perfumeName: "Gabrielle Essence Chanel",
             brandName: "샤넬",
             imageUrl: "https://fimgs.net/mdimg/perfume/m.56076.jpg",
@@ -47,8 +51,9 @@ const ProductHorizontalScroll = () => {
           }}
         />
         <ProductCard
+          type="SCROLL"
           perfumeInfo={{
-            perfumeId: 2024092116592374500,
+            perfumeId: "2024092116592374500",
             perfumeName: "Gabrielle Essence Chanel",
             brandName: "샤넬",
             imageUrl: "https://fimgs.net/mdimg/perfume/m.56076.jpg",

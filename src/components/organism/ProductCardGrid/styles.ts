@@ -5,7 +5,6 @@ const Wrapper = styled.div`
   overflow-y: auto;
   -ms-overflow-style: none; /* IE, Edge */
   scrollbar-width: none; /* Firefox */
-  /* background-color: ${theme.color.white}; */
 
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
@@ -19,6 +18,7 @@ const Wrapper = styled.div`
     padding: 0;
     margin: 0;
     padding-bottom: 1rem;
+    background: ${theme.color.white};
 
     & > li {
       width: 50vw;

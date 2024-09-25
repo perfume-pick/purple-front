@@ -6,13 +6,16 @@ const Wrapper = styled.li`
   align-items: center;
   justify-content: space-between;
   width: 14.1rem;
+
+  &.type-grid {
+    flex: 1 1 50%;
+  }
 `;
 
 const ImageBox = styled.div`
   position: relative;
   aspect-ratio: 1/1;
   width: 100%;
-  height: 100%;
   border-radius: 1.2rem;
 
   &:after {
@@ -25,7 +28,7 @@ const ImageBox = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 `;
 
@@ -37,18 +40,39 @@ const Card = styled.div`
 `;
 
 const TextBox = styled.div`
-  font-size: ${theme.fontSize.sm};
   margin-top: 1.2rem;
+  padding: 1rem;
 
   & > span {
     color: ${theme.color.textDisabled};
     font-weight: ${theme.fontWeight.semiBold};
+    font-size: ${theme.fontSize.xs};
   }
 
   & > p {
-    margin: 0;
     text-wrap: wrap;
     word-break: break-all;
+    font-size: ${theme.fontSize.sm};
+    font-weight: ${theme.fontWeight.semiBold};
+  }
+
+  &.type-scroll {
+    width: 100%;
+    height: 8.2rem;
+    box-sizing: border-box;
+
+    & > span {
+      display: inline-block;
+    }
+
+    & > p {
+      padding: 0.4rem 0;
+      font-weight: ${theme.fontWeight.regular};
+    }
+  }
+
+  &.type-grid {
+    height: 8.2rem;
   }
 `;
 

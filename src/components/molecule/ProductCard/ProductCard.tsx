@@ -3,9 +3,11 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 import { useRouter } from "next/navigation";
 import { DetailPerfumeInfo } from "@/types/res/perfume";
 
-type Props = { perfumeInfo: DetailPerfumeInfo };
+type Props = { perfumeInfo: DetailPerfumeInfo; type?: "SCROLL" | "GRID" };
 
-const ProductCard = ({ perfumeInfo }: Props) => {
+const ProductCard = ({ perfumeInfo, type = "GRID" }: Props) => {
+  const TYPE_CLASS = type === "SCROLL" ? "type-scroll" : "type-grid";
+
   console.log(perfumeInfo);
   const {
     perfumeId,
@@ -22,12 +24,12 @@ const ProductCard = ({ perfumeInfo }: Props) => {
   };
 
   return (
-    <S.Wrapper onClick={handleClickProduct}>
+    <S.Wrapper className={TYPE_CLASS} onClick={handleClickProduct}>
       <S.Card>
         <S.ImageBox>
           <img src={imageUrl} alt={perfumeName} />
         </S.ImageBox>
-        <S.TextBox>
+        <S.TextBox className={TYPE_CLASS}>
           <span>{brandName}</span>
           <p>{perfumeName}</p>
           <S.RatingWrap>
