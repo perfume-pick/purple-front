@@ -61,11 +61,12 @@ const EmptyWrap = styled.div`
     margin: 0 0 1.3rem 0;
   }
 
-  button {
+  a {
     background-color: transparent;
     border: 1px solid #cccccc;
     padding: 1.2rem 2rem;
     border-radius: 0.6rem;
+    color: ${theme.color.black};
   }
 `;
 

@@ -8,7 +8,6 @@ type Props = { perfumeInfo: DetailPerfumeInfo; type?: "SCROLL" | "GRID" };
 const ProductCard = ({ perfumeInfo, type = "GRID" }: Props) => {
   const TYPE_CLASS = type === "SCROLL" ? "type-scroll" : "type-grid";
 
-  console.log(perfumeInfo);
   const {
     perfumeId,
     perfumeName,
