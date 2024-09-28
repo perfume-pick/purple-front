@@ -11,16 +11,19 @@ const Wrapper = styled.div`
 `;
 
 const TopWrap = styled.div`
-  padding: 2rem;
+  .search-wrap {
+    width: auto;
+    margin: 1.6rem;
+  }
 `;
 
 const LogoWrap = styled.div`
   display: flex;
   justify-content: center;
-  margin: 2rem 0;
+  margin: 0.4rem 0;
 
   & > img {
-    width: 130%;
+    width: 100%;
     cursor: pointer;
   }
 `;

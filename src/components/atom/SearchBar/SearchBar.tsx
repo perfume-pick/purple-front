@@ -19,7 +19,7 @@ function SearchBar({
   isReadonly = false,
 }: Props) {
   return (
-    <S.Wrapper>
+    <S.Wrapper className="search-wrap">
       <S.SearchWrap>
         <SearchIcon sx={{ fontSize: "2.5rem", color: "gray" }} />
         <S.SearchInput
