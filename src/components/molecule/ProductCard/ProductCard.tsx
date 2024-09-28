@@ -19,7 +19,7 @@ const ProductCard = ({ perfumeInfo, type = "GRID" }: Props) => {
   const router = useRouter();
 
   const handleClickProduct = () => {
-    router.push("/detail");
+    router.push(`/detail?perfumeId=${perfumeId}`);
   };
 
   return (
