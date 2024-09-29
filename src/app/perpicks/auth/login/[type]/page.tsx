@@ -3,7 +3,7 @@
 import { getJwtToken } from "@/service/client/signInService";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
+import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 
 type Req = {
   params: {

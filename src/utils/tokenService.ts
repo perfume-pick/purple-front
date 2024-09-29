@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { setCookie, getCookie, deleteCookie } from "cookies-next";
-
-export const TOKEN_SAVE_KEY = "PERFUME_TOKEN";
+import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 
 interface TokenServiceType {
   setToken(token: string, req: NextRequest, res: NextResponse): void;

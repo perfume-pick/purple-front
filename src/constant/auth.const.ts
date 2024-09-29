@@ -4,4 +4,4 @@ export enum OauthType {
   //NAVER = "NAVER",
 }
 
-export const AccessTokenKey = "accessToken";
+export const TOKEN_SAVE_KEY = "PERFUME_TOKEN";

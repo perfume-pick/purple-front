@@ -5,7 +5,7 @@ import { S } from "./styles";
 import { clientCreateLoginTry } from "@/service/client/signInService";
 import { OauthType } from "@/constant/auth.const";
 import { useRouter } from "next/navigation";
-import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
+import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 import Image from "next/image";
 import logoImg from "/public/assets/images/logo.png";
 

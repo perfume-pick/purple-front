@@ -1,7 +1,7 @@
 import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { RestResponseType } from "@/types/res/response";
 // import { getCookie } from "cookies-next";
-import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
+import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 
 export function httpConfigHelper(config: InternalAxiosRequestConfig) {
   try {

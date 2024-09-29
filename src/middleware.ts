@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
+import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 import { getCookie } from "cookies-next";
 
 // 로그인이 필요 없는 페이지 경로
