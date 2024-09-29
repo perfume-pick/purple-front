@@ -10,7 +10,6 @@ export async function clientCreateLoginTry(type: OauthType) {
 }
 
 export async function getJwtToken(type: string, code: string) {
-  console.log(code);
   return await clientHttp.post<never, AuthJwtTokenDTO>(
     `/perpicks/auth/login/${type}?code=${code}`,
     null,
