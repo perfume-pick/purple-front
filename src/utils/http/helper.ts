@@ -1,12 +1,10 @@
 import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { RestResponseType } from "@/types/res/response";
-// import { getCookie } from "cookies-next";
-import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
+import TokenClientService from "@/utils/tokenService.client";
 
 export function httpConfigHelper(config: InternalAxiosRequestConfig) {
   try {
-    const token = window.localStorage.getItem(TOKEN_SAVE_KEY);
-    // token && config.headers.set("x-authentication-header", `Bearer ${token}`);
+    const token = TokenClientService.getToken();
     token && config.headers.set("Authorization", `Bearer ${token}`);
     return config;
   } catch (error) {

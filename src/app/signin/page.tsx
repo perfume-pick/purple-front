@@ -5,9 +5,9 @@ import { S } from "./styles";
 import { clientCreateLoginTry } from "@/service/client/signInService";
 import { OauthType } from "@/constant/auth.const";
 import { useRouter } from "next/navigation";
-import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 import Image from "next/image";
 import logoImg from "/public/assets/images/logo.png";
+import TokenClientService from "@/utils/tokenService.client";
 
 export default function SignInPage() {
   const router = useRouter();
@@ -28,8 +28,8 @@ export default function SignInPage() {
 }
 
 const deleteToken = () => {
-  if (localStorage.getItem(TOKEN_SAVE_KEY)) {
-    localStorage.removeItem(TOKEN_SAVE_KEY);
+  if (TokenClientService.getToken()) {
+    TokenClientService.removeToken();
   }
   fetch("/api/delete-token", {
     method: "DELETE",

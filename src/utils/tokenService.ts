@@ -10,7 +10,6 @@ interface TokenServiceType {
 
 const TokenService: TokenServiceType = {
   setToken(token: string, req: NextRequest, res: NextResponse): void {
-    // localStorage.setItem(TOKEN_SAVE_KEY, token);
     setCookie(TOKEN_SAVE_KEY, token, {
       req,
       res,
@@ -22,12 +21,10 @@ const TokenService: TokenServiceType = {
   },
 
   getToken(req: NextRequest, res: NextResponse): string | undefined {
-    // return localStorage.getItem(TOKEN_SAVE_KEY);
     return getCookie(TOKEN_SAVE_KEY, { req, res });
   },
 
   removeToken(req: NextRequest, res: NextResponse): void {
-    // localStorage.removeItem(TOKEN_SAVE_KEY);
     deleteCookie(TOKEN_SAVE_KEY, { req, res });
   },
 };
