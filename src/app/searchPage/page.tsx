@@ -12,7 +12,9 @@ import ChipList from "@/components/organism/ChipList/ChipList";
 import useDebounce from "@/hook/useDebounce";
 import {
   deleteCurrentSearchHistory,
+  deleteCurrentVisitHistory,
   getCurrentSearchHistory,
+  getCurrentVisitHistory,
   getSearchPerfumes,
 } from "@/service/client/searchPerfume";
 
@@ -42,8 +44,21 @@ const SearchPage = () => {
     refetchOnMount: true,
   });
 
+  // 최근 본 상품
+  const {
+    data: currentVisitHistoriesData,
+    refetch: updateCurrentVisitHistoriesData,
+  } = useQuery({
+    queryKey: ["visitHistories"],
+    queryFn: () => getCurrentVisitHistory(),
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+  });
+
   let searchHistories =
     currentSearchHistoriesData?.responseData?.searchHistories;
+
+  let visitHistories = currentVisitHistoriesData?.responseData?.perfumes;
 
   useEffect(() => {
     if (debouncedKeyword === "") {
@@ -63,6 +78,18 @@ const SearchPage = () => {
       if (res.status === 204) {
         // 최근 검색어 refetch
         updateCurrentSearchHistoriesData();
+      }
+    });
+  };
+
+  const handleClickDeleteCurrentVisitHistory = () => {
+    if (visitHistories.length < 1) {
+      return;
+    }
+    deleteCurrentVisitHistory().then(res => {
+      if (res.status === 204) {
+        // 최근 본 상품 refetch
+        updateCurrentVisitHistoriesData();
       }
     });
   };
@@ -94,10 +121,12 @@ const SearchPage = () => {
           <div>
             <S.SearchTitle>
               <span>최근 본 상품</span>
-              <span>전체 삭제</span>
+              <span onClick={handleClickDeleteCurrentVisitHistory}>
+                전체 삭제
+              </span>
             </S.SearchTitle>
           </div>
-          <ProductHorizontalScroll />
+          <ProductHorizontalScroll perfumeList={visitHistories ?? []} />
         </div>
       )}
       {/* {isLoading && <p>로딩중...</p>} */}

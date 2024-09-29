@@ -1,12 +1,14 @@
 import clientHttp from "@/utils/http/clientHttp";
 import { RestResponseType } from "@/types/res/response";
 import { DetailPerfumeInfo } from "@/types/res/perfume";
-import { SearchHistory } from "@/types/res/searchPerfume";
+import { SearchHistory, VisitHistory } from "@/types/res/searchPerfume";
 
 const endPoint = {
   GET_SEARCH_PERFUME: "/perpicks/search/perfumes",
   GET_CURRENT_SEARCH_HISTORY: "/perpicks/users/my/search-histories",
   DELETE_CURRENT_SEARCH_HISTORY: "/perpicks/users/my/search-histories",
+  GET_CURRENT_VISIT_HISTORY: "/perpicks/users/my/visit-histories",
+  DELETE_CURRENT_VISIT_HISTORY: "/perpicks/users/my/visit-histories",
 };
 
 async function getSearchPerfumes(queryParams: string) {
@@ -39,8 +41,29 @@ async function deleteCurrentSearchHistory() {
   return response;
 }
 
+async function getCurrentVisitHistory() {
+  const response = await clientHttp.get<
+    never,
+    RestResponseType<{ perfumes: VisitHistory[] }>
+  >(
+    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.GET_CURRENT_VISIT_HISTORY}`,
+  );
+
+  return response.data;
+}
+
+async function deleteCurrentVisitHistory() {
+  const response = await clientHttp.delete(
+    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.DELETE_CURRENT_VISIT_HISTORY}`,
+  );
+
+  return response;
+}
+
 export {
   getSearchPerfumes,
   getCurrentSearchHistory,
   deleteCurrentSearchHistory,
+  getCurrentVisitHistory,
+  deleteCurrentVisitHistory,
 };

@@ -1,8 +1,13 @@
 import React from "react";
 import ProductCard from "@/components/molecule/ProductCard/ProductCard";
 import { S } from "./styles";
+import { VisitHistory } from "@/types/res/searchPerfume";
 
-const ProductHorizontalScroll = () => {
+type Props = {
+  perfumeList: VisitHistory[];
+};
+
+const ProductHorizontalScroll = (perfumeList: Props) => {
   return (
     <S.Wrapper>
       <ul>
