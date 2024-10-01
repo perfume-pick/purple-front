@@ -25,12 +25,12 @@ const SearchPage = () => {
   const debouncedKeyword = useDebounce(keyword);
 
   // 검색 결과
-  const { data: resultData, isLoading } = useQuery({
+  const { data: resultData } = useQuery({
     queryKey: ["searchPerfume", debouncedKeyword],
     queryFn: () => getSearchPerfumes(debouncedKeyword),
     enabled: !!debouncedKeyword,
     staleTime: 5 * 60 * 1000, // 5분 동안 캐싱
-    keepPreviousData: true,
+    // keepPreviousData: true,
   });
 
   // 최근 검색어
@@ -71,7 +71,7 @@ const SearchPage = () => {
   };
 
   const handleClickDeleteCurrentSearchHistory = () => {
-    if (searchHistories.length < 1) {
+    if (searchHistories && searchHistories.length < 1) {
       return;
     }
     deleteCurrentSearchHistory().then(res => {
@@ -83,7 +83,7 @@ const SearchPage = () => {
   };
 
   const handleClickDeleteCurrentVisitHistory = () => {
-    if (visitHistories.length < 1) {
+    if (visitHistories && visitHistories.length < 1) {
       return;
     }
     deleteCurrentVisitHistory().then(res => {
@@ -133,7 +133,7 @@ const SearchPage = () => {
       {keyword && (
         <div>
           {/* TODO : 메인의 scroll 위치를 기억해야하는 경우 */}
-          {resultData?.data?.responseData.perfumes.length < 1 ? (
+          {resultData && resultData.responseData.perfumes.length < 1 ? (
             <S.EmptyWrap>
               <div>
                 <p>
@@ -151,7 +151,7 @@ const SearchPage = () => {
             </S.EmptyWrap>
           ) : (
             <ProductCardGrid
-              dataList={resultData?.data?.responseData.perfumes}
+              dataList={resultData?.responseData.perfumes || []}
             />
           )}
         </div>

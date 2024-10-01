@@ -1,12 +1,15 @@
 import clientHttp from "@/utils/http/clientHttp";
 import { OauthType } from "@/constant/auth.const";
-import { AuthLoginTryDTO, AuthJwtTokenDTO } from "@/types/authTypes.ts";
+import { AuthLoginTryDTO, AuthJwtTokenDTO } from "@/types/authTypes";
+import { FullRestResponse, RestResponseType } from "@/types/res/response";
 
 export async function clientCreateLoginTry(type: OauthType) {
   console.log(type);
-  return await clientHttp.post<never, AuthLoginTryDTO>(
-    `/perpicks/auth/login-try/${type}`,
-  );
+  const response = await clientHttp.post<
+    never,
+    FullRestResponse<RestResponseType<AuthLoginTryDTO>>
+  >(`/perpicks/auth/login-try/${type}`);
+  return response.data;
 }
 
 export async function getJwtToken(type: string, code: string) {

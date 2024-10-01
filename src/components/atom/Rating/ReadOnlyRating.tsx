@@ -24,7 +24,7 @@ const ReadonlyRating = ({ rate, size, gap }: Props) => {
 
 export default ReadonlyRating;
 
-const RatingWrap = styled.div<{ size: number; gap: number; }>`
+const RatingWrap = styled.div<{ size: number; gap: number }>`
   position: relative;
   display: flex;
   justify-content: space-between;

@@ -10,6 +10,8 @@ import ConfirmAlert from "@/components/alert/ConfirmAlert";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 import Card from "./_components/Card/Card";
+import { BrandPerfumeInfo } from "@/types/res/perfume";
+import { RestResponseType } from "@/types/res/response";
 
 const OneStep = () => {
   const router = useRouter();
@@ -17,16 +19,14 @@ const OneStep = () => {
   const nickname = searchParams.get("username");
 
   const [openAlert, setOpenAlert] = useState(false);
-  const [perfumeBrands, setPerfumeBrands] = useState([]);
+  const [perfumeBrands, setPerfumeBrands] = useState<BrandPerfumeInfo[]>([]);
   const [selectedBrandList, setSelectedBrandList] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await getPerfumeBrands();
       const {
-        data: {
-          responseData: { brands },
-        },
+        responseData: { brands },
       } = response;
       setPerfumeBrands(brands);
     };

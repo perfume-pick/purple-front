@@ -1,6 +1,6 @@
 import clientHttp from "@/utils/http/clientHttp";
 import axios from "axios";
-import { RestResponseType } from "@/types/res/response";
+import { FullRestResponse, RestResponseType } from "@/types/res/response";
 import { PerfumeBrands, BrandPerfumeInfo } from "@/types/res/perfume";
 import {
   postOnboardingRatingRequestDTO,
@@ -16,7 +16,7 @@ const endPoint = {
 async function getPerfumeBrands() {
   const response = await axios.get<
     never,
-    RestResponseType<{ brands: BrandPerfumeInfo[] }>
+    FullRestResponse<RestResponseType<{ brands: BrandPerfumeInfo[] }>>
   >(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.GET_PERFUME_BRANDS}`,
     {
@@ -26,12 +26,20 @@ async function getPerfumeBrands() {
       },
     },
   );
-
-  return response;
+  return response.data;
 }
 
-async function postOnboardingRating(payload: ratingInfo[]) {
-  const response = await clientHttp.post<postOnboardingRatingRequestDTO, void>(
+type ApiResponse = {
+  status: number;
+};
+
+async function postOnboardingRating(
+  payload: ratingInfo[],
+): Promise<FullRestResponse> {
+  const response = await clientHttp.post<
+    postOnboardingRatingRequestDTO,
+    FullRestResponse
+  >(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.SET_RATINGS_ONBOARDING}`,
     {
       starRatingVOs: payload,
@@ -49,7 +57,7 @@ async function getSelectedBrandPerfumeList(selectedPerfumesString: string) {
 
   const response = await axios.get<
     never,
-    RestResponseType<{ brands: PerfumeBrands[] }>
+    FullRestResponse<RestResponseType<{ brands: PerfumeBrands[] }>>
   >(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.GET_SELECTED_BRANDS_PERFUMES}?${queryParams}`,
     {
@@ -60,7 +68,7 @@ async function getSelectedBrandPerfumeList(selectedPerfumesString: string) {
     },
   );
 
-  return response;
+  return response.data;
 }
 
 export { getPerfumeBrands, postOnboardingRating, getSelectedBrandPerfumeList };

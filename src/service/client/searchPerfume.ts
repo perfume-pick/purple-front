@@ -1,5 +1,5 @@
 import clientHttp from "@/utils/http/clientHttp";
-import { RestResponseType } from "@/types/res/response";
+import { FullRestResponse, RestResponseType } from "@/types/res/response";
 import { DetailPerfumeInfo } from "@/types/res/perfume";
 import { SearchHistory, VisitHistory } from "@/types/res/searchPerfume";
 
@@ -14,18 +14,18 @@ const endPoint = {
 async function getSearchPerfumes(queryParams: string) {
   const response = await clientHttp.get<
     never,
-    RestResponseType<{ perfums: DetailPerfumeInfo[] }>
+    FullRestResponse<RestResponseType<{ perfumes: DetailPerfumeInfo[] }>>
   >(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.GET_SEARCH_PERFUME}?keyword=${queryParams}`,
   );
 
-  return response;
+  return response.data;
 }
 
 async function getCurrentSearchHistory() {
   const response = await clientHttp.get<
     never,
-    RestResponseType<{ searchHistories: SearchHistory[] }>
+    FullRestResponse<RestResponseType<{ searchHistories: SearchHistory[] }>>
   >(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.GET_CURRENT_SEARCH_HISTORY}`,
   );
@@ -44,7 +44,7 @@ async function deleteCurrentSearchHistory() {
 async function getCurrentVisitHistory() {
   const response = await clientHttp.get<
     never,
-    RestResponseType<{ perfumes: VisitHistory[] }>
+    FullRestResponse<RestResponseType<{ perfumes: VisitHistory[] }>>
   >(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.GET_CURRENT_VISIT_HISTORY}`,
   );
