@@ -36,7 +36,8 @@ html {
 body {
   -ms-overflow-style: none;
   font-size: 16px;
-  width: 440px;
+  width: 100vw;
+  max-width: 440px;
   height: 100vh;
   overflow-y: scroll;
   background-color: #ffffff;

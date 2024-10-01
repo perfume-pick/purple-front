@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { theme } from "@/styles/theme";
 
 const Wrapper = styled.div`
   overflow-y: auto;
@@ -17,6 +18,7 @@ const Wrapper = styled.div`
     padding: 0;
     margin: 0;
     padding-bottom: 1rem;
+    background: ${theme.color.white};
 
     & > li {
       width: 50vw;

@@ -1,16 +1,17 @@
 import styled from "@emotion/styled";
 import Chip from "@/components/molecule/Chip/Chip";
+import { SearchHistory } from "@/types/res/searchPerfume";
 
 type Props = {
-  chipList: string[];
+  chipList: SearchHistory[];
   onChipClick: (text: string) => void;
 };
 const ChipList = ({ chipList, onChipClick }: Props) => {
   return (
     <S.Wrapper>
       <S.List>
-        {chipList.map((chip, index) => (
-          <Chip key={index} text={chip} onChipClick={onChipClick} />
+        {chipList?.map((chip, index) => (
+          <Chip key={index} text={chip.keyword} onChipClick={onChipClick} />
         ))}
       </S.List>
     </S.Wrapper>

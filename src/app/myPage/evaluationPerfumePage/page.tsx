@@ -2,7 +2,7 @@
 
 import styled from "@emotion/styled";
 import { USER_COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
-import ProductCardGrid from "@/components/organism/ProductCardGrid/ProductCardGrid";
+// import ProductCardGrid from "@/components/organism/ProductCardGrid/ProductCardGrid";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
 import FilterBox from "@/components/organism/FilterBox/FilterBox";
@@ -16,7 +16,7 @@ const EvaluationPerfumePage = () => {
       </NavHeader>
       <HeaderBottomContents>
         <FilterBox filterList={USER_COMMENT_FILTER_LIST} />
-        <ProductCardGrid />
+        {/* <ProductCardGrid /> */}
       </HeaderBottomContents>
     </S.Wrapper>
   );

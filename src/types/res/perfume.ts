@@ -3,19 +3,27 @@ export interface PerfumeInfo {
   imageUrl: string;
 }
 
-export interface PerfumeBrands {
-  perfumeInfo: PerfumeInfo[];
-}
-
-export interface brandPerfumesDTOs {}
-
-export interface DetailPerfumeInfo extends PerfumeInfo {
-  perfumeId: number;
-  perfumeName: string;
+export interface brandListPerfumeInfo extends PerfumeInfo {
+  name: string;
+  perfumeId: string;
   score?: number;
 }
 
-export interface BrandPerfumeInfo {
+export interface PerfumeBrands {
   brandName: string;
-  perfumes: DetailPerfumeInfo[];
+  perfumes: brandListPerfumeInfo[];
+}
+
+export interface DetailPerfumeInfo extends PerfumeInfo {
+  perfumeId: string;
+  perfumeName: string;
+  score?: number;
+  averageScore?: number;
+  accordName?: string;
+}
+
+export interface BrandPerfumeInfo {
+  name: string;
+  imageUrl: string;
+  order?: number;
 }

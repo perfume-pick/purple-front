@@ -8,7 +8,7 @@ import {
   getSelectedBrandPerfumeList,
   postOnboardingRating,
 } from "@/service/client/onBoarding";
-import { BrandPerfumeInfo, DetailPerfumeInfo } from "@/types/res/perfume";
+import { brandListPerfumeInfo, PerfumeBrands } from "@/types/res/perfume";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 import EvaluationBanner from "@/components/Evaluation/EvaluatoinBanner";
@@ -25,9 +25,9 @@ const TwoStep = () => {
   const searchParams = useSearchParams();
   const selectedBrands = searchParams.get("selectedBrands");
 
-  const [perfumesBrandList, setPerfumesBrandList] = useState<
-    BrandPerfumeInfo[]
-  >([]);
+  const [perfumesBrandList, setPerfumesBrandList] = useState<PerfumeBrands[]>(
+    [],
+  );
   const [filterBtnList, setFilterBtnList] = useState<filterType[]>([]);
   const [selectedRatingCount, setSelectedRatingCount] = useState(0);
   const [ratingMessage, setRatingMessage] = useState("");
@@ -38,29 +38,39 @@ const TwoStep = () => {
       const response = await getSelectedBrandPerfumeList(selectedBrands);
       const {
         data: {
-          responseData: { brandPerfumesDTOs },
+          responseData: { brands },
         },
       } = response;
 
-      const tempBrandPerfumesList = brandPerfumesDTOs.map(
-        (item: BrandPerfumeInfo) => ({
-          ...item,
-          perfumes: item.perfumes.map((perfumeInfo: DetailPerfumeInfo) => ({
-            ...perfumeInfo,
-            score: 0,
-          })),
-        }),
-      );
+      const tempBrandPerfumesList = brands.map((item: PerfumeBrands) => {
+        const transformedPerfumes = item.perfumes.map(
+          (innerItem: brandListPerfumeInfo) => {
+            return {
+              ...innerItem,
+              score: 0,
+            };
+          },
+        );
+
+        return {
+          brandName: item.brandName,
+          perfumes: transformedPerfumes,
+        };
+      });
+
       setPerfumesBrandList(tempBrandPerfumesList);
 
       // 필터 버튼 리스트 초기화
-      const filterList = [
-        { brandName: "All", isSelected: true },
-        ...tempBrandPerfumesList.map((item: BrandPerfumeInfo) => ({
+      const filterList = (
+        tempBrandPerfumesList.length > 1
+          ? [{ brandName: "전체보기", isSelected: true }]
+          : []
+      ).concat(
+        tempBrandPerfumesList.map((item: PerfumeBrands) => ({
           brandName: item.brandName,
           isSelected: false,
         })),
-      ];
+      );
       setFilterBtnList(filterList);
     };
 
@@ -72,7 +82,7 @@ const TwoStep = () => {
     const selectedBtn = filterBtnList.find(btn => btn.isSelected);
     if (!selectedBtn) return perfumesBrandList;
 
-    if (selectedBtn.brandName === "All") {
+    if (selectedBtn.brandName === "전체보기") {
       return perfumesBrandList;
     } else {
       return perfumesBrandList.filter(
@@ -81,7 +91,7 @@ const TwoStep = () => {
     }
   }, [perfumesBrandList, filterBtnList]);
 
-  const setRating = (newRate: number, brandName: string, perfumeId: number) => {
+  const setRating = (newRate: number, brandName: string, perfumeId: string) => {
     setPerfumesBrandList(prevList =>
       prevList.map(brand => {
         if (brand.brandName === brandName) {
@@ -102,9 +112,9 @@ const TwoStep = () => {
   useEffect(() => {
     // 선택된 별점 갯수 업데이트
     const selectedPerfumeCount = perfumesBrandList.reduce(
-      (totalCount, brand: BrandPerfumeInfo) => {
-        const ratedPerfumesCount = brand.perfumes.filter(
-          (perfume: DetailPerfumeInfo) => perfume.score && perfume.score > 0,
+      (totalCount, item: PerfumeBrands) => {
+        const ratedPerfumesCount = item.perfumes.filter(
+          (perfume: brandListPerfumeInfo) => perfume.score && perfume.score > 0,
         ).length;
         return totalCount + ratedPerfumesCount;
       },
@@ -129,28 +139,18 @@ const TwoStep = () => {
     );
   };
 
-  const isMoveButtonDisabled = useMemo(() => {
-    return !perfumesBrandList.some((brand: BrandPerfumeInfo) => {
-      const ratedPerfumesCount = brand.perfumes.filter(
-        (perfume: DetailPerfumeInfo) => perfume.score && perfume.score > 0,
-      ).length;
-      return ratedPerfumesCount >= 5;
-    });
-  }, [perfumesBrandList]);
-
   const saveRatingValues = () => {
     const filteredHaveRatingList = perfumesBrandList.flatMap(
-      (brand: BrandPerfumeInfo) =>
-        brand.perfumes.filter(
-          (perfume: DetailPerfumeInfo) => perfume.score && perfume.score > 0,
+      (item: PerfumeBrands) =>
+        item.perfumes.filter(
+          (perfume: brandListPerfumeInfo) => perfume.score && perfume.score > 0,
         ),
     );
 
     const params = filteredHaveRatingList.map(perfumeInfo => {
-      const { perfumeId, perfumeName, score } = perfumeInfo;
+      const { perfumeId, score } = perfumeInfo;
       return {
         perfumeId,
-        perfumeName,
         score: !score ? 0 : score,
       };
     });
@@ -166,7 +166,7 @@ const TwoStep = () => {
     <>
       <NavHeader style={{ justifyContent: "end" }}>
         <S.MovePageBtn
-          disabled={isMoveButtonDisabled}
+          disabled={selectedRatingCount < 5}
           onClick={saveRatingValues}
         >
           다음으로
@@ -207,7 +207,7 @@ const TwoStep = () => {
                 <EvaluationBanner
                   key={perfume.perfumeId}
                   brandName={perfume.brandName}
-                  perfumeName={perfume.perfumeName}
+                  perfumeName={perfume.name}
                   perfumeId={perfume.perfumeId}
                   imageUrl={perfume.imageUrl}
                   rating={perfume.score ?? 0}

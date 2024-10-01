@@ -1,18 +1,22 @@
 "use client";
 
+import { DetailPerfumeInfo } from "@/types/res/perfume";
 import React from "react";
 import ProductCard from "../../molecule/ProductCard/ProductCard";
 import { S } from "./styles";
 
-const ProductHorizontalScroll = () => {
+type Props = {
+  dataList: DetailPerfumeInfo[];
+};
+
+const ProductHorizontalScroll = ({ dataList }: Props) => {
+  console.log(dataList);
   return (
     <S.Wrapper>
       <ul>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {dataList?.map(perfume => {
+          return <ProductCard key={perfume.perfumeId} perfumeInfo={perfume} />;
+        })}
       </ul>
     </S.Wrapper>
   );

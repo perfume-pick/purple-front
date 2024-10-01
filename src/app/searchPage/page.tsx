@@ -1,31 +1,97 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { S } from "./styles";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ProductCardGrid from "@/components/organism/ProductCardGrid/ProductCardGrid";
 import SearchBar from "@/components/atom/SearchBar/SearchBar";
 import ProductHorizontalScroll from "./_components/ProductList/ProductHorizontalScroll";
 import ChipList from "@/components/organism/ChipList/ChipList";
-// import { goHome } from "@/utils/routerUtil";
-
-const tempCurrentSearchList = [
-  "딥티크",
-  "오드뚜왈렛",
-  "긴텍스트긴텍스트",
-  "필로시코스",
-  "딥티크",
-  "오드뚜왈렛",
-  "긴텍스트긴텍스트",
-  "필로시코스",
-];
+import useDebounce from "@/hook/useDebounce";
+import {
+  deleteCurrentSearchHistory,
+  deleteCurrentVisitHistory,
+  getCurrentSearchHistory,
+  getCurrentVisitHistory,
+  getSearchPerfumes,
+} from "@/service/client/searchPerfume";
 
 const SearchPage = () => {
   const router = useRouter();
   const [keyword, setKeyword] = useState("");
 
+  const debouncedKeyword = useDebounce(keyword);
+
+  // 검색 결과
+  const { data: resultData, isLoading } = useQuery({
+    queryKey: ["searchPerfume", debouncedKeyword],
+    queryFn: () => getSearchPerfumes(debouncedKeyword),
+    enabled: !!debouncedKeyword,
+    staleTime: 5 * 60 * 1000, // 5분 동안 캐싱
+    keepPreviousData: true,
+  });
+
+  // 최근 검색어
+  const {
+    data: currentSearchHistoriesData,
+    refetch: updateCurrentSearchHistoriesData,
+  } = useQuery({
+    queryKey: ["searchHistories"],
+    queryFn: () => getCurrentSearchHistory(),
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+  });
+
+  // 최근 본 상품
+  const {
+    data: currentVisitHistoriesData,
+    refetch: updateCurrentVisitHistoriesData,
+  } = useQuery({
+    queryKey: ["visitHistories"],
+    queryFn: () => getCurrentVisitHistory(),
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+  });
+
+  let searchHistories =
+    currentSearchHistoriesData?.responseData?.searchHistories;
+
+  let visitHistories = currentVisitHistoriesData?.responseData?.perfumes;
+
+  useEffect(() => {
+    if (debouncedKeyword === "") {
+      updateCurrentSearchHistoriesData();
+    }
+  }, [debouncedKeyword, updateCurrentSearchHistoriesData]);
+
   const handleChipClick = (text: string) => {
     setKeyword(text);
+  };
+
+  const handleClickDeleteCurrentSearchHistory = () => {
+    if (searchHistories.length < 1) {
+      return;
+    }
+    deleteCurrentSearchHistory().then(res => {
+      if (res.status === 204) {
+        // 최근 검색어 refetch
+        updateCurrentSearchHistoriesData();
+      }
+    });
+  };
+
+  const handleClickDeleteCurrentVisitHistory = () => {
+    if (visitHistories.length < 1) {
+      return;
+    }
+    deleteCurrentVisitHistory().then(res => {
+      if (res.status === 204) {
+        // 최근 본 상품 refetch
+        updateCurrentVisitHistoriesData();
+      }
+    });
   };
 
   return (
@@ -43,47 +109,51 @@ const SearchPage = () => {
           <div>
             <S.SearchTitle>
               <span>최근 검색</span>
-              <span>전체 삭제</span>
+              <span onClick={handleClickDeleteCurrentSearchHistory}>
+                전체 삭제
+              </span>
             </S.SearchTitle>
           </div>
           <ChipList
-            chipList={tempCurrentSearchList}
+            chipList={searchHistories ?? []}
             onChipClick={handleChipClick}
           />
           <div>
             <S.SearchTitle>
               <span>최근 본 상품</span>
-              <span>전체 삭제</span>
+              <span onClick={handleClickDeleteCurrentVisitHistory}>
+                전체 삭제
+              </span>
             </S.SearchTitle>
           </div>
-          <ProductHorizontalScroll />
+          <ProductHorizontalScroll perfumeList={visitHistories ?? []} />
         </div>
       )}
-      {true && keyword && (
-        <S.SearchAutoCompleteArea>
-          <ul>
-            {["test1", "test2", "test3"].map(text => (
-              <li key={text} onClick={() => handleChipClick(text)}>
-                {text}
-              </li>
-            ))}
-          </ul>
-        </S.SearchAutoCompleteArea>
-      )}
-      {false && keyword && (
+      {/* {isLoading && <p>로딩중...</p>} */}
+      {keyword && (
         <div>
           {/* TODO : 메인의 scroll 위치를 기억해야하는 경우 */}
-          {false && (
+          {resultData?.data?.responseData.perfumes.length < 1 ? (
             <S.EmptyWrap>
               <div>
                 <p>
                   검색 결과가 없습니다. <br /> 상품 등록 요청을 해주세요.
                 </p>
-                <button>상품 등록 요청</button>
+                <Link
+                  href="https://forms.gle/qrm7mewTK12KM6R16"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  passHref
+                >
+                  상품 등록 요청
+                </Link>
               </div>
             </S.EmptyWrap>
+          ) : (
+            <ProductCardGrid
+              dataList={resultData?.data?.responseData.perfumes}
+            />
           )}
-          {true && <ProductCardGrid />}
         </div>
       )}
     </>
