@@ -3,7 +3,7 @@
 import { getJwtToken } from "@/service/client/signInService";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
+import TokenClientService from "@/utils/tokenService.client";
 
 type Req = {
   params: {
@@ -31,7 +31,8 @@ const KakaoCallbackPage = (req: Req, res: any) => {
           responseData: { jwtToken, isSignUp },
         } = response.data;
 
-        await fetch("/api/set-token", {
+        // const baseUrl = "http://localhost:3000";
+        await fetch(`/api/set-token`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -39,7 +40,7 @@ const KakaoCallbackPage = (req: Req, res: any) => {
           body: JSON.stringify({ jwtToken }),
         }).then(res => {
           if (res.ok) {
-            localStorage.setItem(TOKEN_SAVE_KEY, jwtToken);
+            TokenClientService.setToken(jwtToken);
 
             if (isSignUp) {
               router.push("/onBoarding/nickName");

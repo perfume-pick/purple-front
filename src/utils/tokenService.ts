@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { setCookie, getCookie, deleteCookie } from "cookies-next";
-
-export const TOKEN_SAVE_KEY = "PERFUME_TOKEN";
+import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 
 interface TokenServiceType {
   setToken(token: string, req: NextRequest, res: NextResponse): void;
@@ -11,7 +10,6 @@ interface TokenServiceType {
 
 const TokenService: TokenServiceType = {
   setToken(token: string, req: NextRequest, res: NextResponse): void {
-    // localStorage.setItem(TOKEN_SAVE_KEY, token);
     setCookie(TOKEN_SAVE_KEY, token, {
       req,
       res,
@@ -23,12 +21,10 @@ const TokenService: TokenServiceType = {
   },
 
   getToken(req: NextRequest, res: NextResponse): string | undefined {
-    // return localStorage.getItem(TOKEN_SAVE_KEY);
     return getCookie(TOKEN_SAVE_KEY, { req, res });
   },
 
   removeToken(req: NextRequest, res: NextResponse): void {
-    // localStorage.removeItem(TOKEN_SAVE_KEY);
     deleteCookie(TOKEN_SAVE_KEY, { req, res });
   },
 };

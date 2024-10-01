@@ -1,7 +1,7 @@
 "use client";
 import axios, { AxiosError } from "axios";
 import { httpConfigHelper, httpParserHelper } from "@/utils/http/helper";
-import { TOKEN_SAVE_KEY } from "@/utils/tokenService";
+import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 
 const getRefreshToken = async (): Promise<string | void> => {
   try {

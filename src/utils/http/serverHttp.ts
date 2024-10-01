@@ -4,6 +4,7 @@ import { httpParserHelper } from "@/utils/http/helper";
 import { cookies } from "next/headers";
 import TokenService, { TOKEN_SAVE_KEY } from "@/utils/tokenService";
 import { setCookie, getCookie, deleteCookie, getCookies } from "cookies-next";
+// import { logout } from "./logout";
 
 // import { redirect } from "next/navigation";
 
@@ -14,40 +15,39 @@ type response = {
   };
 };
 
-const cookieStore = cookies();
 const baseUrl = "http://localhost:3000";
 
-// const getRefreshToken = async (): Promise<string | void> => {
-//   try {
-//     const originToken = cookieStore.get(TOKEN_SAVE_KEY)?.value;
-//     console.log("originToken!!!!!");
-//     console.log(originToken);
+const getRefreshToken = async (): Promise<string | void> => {
+  try {
+    const originToken = cookies().get(TOKEN_SAVE_KEY)?.value;
+    console.log("originToken!!!!!");
+    console.log(originToken);
 
-//     const {
-//       data: {
-//         responseData: { jwtToken },
-//       },
-//     } = await axios.post(
-//       "/perpicks/auth/refresh",
-//       {
-//         jwtToken: originToken,
-//       },
-//       {
-//         baseURL: process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL,
-//       },
-//     );
+    const {
+      data: {
+        responseData: { jwtToken },
+      },
+    } = await axios.post(
+      "/perpicks/auth/refresh",
+      {
+        jwtToken: originToken,
+      },
+      {
+        baseURL: process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL,
+      },
+    );
 
-//     if (jwtToken) {
-//       axios.post("/api/set-token", {
-//         jwtToken,
-//       });
-//     }
-//     return jwtToken;
-//   } catch (e) {
-//     logout();
-//   }
-// };
-const logout = async (error: AxiosError) => {
+    if (jwtToken) {
+      axios.post("/api/set-token", {
+        jwtToken,
+      });
+    }
+    return jwtToken;
+  } catch (e) {
+    logout();
+  }
+};
+const logout = async () => {
   console.log("cookie1 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
 
   await fetch(`${baseUrl}/api/delete-token`, {
@@ -55,20 +55,6 @@ const logout = async (error: AxiosError) => {
   }).then(res => {
     console.log("cookie2 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
   });
-
-  // return NextResponse.redirect(`${baseUrl}/signin`);
-
-  // setTimeout(() => {
-  //   {
-  //     /** TODO: 환경변수 분리 후 baseurl 변경 */
-  //   }
-  //   // const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-  //   //쿠키가 삭제가 안되는건지 리다이렉트가 안먹는건지...
-  //   // return NextResponse.redirect(`${baseUrl}/signin`);
-  //   // redirect("/signin");
-  // return Promise.reject(error);
-  // }, 2000);
 };
 
 const serverHttp = axios.create({
@@ -77,7 +63,7 @@ const serverHttp = axios.create({
 
 serverHttp.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    const token = cookieStore.get(TOKEN_SAVE_KEY)?.value;
+    const token = getCookie(TOKEN_SAVE_KEY, { cookies });
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -93,31 +79,31 @@ serverHttp.interceptors.request.use(
 serverHttp.interceptors.response.use(
   httpParserHelper,
   async (error: AxiosError) => {
-    logout(error);
-    // const { config } = error;
-    // // const status = error.response ? error.response.status : null;
+    // logout();
+    const { config } = error;
+    // const status = error.response ? error.response.status : null;
 
-    // if (config?.sent) {
-    //   return Promise.reject(error);
-    // }
+    if (config?.sent) {
+      return Promise.reject(error);
+    }
 
-    // try {
-    //   setTimeout(async () => {
-    //     config.sent = true;
-    //     // 토큰 재설정
-    //     const jwtToken = await getRefreshToken();
+    try {
+      setTimeout(async () => {
+        config.sent = true;
+        // 토큰 재설정
+        const jwtToken = await getRefreshToken();
 
-    //     if (jwtToken) {
-    //       config.headers.Authorization = `Bearer ${jwtToken}`;
-    //     }
+        if (jwtToken) {
+          config.headers.Authorization = `Bearer ${jwtToken}`;
+        }
 
-    //     // 실패한 요청을 다시 시도
-    //     return serverHttp.request(config);
-    //   }, 10000);
-    // } catch (refreshError) {
-    //   logout();
-    //   return Promise.reject(refreshError);
-    // }
+        // 실패한 요청을 다시 시도
+        return serverHttp.request(config);
+      }, 10000);
+    } catch (refreshError) {
+      logout();
+      return Promise.reject(refreshError);
+    }
   },
 );
 
