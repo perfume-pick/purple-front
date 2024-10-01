@@ -1,10 +1,10 @@
 "use client";
 
-import Banner from "@/components/banner/Banner";
+import Banner from "@/components/banner/banner";
 import { S } from "../../styles";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import { useEffect, useState } from "react";
-import dayjs from "dayjs";
+// import { useEffect, useState } from "react";
+// import dayjs from "dayjs";
 import { useRouter } from "next/navigation";
 
 function NoteMainPage() {

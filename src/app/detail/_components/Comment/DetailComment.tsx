@@ -4,7 +4,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import React, { forwardRef } from "react";
 import { S } from "./styles";
 import Topic from "./Topic/Topic";
-import ReadonlyRating from "@/components/atom/Rating/ReadOnlyRating";
+import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
 import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
 import CommentBox from "@/components/organism/CommentBox/CommentBox";
 import DetailCommentBox from "@/components/organism/CommentBox/DetailCommentBox";
