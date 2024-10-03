@@ -15,7 +15,7 @@ type Req = {
   };
 };
 
-const KakaoCallbackPage = (req: Req, res: any) => {
+const KakaoCallbackPage = (req: Req) => {
   const router = useRouter();
   const type = req.params.type;
   const { searchParams } = req;
@@ -31,7 +31,6 @@ const KakaoCallbackPage = (req: Req, res: any) => {
           responseData: { jwtToken, isSignUp },
         } = response.data;
 
-        // const baseUrl = "http://localhost:3000";
         await fetch(`/api/set-token`, {
           method: "POST",
           headers: {
@@ -50,15 +49,12 @@ const KakaoCallbackPage = (req: Req, res: any) => {
           }
         });
       } catch (error) {
-        {
-          /* TODO: 404 페이지 이동 필요 */
-        }
         console.error("Error fetching token:", error);
       }
     };
 
     fetchToken();
-  }, []);
+  }, [router, searchParams.code, type]);
 
   return <div>카카오 로그인 중...</div>;
 };

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { theme } from "@/styles/theme";
-import { COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
 import { DropdownType } from "@/types/dropdownTypes";
 import Dropdown from "@/components/molecule/Dropdown/Dropdown";
 

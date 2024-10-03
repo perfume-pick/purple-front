@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { theme } from "@/styles/theme";
 import { useRouter } from "next/navigation";
 
-const successPage = () => {
+const SuccessPage = () => {
   const router = useRouter();
   const handleClickConfirmBtn = () => {
     router.push("/");
@@ -27,7 +27,7 @@ const successPage = () => {
   );
 };
 
-export default successPage;
+export default SuccessPage;
 
 const Wrapper = styled.div`
   width: 100%;

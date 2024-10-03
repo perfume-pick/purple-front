@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import TokenService from "@/utils/tokenService";
 
-export async function DELETE(req: NextRequest, res: NextResponse) {
+export async function DELETE(req: NextRequest) {
   try {
     const res = NextResponse.json(true, { status: 200 });
     TokenService.removeToken(req, res);

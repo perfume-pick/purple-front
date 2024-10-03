@@ -11,7 +11,6 @@ import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 import Card from "./_components/Card/Card";
 import { BrandPerfumeInfo } from "@/types/res/perfume";
-import { RestResponseType } from "@/types/res/response";
 
 const OneStep = () => {
   const router = useRouter();

@@ -29,10 +29,6 @@ async function getPerfumeBrands() {
   return response.data;
 }
 
-type ApiResponse = {
-  status: number;
-};
-
 async function postOnboardingRating(
   payload: ratingInfo[],
 ): Promise<FullRestResponse> {

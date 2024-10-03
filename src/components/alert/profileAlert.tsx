@@ -29,7 +29,7 @@ const ProfileAlert = ({
     return () => {
       document.removeEventListener("mousedown", clickEvent);
     };
-  }, [contentRef]);
+  }, [setOpenAlert]);
 
   return (
     <ModalLayout>

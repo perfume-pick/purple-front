@@ -8,6 +8,7 @@ type Props = {
 };
 
 const ProductHorizontalScroll = (perfumeList: Props) => {
+  console.log(perfumeList);
   return (
     <S.Wrapper>
       <ul>

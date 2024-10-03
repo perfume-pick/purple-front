@@ -57,10 +57,10 @@ clientHttp.interceptors.response.use(
   httpParserHelper,
   async (error: AxiosError) => {
     const { config } = error;
-    const status = error.response ? error.response.status : null;
+    // const status = error.response ? error.response.status : null;
 
     // 토큰 만료 시, status 코드가 500대로 와서 임시처리
-    // if (config?.sent || status !== 401 || status !== 403) {
+    // if (status !== 401 || status !== 403) {
     //   return Promise.reject(error);
     // }
 
@@ -79,7 +79,13 @@ clientHttp.interceptors.response.use(
       }
 
       // 실패한 요청을 다시 시도
-      return clientHttp.request(config);
+      if (config) {
+        // config가 존재할 때만 요청 시도
+        return clientHttp.request(config);
+      } else {
+        // config가 undefined일 경우 처리
+        return Promise.reject(new Error("Request configuration is undefined"));
+      }
     } catch (refreshError) {
       logout();
       return Promise.reject(refreshError);

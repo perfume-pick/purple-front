@@ -55,10 +55,10 @@ const SearchPage = () => {
     refetchOnMount: true,
   });
 
-  let searchHistories =
+  const searchHistories =
     currentSearchHistoriesData?.responseData?.searchHistories;
 
-  let visitHistories = currentVisitHistoriesData?.responseData?.perfumes;
+  const visitHistories = currentVisitHistoriesData?.responseData?.perfumes;
 
   useEffect(() => {
     if (debouncedKeyword === "") {

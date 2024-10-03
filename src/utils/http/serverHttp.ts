@@ -1,19 +1,10 @@
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
-import { NextResponse, NextRequest } from "next/server";
+import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { httpParserHelper } from "@/utils/http/helper";
+import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 import { cookies } from "next/headers";
-import TokenService, { TOKEN_SAVE_KEY } from "@/utils/tokenService";
-import { setCookie, getCookie, deleteCookie, getCookies } from "cookies-next";
+import { getCookie } from "cookies-next";
 // import { logout } from "./logout";
-
 // import { redirect } from "next/navigation";
-
-type response = {
-  timeStamp: string;
-  responseData: {
-    jwtToken: string;
-  };
-};
 
 const baseUrl = "http://localhost:3000";
 
@@ -52,7 +43,7 @@ const logout = async () => {
 
   await fetch(`${baseUrl}/api/delete-token`, {
     method: "DELETE",
-  }).then(res => {
+  }).then(() => {
     console.log("cookie2 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
   });
 };
@@ -62,7 +53,7 @@ const serverHttp = axios.create({
 });
 
 serverHttp.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: InternalAxiosRequestConfig) => {
     const token = getCookie(TOKEN_SAVE_KEY, { cookies });
 
     if (token) {
@@ -83,22 +74,30 @@ serverHttp.interceptors.response.use(
     const { config } = error;
     // const status = error.response ? error.response.status : null;
 
-    if (config?.sent) {
-      return Promise.reject(error);
-    }
+    // if (config?.sent) {
+    //   return Promise.reject(error);
+    // }
 
     try {
       setTimeout(async () => {
-        config.sent = true;
+        // config.sent = true;
         // 토큰 재설정
         const jwtToken = await getRefreshToken();
 
-        if (jwtToken) {
+        if (jwtToken && config) {
           config.headers.Authorization = `Bearer ${jwtToken}`;
         }
 
         // 실패한 요청을 다시 시도
-        return serverHttp.request(config);
+        if (config) {
+          // config가 존재할 때만 요청 시도
+          return serverHttp.request(config);
+        } else {
+          // config가 undefined일 경우 처리
+          return Promise.reject(
+            new Error("Request configuration is undefined"),
+          );
+        }
       }, 10000);
     } catch (refreshError) {
       logout();
