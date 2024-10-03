@@ -27,7 +27,7 @@ const buttonAsset: ButtonAssetTypes = {
 };
 
 const OAuthLoginButton: FC<PropTypes> = ({ type, onClick }) => {
-  const { img, color, text } = buttonAsset[type];
+  const { color, text } = buttonAsset[type];
   return (
     <Wrapper bgColor={color} onClick={() => onClick(type)}>
       <Image src={kakaoLogoImg} alt={text} />

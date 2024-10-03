@@ -35,11 +35,12 @@ const TwoStep = () => {
   // 데이터 fetching 및 초기 필터 버튼 설정
   useEffect(() => {
     const fetchData = async () => {
+      if (!selectedBrands) {
+        return;
+      }
       const response = await getSelectedBrandPerfumeList(selectedBrands);
       const {
-        data: {
-          responseData: { brands },
-        },
+        responseData: { brands },
       } = response;
 
       const tempBrandPerfumesList = brands.map((item: PerfumeBrands) => {

@@ -7,6 +7,7 @@ export interface AuthJwtTokenDTO {
     timeStamp: string;
     responseData: {
       jwtToken: string;
+      isSignUp: boolean;
     };
   };
 }

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { theme } from "@/styles/theme";
-import ProductHorizontalScroll from "../../../searchPage/_components/ProductList/ProductHorizontalScroll";
+// import ProductHorizontalScroll from "../../../searchPage/_components/ProductList/ProductHorizontalScroll";
 import Link from "../../../../../node_modules/next/link";
 
 const PurfumeScroll = () => {
@@ -15,7 +15,7 @@ const PurfumeScroll = () => {
           <span>더보기</span>
         </Link>
       </S.TitleWrap>
-      <ProductHorizontalScroll />
+      {/* <ProductHorizontalScroll /> */}
     </>
   );
 };

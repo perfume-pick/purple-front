@@ -13,9 +13,16 @@ const Card = ({ brandName, imageUrl, isSelected, handleClickCard }: Props) => {
     <S.Wrapper onClick={handleClickCard}>
       {/* <img src={imageUrl} /> */}
       <S.ImgBox>
-        <img src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}${imageUrl}`} />
+        <img
+          src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}${imageUrl}`}
+          alt={`${brandName} image`}
+        />
         {isSelected && (
-          <img className="check-icon" src="/assets/images/Check.png" />
+          <img
+            className="check-icon"
+            src="/assets/images/Check.png"
+            alt="check image"
+          />
         )}
       </S.ImgBox>
       <span>{brandName}</span>

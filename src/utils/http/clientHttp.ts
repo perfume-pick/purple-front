@@ -57,24 +57,35 @@ clientHttp.interceptors.response.use(
   httpParserHelper,
   async (error: AxiosError) => {
     const { config } = error;
-    const status = error.response ? error.response.status : null;
+    // const status = error.response ? error.response.status : null;
 
-    if (config?.sent || status !== 401 || status !== 403) {
-      return Promise.reject(error);
-    }
+    // 토큰 만료 시, status 코드가 500대로 와서 임시처리
+    // if (status !== 401 || status !== 403) {
+    //   return Promise.reject(error);
+    // }
+
+    // if (config && config.sent) {
+    //   return Promise.reject(error);
+    // }
 
     // 토큰 만료일 때
     try {
-      config.sent = true;
+      // config.sent = true;
       // 토큰 재설정
       const jwtToken = await getRefreshToken();
 
-      if (jwtToken) {
+      if (jwtToken && config) {
         config.headers.Authorization = `Bearer ${jwtToken}`;
       }
 
       // 실패한 요청을 다시 시도
-      return clientHttp.request(config);
+      if (config) {
+        // config가 존재할 때만 요청 시도
+        return clientHttp.request(config);
+      } else {
+        // config가 undefined일 경우 처리
+        return Promise.reject(new Error("Request configuration is undefined"));
+      }
     } catch (refreshError) {
       logout();
       return Promise.reject(refreshError);

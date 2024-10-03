@@ -17,7 +17,7 @@ export function httpParserHelper(response: AxiosResponse<RestResponseType>) {
   // 상태값이 200대로 오지 않는 경우도 있어 임시처리
   if (code !== 200 && code !== 204) {
     const error = new Error();
-    error.name = code;
+    error.name = code.toString();
     error.message = "Internal Error";
     error.cause = "DEFINED";
     throw error;

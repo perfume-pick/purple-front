@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { S } from "./styles";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { TEXT_LENGTH } from "@/constant/common/textLength";
 import { updateUserNickname } from "@/service/client/userInfo";
 import { useRouter } from "next/navigation";
@@ -10,6 +10,10 @@ import Button from "@/components/atom/Button";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
+
+type FormData = {
+  nickName: string;
+};
 
 function NickNameOnBoarding() {
   const router = useRouter();
@@ -20,13 +24,15 @@ function NickNameOnBoarding() {
     setError,
     formState: { errors },
     watch,
-  } = useForm();
+  } = useForm<FormData>();
 
   const [focusInput, setFocusInput] = useState(false);
 
   const nickName = watch("nickName", "");
 
-  const onSubmit = async (data: { nickName: string }) => {
+  const onSubmit: SubmitHandler<FormData> = async (data: {
+    nickName: string;
+  }) => {
     const cleanedNickName = data.nickName.replace(/\s+/g, "");
 
     const params = {
@@ -79,7 +85,9 @@ function NickNameOnBoarding() {
               {focusInput && <span>{nickName.length}/10</span>}
             </S.NickNameInputWrap>
             <S.ErrorText className={errors.nickName?.message ? "has-text" : ""}>
-              {errors.nickName?.message ?? ""}
+              {typeof errors.nickName?.message === "string"
+                ? errors.nickName.message
+                : ""}
             </S.ErrorText>
             <S.ButtonWrap>
               <Button

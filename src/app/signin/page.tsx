@@ -14,14 +14,20 @@ export default function SignInPage() {
   const onClickLoginType = async (type: OauthType) => {
     deleteToken();
 
-    const { data } = await clientCreateLoginTry(type);
-    router.push(data.responseData.uri);
+    const { responseData } = await clientCreateLoginTry(type);
+    router.push(responseData.uri);
   };
 
   return (
     <S.Wrapper>
       {/* <img src={logoImg} alt="로고이미지" /> */}
-      <Image src={logoImg} layout="intrinsic" width="auto" height="auto" />
+      <Image
+        src={logoImg}
+        layout="intrinsic"
+        width={100}
+        height={100}
+        alt="로고 이미지"
+      />
       <OAuthLoginButton type={OauthType.KAKAO} onClick={onClickLoginType} />
     </S.Wrapper>
   );

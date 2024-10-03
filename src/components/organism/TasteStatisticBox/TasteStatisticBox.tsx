@@ -71,7 +71,7 @@ const TasteStatisticBox = ({ chartData, reviewsNum, children }: Props) => {
 
     data.datasets[0].data = percentageList;
     data.datasets[0].backgroundColor = backgroundColor;
-  }, []);
+  }, [chartData, data.datasets]);
 
   return (
     <S.Wrapper>

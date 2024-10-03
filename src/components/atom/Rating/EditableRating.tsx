@@ -36,7 +36,7 @@ const EditableRating = ({ rate, size, gap, onRateChange }: Props) => {
   return (
     <S.RatingWrap size={size} gap={gap} onClick={handleStarClick}>
       {[...Array(5)].map((_, index) => (
-        <S.Star key={index} size={size} gap={gap}></S.Star>
+        <S.Star key={index} size={size}></S.Star>
       ))}
       <S.RatingBgColorBlock width={percentage} />
     </S.RatingWrap>

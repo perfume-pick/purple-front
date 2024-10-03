@@ -71,7 +71,7 @@
 // };
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { FieldDefinitionsType } from "@/types/commentTypes";
@@ -83,7 +83,7 @@ type RatingProps = {
 };
 
 // TODO : rating이 사용되는곳이 어떤식으로 될지에 따라 변경해야함.
-function Rating({ setValue, selectedCommentIdx, getValues }: RatingProps) {
+function Rating({ setValue }: RatingProps) {
   const [rating, setRating] = useState(0);
 
   const handleRatingClick = (selectRating: number) => {
@@ -114,9 +114,9 @@ function Rating({ setValue, selectedCommentIdx, getValues }: RatingProps) {
       {[...Array(5)].map((_, idx) => (
         <div key={idx} onClick={() => handleRatingClick(idx + 1)}>
           {idx < rating ? (
-            <img src="/assets/images/star.png" />
+            <img src="/assets/images/star.png" alt="star" />
           ) : (
-            <img src="/assets/images/starOpacity.png" />
+            <img src="/assets/images/starOpacity.png" alt="star opacity" />
           )}
         </div>
       ))}

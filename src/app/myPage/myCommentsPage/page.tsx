@@ -1,30 +1,26 @@
 "use client";
 
-import styled from "@emotion/styled";
-import {
-  COMMENT_BOX_FILTER,
-  COMMENT_FILTER_LIST,
-} from "@/constant/dropdown/commentFilterList";
-import { useState } from "react";
+// import styled from "@emotion/styled";
+import { COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import CommentBox from "../../../components/organism/CommentBox/CommentBox";
 import FilterBox from "@/components/organism/FilterBox/FilterBox";
-import MoreButton from "../../../components/molecule/MoreButton/MoreButton";
+// import MoreButton from "../../../components/molecule/MoreButton/MoreButton";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
-import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
-import EditableRating from "../../../components/atom/Rating/EditableRating";
+// import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
+// import EditableRating from "../../../components/atom/Rating/EditableRating";
 
 const MyCommentsPage = () => {
-  const [rating, setRating] = useState(1.5);
+  // const [rating, setRating] = useState(1.5);
 
-  const handleRateChange = (newRate: number) => {
-    setRating(newRate);
-  };
+  // const handleRateChange = (newRate: number) => {
+  //   setRating(newRate);
+  // };
 
-  const handleDeleteComment = () => {
-    console.log("delete");
-  };
+  // const handleDeleteComment = () => {
+  //   console.log("delete");
+  // };
 
   return (
     <>
@@ -33,8 +29,8 @@ const MyCommentsPage = () => {
       </NavHeader>
       <HeaderBottomContents>
         <FilterBox filterList={COMMENT_FILTER_LIST} />
-        <CommentBox>
-          <S.BrandCommentTopArea>
+        <CommentBox />
+        {/* <S.BrandCommentTopArea>
             <div>
               <img
                 src="https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9&s=dd060fe209b4a56733a1dcc9b5aea53a"
@@ -56,8 +52,7 @@ const MyCommentsPage = () => {
               selectList={COMMENT_BOX_FILTER}
               handleDropdown={handleDeleteComment}
             />
-          </S.BrandCommentTopArea>
-        </CommentBox>
+          </S.BrandCommentTopArea> */}
       </HeaderBottomContents>
     </>
   );
@@ -65,32 +60,32 @@ const MyCommentsPage = () => {
 
 export default MyCommentsPage;
 
-const BrandCommentTopArea = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+// const BrandCommentTopArea = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
 
-  img {
-    width: 5.4rem;
-    height: 5.4rem;
-    border-radius: 0.54rem;
-    object-fit: cover;
-    margin-right: 0.4rem;
-  }
-  & > div {
-    display: flex;
-  }
-`;
+//   img {
+//     width: 5.4rem;
+//     height: 5.4rem;
+//     border-radius: 0.54rem;
+//     object-fit: cover;
+//     margin-right: 0.4rem;
+//   }
+//   & > div {
+//     display: flex;
+//   }
+// `;
 
-const RatingWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+// const RatingWrap = styled.div`
+//   display: flex;
+//   flex-direction: column;
+// `;
 
-const MoreButtonWrap = styled.div``;
+// const MoreButtonWrap = styled.div``;
 
-const S = {
-  BrandCommentTopArea,
-  RatingWrap,
-  MoreButtonWrap,
-};
+// const S = {
+//   BrandCommentTopArea,
+//   RatingWrap,
+//   MoreButtonWrap,
+// };
