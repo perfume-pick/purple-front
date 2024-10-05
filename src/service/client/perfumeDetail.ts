@@ -15,11 +15,6 @@ const endPoint = {
   GET_REVIEWS: "/perpicks/perfumes/{PERFUME_ID}/reviews",
 };
 
-// perpicks/perfumes/{perfume-id}/accords-notes  메인어코드, 노트
-// perpicks/perfumes/{perfume-id}/fragrantica-evaluation 프라그란티카 평가 정보
-// perpicks/perfumes/{perfume-id}/statistics 코멘트 토픽
-// perpicks/perfumes/{perfume-id}/reviews 코멘트 전체 조회
-
 // 메인어코드, 노트
 async function getAccordsNotes(queryParams: string) {
   const changedEndPoint = endPoint.GET_ACCORDS_NOTES.replace(
@@ -62,7 +57,7 @@ async function getStatistics(queryParams: string) {
   return response.data;
 }
 
-// 코멘트 토픽
+// 코멘트 전체 조회
 async function getReviews(queryParams: string) {
   const changedEndPoint = endPoint.GET_REVIEWS.replace(
     "{PERFUME_ID}",

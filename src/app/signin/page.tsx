@@ -20,7 +20,6 @@ export default function SignInPage() {
 
   return (
     <S.Wrapper>
-      {/* <img src={logoImg} alt="로고이미지" /> */}
       <Image
         src={logoImg}
         layout="intrinsic"
