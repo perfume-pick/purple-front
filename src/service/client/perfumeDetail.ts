@@ -26,7 +26,9 @@ async function getAccordsNotes(queryParams: string) {
     FullRestResponse<RestResponseType<PerfumeAccordsNote>>
   >(`${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`);
 
-  return response.data;
+  if (response.data) {
+    return response.data.responseData;
+  }
 }
 
 // 프라그란티카 평가 정보
@@ -40,7 +42,9 @@ async function getFragranticaEvaluation(queryParams: string) {
     FullRestResponse<RestResponseType<FragranticaEvaluation>>
   >(`${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`);
 
-  return response.data;
+  if (response.data) {
+    return response.data.responseData;
+  }
 }
 
 // 코멘트 토픽

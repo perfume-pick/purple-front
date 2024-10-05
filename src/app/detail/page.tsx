@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IosShareIcon from "@mui/icons-material/IosShare";
@@ -8,6 +9,9 @@ import DetailPageContent from "./_components";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 
 function DetailPage() {
+  const searchParams = useSearchParams();
+  const perfumeId = searchParams.get("perfumeId");
+
   return (
     <S.Wrapper>
       <NavHeader
@@ -26,7 +30,7 @@ function DetailPage() {
         </div>
       </NavHeader>
       <HeaderBottomContents>
-        <DetailPageContent />
+        <DetailPageContent perfumeId={perfumeId} />
       </HeaderBottomContents>
     </S.Wrapper>
   );

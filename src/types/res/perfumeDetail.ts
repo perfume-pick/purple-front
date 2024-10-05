@@ -3,28 +3,30 @@ export interface PerfumeAccordsNote {
   notes: NoteInfo[];
 }
 
-interface AccordInfo {
+export interface AccordInfo {
   order: number;
   accordName: string;
   accordValue: number;
 }
 
-interface NoteInfo {
+export interface NoteInfo {
   name: string;
-  type: "TOP" | "BOTTOM" | "MIDDLE";
+  type: NoteType;
 }
+
+export type NoteType = "TOP" | "MIDDLE" | "BASE";
 
 export interface FragranticaEvaluation {
   fragranticaEvaluation: FragranticaEvaluationItem[];
 }
 
-interface FragranticaEvaluationItem {
+export interface FragranticaEvaluationItem {
   fieldCode: string;
   fieldName: string;
   mostVotedOptions: mostVotedOptionInfo[];
 }
 
-interface mostVotedOptionInfo {
+export interface mostVotedOptionInfo {
   optionCode: string;
   optionName: string;
   votePercent: number;

@@ -12,7 +12,11 @@ import {
 } from "@/constant/detail.const";
 import { scrollRef } from "@/utils/scrollUtil";
 
-function DetailPageContent() {
+type Props = {
+  perfumeId: string;
+};
+
+function DetailPageContent({ perfumeId }: Props) {
   const [selectedComponent, setSelectedComponent] =
     useState<SelectButtonValueType>("INFO");
   const infoRef = useRef<HTMLDivElement>(null);
@@ -60,7 +64,7 @@ function DetailPageContent() {
         ))}
       </S.SelectBtnWrapper>
       {/* {renderSelectedComponent()} */}
-      <DetailInfo ref={infoRef} />
+      <DetailInfo ref={infoRef} perfumeId={perfumeId} />
       <DetailComment ref={commentRef} />
     </>
   );

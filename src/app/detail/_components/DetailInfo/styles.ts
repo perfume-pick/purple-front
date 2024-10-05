@@ -25,7 +25,6 @@ const GraphWrap = styled.div`
   margin: 2rem 0;
 
   & > div {
-    background-color: #bc4d0f;
     display: flex;
     height: 2.4rem;
     align-items: center;
@@ -52,6 +51,7 @@ const NoteContent = styled.div`
     margin-right: 1rem;
     color: ${theme.color.textDisabled};
     font-weight: ${theme.fontWeight.semiBold};
+    white-space: nowrap;
   }
 `;
 
@@ -75,14 +75,37 @@ const InfoWrap = styled.div`
   }
 
   & > div {
-    height: 3.2rem;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border-radius: 2rem;
-    background-color: ${theme.color.grayColor[500]};
-    padding: 1.5rem;
+    &.outer-bar {
+      position: relative;
+      height: 3.2rem;
+      width: 100%;
+      border-radius: 2rem;
+      background-color: ${theme.color.grayColor[500]};
+      padding: 1.5rem;
+      overflow: hidden;
+
+      .inner-bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20%;
+        height: 100%;
+        background-color: blue;
+        border-radius: 2rem;
+        align-content: center;
+
+        p {
+          text-indent: 1rem;
+          color: ${theme.color.white};
+        }
+      }
+    }
   }
+`;
+
+const SeasonGraph = styled.div`
+  display: flex;
+  column-gap: 2.4rem;
 `;
 
 export const S = {
@@ -96,4 +119,5 @@ export const S = {
   EvaluationWrap,
   EvaluationInfo,
   InfoWrap,
+  SeasonGraph,
 };

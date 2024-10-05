@@ -29,8 +29,8 @@ const SearchPage = () => {
     queryKey: ["searchPerfume", debouncedKeyword],
     queryFn: () => getSearchPerfumes(debouncedKeyword),
     enabled: !!debouncedKeyword,
-    staleTime: 5 * 60 * 1000, // 5분 동안 캐싱
     // keepPreviousData: true,
+    retry: false,
   });
 
   // 최근 검색어
@@ -42,6 +42,7 @@ const SearchPage = () => {
     queryFn: () => getCurrentSearchHistory(),
     refetchOnWindowFocus: false,
     refetchOnMount: true,
+    retry: false,
   });
 
   // 최근 본 상품
@@ -51,8 +52,8 @@ const SearchPage = () => {
   } = useQuery({
     queryKey: ["visitHistories"],
     queryFn: () => getCurrentVisitHistory(),
-    refetchOnWindowFocus: false,
     refetchOnMount: true,
+    retry: false,
   });
 
   const searchHistories =
