@@ -7,66 +7,20 @@ type Props = {
   perfumeList: VisitHistory[];
 };
 
-const ProductHorizontalScroll = (perfumeList: Props) => {
-  console.log(perfumeList);
+const ProductHorizontalScroll = ({ perfumeList }: Props) => {
   return (
     <S.Wrapper>
       <ul>
-        <ProductCard
-          type="SCROLL"
-          perfumeInfo={{
-            perfumeId: "2024092116592374500",
-            perfumeName: "Gabrielle Essence Chanel",
-            brandName: "샤넬",
-            imageUrl: "https://fimgs.net/mdimg/perfume/m.56076.jpg",
-            averageScore: 0,
-            accordName: "white floral",
-          }}
-        />
-        <ProductCard
-          type="SCROLL"
-          perfumeInfo={{
-            perfumeId: "2024092116592374500",
-            perfumeName: "Gabrielle Essence Chanel",
-            brandName: "샤넬",
-            imageUrl: "https://fimgs.net/mdimg/perfume/m.56076.jpg",
-            averageScore: 0,
-            accordName: "white floral",
-          }}
-        />
-        <ProductCard
-          type="SCROLL"
-          perfumeInfo={{
-            perfumeId: "2024092116592374500",
-            perfumeName: "Gabrielle Essence Chanel",
-            brandName: "샤넬",
-            imageUrl: "https://fimgs.net/mdimg/perfume/m.56076.jpg",
-            averageScore: 0,
-            accordName: "white floral",
-          }}
-        />
-        <ProductCard
-          type="SCROLL"
-          perfumeInfo={{
-            perfumeId: "2024092116592374500",
-            perfumeName: "Gabrielle Essence Chanel",
-            brandName: "샤넬",
-            imageUrl: "https://fimgs.net/mdimg/perfume/m.56076.jpg",
-            averageScore: 0,
-            accordName: "white floral",
-          }}
-        />
-        <ProductCard
-          type="SCROLL"
-          perfumeInfo={{
-            perfumeId: "2024092116592374500",
-            perfumeName: "Gabrielle Essence Chanel",
-            brandName: "샤넬",
-            imageUrl: "https://fimgs.net/mdimg/perfume/m.56076.jpg",
-            averageScore: 0,
-            accordName: "white floral",
-          }}
-        />
+        {perfumeList &&
+          perfumeList.map((item: VisitHistory) => {
+            return (
+              <ProductCard
+                key={item.order}
+                type="SCROLL"
+                perfumeInfo={item.perfume}
+              />
+            );
+          })}
       </ul>
     </S.Wrapper>
   );

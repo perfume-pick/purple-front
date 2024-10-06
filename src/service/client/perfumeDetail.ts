@@ -13,6 +13,7 @@ const endPoint = {
     "/perpicks/perfumes/{PERFUME_ID}/fragrantica-evaluation",
   GET_STATISTICS: "/perpicks/perfumes/{PERFUME_ID}/statistics",
   GET_REVIEWS: "/perpicks/perfumes/{PERFUME_ID}/reviews",
+  POST_VISIT_HISTORY: "/perpicks/users/my/visit-history/{PERFUME_ID}",
 };
 
 // 메인어코드, 노트
@@ -75,4 +76,23 @@ async function getReviews(queryParams: string) {
   return response.data;
 }
 
-export { getAccordsNotes, getFragranticaEvaluation, getStatistics, getReviews };
+// 최근 본 상품 기록 저장
+async function postVisitHistory(queryParams: string) {
+  const changedEndPoint = endPoint.POST_VISIT_HISTORY.replace(
+    "{PERFUME_ID}",
+    queryParams,
+  );
+  const response = await clientHttp.post(
+    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`,
+  );
+
+  return response.data;
+}
+
+export {
+  getAccordsNotes,
+  getFragranticaEvaluation,
+  getStatistics,
+  getReviews,
+  postVisitHistory,
+};

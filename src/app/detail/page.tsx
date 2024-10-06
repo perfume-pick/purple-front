@@ -9,6 +9,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import DetailPageContent from "./_components";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
+import { postVisitHistory } from "@/service/client/perfumeDetail";
 
 function DetailPage() {
   const { removePerfumeInfo } = usePerfumeDetailStore();
@@ -16,6 +17,7 @@ function DetailPage() {
   const perfumeId = searchParams.get("perfumeId");
 
   useEffect(() => {
+    postVisitHistory(perfumeId);
     return () => {
       // 컴포넌트가 언마운트되기 직전에 향수 상세정보 데이터 삭제
       removePerfumeInfo();
