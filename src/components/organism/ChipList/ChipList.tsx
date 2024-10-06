@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import Chip from "@/components/molecule/Chip/Chip";
+import Chip from "@/components/molecule/Chip/Chip";
 import { SearchHistory } from "@/types/res/searchPerfume";
 
 type Props = {
