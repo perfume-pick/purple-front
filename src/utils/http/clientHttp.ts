@@ -3,6 +3,9 @@ import axios, { AxiosError } from "axios";
 import { httpConfigHelper, httpParserHelper } from "@/utils/http/helper";
 import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 
+let isRefreshing = false; // 리프레시 토큰이 진행 중인지 여부
+let refreshSubscribers: ((token: string) => void)[] = []; // 대기 중인 요청을 저장하는 큐
+
 const getRefreshToken = async (): Promise<string | void> => {
   try {
     const originToken = localStorage.getItem(TOKEN_SAVE_KEY);
@@ -46,12 +49,24 @@ const logout = () => {
   }, 1000);
 };
 
+// 리프레시가 완료되면 대기 중인 요청들을 처리
+const onTokenRefreshed = (newToken: string) => {
+  refreshSubscribers.forEach(callback => callback(newToken));
+  refreshSubscribers = [];
+};
+
+// 리프레시 대기 중인 요청을 추가
+const addRefreshSubscriber = (callback: (token: string) => void) => {
+  refreshSubscribers.push(callback);
+};
+
 const clientHttp = axios.create({
   baseURL: process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL,
 });
 
 // 요청을 보내기 전 실행
 clientHttp.interceptors.request.use(httpConfigHelper, () => {});
+
 // 요청을 받은 후 실행
 clientHttp.interceptors.response.use(
   httpParserHelper,
@@ -69,27 +84,36 @@ clientHttp.interceptors.response.use(
     // }
 
     // 토큰 만료일 때
-    try {
-      // config.sent = true;
-      // 토큰 재설정
-      const jwtToken = await getRefreshToken();
+    // if (error.response?.status === 401) {
+    if (!isRefreshing) {
+      // 토큰 리프레시가 진행 중이 아니면 리프레시 시작
+      isRefreshing = true;
+      try {
+        const jwtToken = await getRefreshToken();
 
-      if (jwtToken && config) {
-        config.headers.Authorization = `Bearer ${jwtToken}`;
+        if (jwtToken) {
+          onTokenRefreshed(jwtToken);
+          isRefreshing = false;
+        }
+      } catch (refreshError) {
+        isRefreshing = false;
+        logout();
+        return Promise.reject(refreshError);
       }
-
-      // 실패한 요청을 다시 시도
-      if (config) {
-        // config가 존재할 때만 요청 시도
-        return clientHttp.request(config);
-      } else {
-        // config가 undefined일 경우 처리
-        return Promise.reject(new Error("Request configuration is undefined"));
-      }
-    } catch (refreshError) {
-      logout();
-      return Promise.reject(refreshError);
     }
+
+    // 대기 중인 요청을 큐에 추가
+    return new Promise(resolve => {
+      addRefreshSubscriber((newToken: string) => {
+        if (config) {
+          config.headers.Authorization = `Bearer ${newToken}`;
+          resolve(clientHttp.request(config));
+        }
+      });
+    });
+    // }
+
+    // return Promise.reject(error);
   },
 );
 

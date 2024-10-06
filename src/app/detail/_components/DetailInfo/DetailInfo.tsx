@@ -32,7 +32,7 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
   ({ perfumeId }, ref) => {
     // 향수 상세 정보 조회
     const { data: accordNoteInfo } = useQuery({
-      queryKey: ["accordNoteInfo"],
+      queryKey: ["accordNoteInfo", perfumeId],
       queryFn: () => getAccordsNotes(perfumeId),
       enabled: !!perfumeId,
       retry: false,
@@ -40,7 +40,7 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
 
     // 프라그란티카 평가 상세 정보 조회
     const { data: fragranticaEvaluationInfo } = useQuery({
-      queryKey: ["fragranticaEvaluationInfo"],
+      queryKey: ["fragranticaEvaluationInfo", perfumeId],
       queryFn: () => getFragranticaEvaluation(perfumeId),
       enabled: !!perfumeId,
       retry: false,
