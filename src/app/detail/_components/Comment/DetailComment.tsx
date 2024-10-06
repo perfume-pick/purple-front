@@ -1,20 +1,42 @@
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-// import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import React, { forwardRef } from "react";
+// import { useQuery } from "@tanstack/react-query";
 import { S } from "./styles";
 import Topic from "./Topic/Topic";
 import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
 import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
 import CommentBox from "@/components/organism/CommentBox/CommentBox";
 import DetailCommentBox from "@/components/organism/CommentBox/DetailCommentBox";
+// import { getReviews, getStatistics } from "@/service/client/perfumeDetail";
 
 interface DetailCommentProps {
-  // 필요한 props 정의
+  perfumeId: string;
 }
 
 const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
-  (props, ref) => {
+  ({ perfumeId }, ref) => {
+    {
+      /**TODO: 코멘트 데이터가 없어, 임시 주석 처리 */
+    }
+    // 코멘트 토픽 조회
+    // const { data: statisticsInfo } = useQuery({
+    //   queryKey: ["statisticsInfo", perfumeId],
+    //   queryFn: () => getStatistics(perfumeId),
+    //   enabled: !!perfumeId,
+    //   retry: false,
+    // });
+
+    // 코멘트 토픽 조회
+    // const { data: reviewsInfo } = useQuery({
+    //   queryKey: ["reviewsInfo", perfumeId],
+    //   queryFn: () => getReviews(perfumeId),
+    //   enabled: !!perfumeId,
+    //   retry: false,
+    // });
+
+    // console.log(statisticsInfo);
+    // console.log(reviewsInfo);
+
     const chartData = [
       {
         rate: 5,

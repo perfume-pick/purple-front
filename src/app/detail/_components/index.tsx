@@ -65,7 +65,7 @@ function DetailPageContent({ perfumeId }: Props) {
       </S.SelectBtnWrapper>
       {/* {renderSelectedComponent()} */}
       <DetailInfo ref={infoRef} perfumeId={perfumeId} />
-      <DetailComment ref={commentRef} />
+      <DetailComment perfumeId={perfumeId} ref={commentRef} />
     </>
   );
 }
