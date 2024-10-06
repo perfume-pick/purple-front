@@ -14,6 +14,7 @@ const BannerWrapper = styled.div`
 const BannerImage = styled.img`
   width: 100%;
   height: 40rem;
+  object-fit: contain;
 `;
 
 const BannerContentWrap = styled.div`

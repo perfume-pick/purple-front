@@ -1,16 +1,26 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
+import styled from "@emotion/styled";
+import { useEffect } from "react";
+import { usePerfumeDetailStore } from "@/store/perfumeDetailStore";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IosShareIcon from "@mui/icons-material/IosShare";
-import styled from "@emotion/styled";
 import DetailPageContent from "./_components";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 
 function DetailPage() {
+  const { removePerfumeInfo } = usePerfumeDetailStore();
   const searchParams = useSearchParams();
   const perfumeId = searchParams.get("perfumeId");
+
+  useEffect(() => {
+    return () => {
+      // 컴포넌트가 언마운트되기 직전에 향수 상세정보 데이터 삭제
+      removePerfumeInfo();
+    };
+  }, []);
 
   return (
     <S.Wrapper>
