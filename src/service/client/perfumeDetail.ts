@@ -59,7 +59,9 @@ async function getStatistics(queryParams: string) {
     FullRestResponse<RestResponseType<Statistic>>
   >(`${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`);
 
-  return response.data;
+  if (response.data) {
+    return response.data.responseData;
+  }
 }
 
 // 코멘트 전체 조회
@@ -73,7 +75,9 @@ async function getReviews(queryParams: string) {
     FullRestResponse<RestResponseType<Reviews>>
   >(`${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`);
 
-  return response.data;
+  if (response.data) {
+    return response.data.responseData;
+  }
 }
 
 // 최근 본 상품 기록 저장

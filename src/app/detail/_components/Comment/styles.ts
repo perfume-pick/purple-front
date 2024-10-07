@@ -119,6 +119,10 @@ const ChartWrap = styled.div`
   height: 6.6rem;
 `;
 
+const TopicWrap = styled.div`
+  margin: 2rem 1.6rem;
+`;
+
 export const S = {
   Wrapper,
   TotalComment,
@@ -133,4 +137,5 @@ export const S = {
   Rating,
   ReviewContent,
   ChartWrap,
+  TopicWrap,
 };

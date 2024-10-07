@@ -1,13 +1,14 @@
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import React, { forwardRef } from "react";
-// import { useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { S } from "./styles";
 import Topic from "./Topic/Topic";
 import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
 import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
 import CommentBox from "@/components/organism/CommentBox/CommentBox";
 import DetailCommentBox from "@/components/organism/CommentBox/DetailCommentBox";
-// import { getReviews, getStatistics } from "@/service/client/perfumeDetail";
+import { getReviews, getStatistics } from "@/service/client/perfumeDetail";
+import { EvaluationStatisticInfo } from "@/types/res/perfumeDetail";
 
 interface DetailCommentProps {
   perfumeId: string;
@@ -19,12 +20,12 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
       /**TODO: 코멘트 데이터가 없어, 임시 주석 처리 */
     }
     // 코멘트 토픽 조회
-    // const { data: statisticsInfo } = useQuery({
-    //   queryKey: ["statisticsInfo", perfumeId],
-    //   queryFn: () => getStatistics(perfumeId),
-    //   enabled: !!perfumeId,
-    //   retry: false,
-    // });
+    const { data: statisticsInfo } = useQuery({
+      queryKey: ["statisticsInfo", perfumeId],
+      queryFn: () => getStatistics(perfumeId),
+      enabled: !!perfumeId,
+      // retry: false,
+    });
 
     // 코멘트 토픽 조회
     // const { data: reviewsInfo } = useQuery({
@@ -34,7 +35,6 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
     //   retry: false,
     // });
 
-    // console.log(statisticsInfo);
     // console.log(reviewsInfo);
 
     const chartData = [
@@ -77,14 +77,35 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
         </S.TotalComment>
         <S.AverageScoreWrap>
           <S.Score>
-            <div>4.8</div>
-            <ReadonlyRating rate={4.8} size={23} gap={0.7} />
+            <div>
+              {statisticsInfo && statisticsInfo.starRatingStatistics[0].score}
+            </div>
+            <ReadonlyRating
+              rate={
+                statisticsInfo && statisticsInfo.starRatingStatistics[0].score
+              }
+              size={23}
+              gap={0.7}
+            />
           </S.Score>
           <S.ChartWrap>
             <RatingDistributionChart chartData={chartData} />
           </S.ChartWrap>
         </S.AverageScoreWrap>
-        <Topic />
+        <S.TopicWrap>
+          {statisticsInfo &&
+            statisticsInfo.evaluationStatistics.map(
+              (item: EvaluationStatisticInfo) => {
+                return (
+                  <Topic
+                    key={item.fieldCode}
+                    fieldName={item.fieldName}
+                    evaluationOptions={item.evaluationOptions}
+                  />
+                );
+              },
+            )}
+        </S.TopicWrap>
         <S.TotalComment>
           <S.CommentWrap>
             <S.CommentTitle>

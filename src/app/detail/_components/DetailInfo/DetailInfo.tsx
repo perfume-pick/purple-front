@@ -129,35 +129,22 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
             <span>프라그란티카 평가</span>
           </S.InfoTitle>
           <S.EvaluationInfo>
-            {/* {Object.values(EvaluationType).map((title, idx) => (
-              <S.InfoWrap key={idx}>
-                <span>{title}</span>
-                <div>그래프</div>
-              </S.InfoWrap>
-            ))} */}
             {fragranticaEvaluationInfo &&
-              fragranticaEvaluationInfo.fragranticaEvaluation.map(
-                (item: FragranticaEvaluationItem) => {
-                  if (item.fieldCode === "EF003") {
-                    return (
-                      <S.InfoWrap key={item.fieldCode}>
-                        <span>{item.fieldName}</span>
-                        <S.SeasonGraph>
-                          {item.mostVotedOptions.map(
-                            (votedOption: mostVotedOptionInfo) => {
-                              return (
-                                <SeasonGraph
-                                  infoData={votedOption}
-                                  key={votedOption.optionCode}
-                                />
-                              );
-                            },
-                          )}
-                        </S.SeasonGraph>
-                      </S.InfoWrap>
-                    );
-                  } else {
-                    return (
+              (() => {
+                const filteredItems =
+                  fragranticaEvaluationInfo.fragranticaEvaluation.filter(
+                    (item: FragranticaEvaluationItem) =>
+                      item.fieldCode !== "EF003",
+                  );
+                const lastItem =
+                  fragranticaEvaluationInfo.fragranticaEvaluation.find(
+                    (item: FragranticaEvaluationItem) =>
+                      item.fieldCode === "EF003",
+                  );
+
+                return (
+                  <>
+                    {filteredItems.map((item: FragranticaEvaluationItem) => (
                       <S.InfoWrap key={item.fieldCode}>
                         <span>{item.fieldName}</span>
                         <div className="outer-bar">
@@ -172,10 +159,26 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
                           </div>
                         </div>
                       </S.InfoWrap>
-                    );
-                  }
-                },
-              )}
+                    ))}
+
+                    {lastItem && (
+                      <S.InfoWrap key={lastItem.fieldCode}>
+                        <span>{lastItem.fieldName}</span>
+                        <S.SeasonGraph>
+                          {lastItem.mostVotedOptions.map(
+                            (votedOption: mostVotedOptionInfo) => (
+                              <SeasonGraph
+                                infoData={votedOption}
+                                key={votedOption.optionCode}
+                              />
+                            ),
+                          )}
+                        </S.SeasonGraph>
+                      </S.InfoWrap>
+                    )}
+                  </>
+                );
+              })()}
           </S.EvaluationInfo>
         </S.EvaluationWrap>
       </S.Wrapper>

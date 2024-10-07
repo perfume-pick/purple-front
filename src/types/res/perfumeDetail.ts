@@ -42,13 +42,13 @@ interface StarRatingStatisticInfo {
   votePercent: number;
 }
 
-interface EvaluationStatisticInfo {
+export interface EvaluationStatisticInfo {
   fieldCode: string;
   fieldName: string;
   evaluationOptions: EvaluationOptionInfo[];
 }
 
-interface EvaluationOptionInfo {
+export interface EvaluationOptionInfo {
   order: number;
   optionCode: string;
   optionName: string;
