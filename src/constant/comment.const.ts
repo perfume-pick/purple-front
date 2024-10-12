@@ -156,6 +156,15 @@ export const FieldDefinitions = {
     name: "textReview",
     type: "text",
   },
+  mood: {
+    label: "향수에 어울리는 분위기",
+    name: "mood",
+    type: "checkbox",
+    options: MoodCheckboxList,
+  },
+};
+
+export const FieldDefinitionsWithCode = {
   persistence: {
     fieldCode: "EF001",
     fieldName: "지속력",
@@ -183,11 +192,5 @@ export const FieldDefinitions = {
     name: "gender",
     type: "radio",
     options: GenderOptions,
-  },
-  mood: {
-    label: "향수에 어울리는 분위기",
-    name: "mood",
-    type: "checkbox",
-    options: MoodCheckboxList,
   },
 };
