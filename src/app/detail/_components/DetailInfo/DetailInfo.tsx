@@ -1,6 +1,5 @@
 "use client";
 
-import { EvaluationType } from "@/constant/detail.const";
 import { S } from "./styles";
 import React, { forwardRef, useMemo } from "react";
 import {
@@ -17,6 +16,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { PERFUME_ACCORD_COLORS } from "@/constant/perfumeAccord/perfumeAccordColors";
 import SeasonGraph from "../SeasonGraph/SeasonGraph";
+import { FieldDefinitionsWithCode } from "@/constant/comment.const";
 
 interface DetailInfoProps {
   perfumeId: string;
@@ -151,7 +151,7 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
                           <div
                             className="inner-bar"
                             style={{
-                              backgroundColor: `#${item.mostVotedOptions[0].optionCode}`,
+                              backgroundColor: `${fragranticaEvaluationColor(item)}`,
                               width: `${item.mostVotedOptions[0].votePercent}%`,
                             }}
                           >
@@ -188,3 +188,14 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
 
 DetailInfo.displayName = "DetailInfo";
 export default DetailInfo;
+
+const fragranticaEvaluationColor = (
+  evaluationInfo: FragranticaEvaluationItem,
+): string => {
+  const targetDataColor = Object.values(FieldDefinitionsWithCode)
+    .filter(field => field.fieldCode === evaluationInfo.fieldCode)[0]
+    .options.find(
+      item => item.optionCode === evaluationInfo.mostVotedOptions[0].optionCode,
+    )?.color;
+  return targetDataColor ?? "";
+};

@@ -90,7 +90,6 @@ const InfoWrap = styled.div`
         top: 0;
         width: 20%;
         height: 100%;
-        background-color: blue;
         border-radius: 2rem;
         align-content: center;
 

@@ -9,6 +9,10 @@ import CommentBox from "@/components/organism/CommentBox/CommentBox";
 import DetailCommentBox from "@/components/organism/CommentBox/DetailCommentBox";
 import { getReviews, getStatistics } from "@/service/client/perfumeDetail";
 import { EvaluationStatisticInfo } from "@/types/res/perfumeDetail";
+import { USER_COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
+import { usePerfumeDetailStore } from "@/store/perfumeDetailStore";
+import { PerfumeDetailStore } from "@/store/types";
+import { DetailPerfumeInfo } from "@/types/res/perfume";
 
 interface DetailCommentProps {
   perfumeId: string;
@@ -16,9 +20,9 @@ interface DetailCommentProps {
 
 const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
   ({ perfumeId }, ref) => {
-    {
-      /**TODO: 코멘트 데이터가 없어, 임시 주석 처리 */
-    }
+    const currentPerfumeInfo: DetailPerfumeInfo = usePerfumeDetailStore(
+      (state: PerfumeDetailStore) => state.currentPerfumeInfo,
+    );
     // 코멘트 토픽 조회
     const { data: statisticsInfo } = useQuery({
       queryKey: ["statisticsInfo", perfumeId],
@@ -27,15 +31,22 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
       // retry: false,
     });
 
-    // 코멘트 토픽 조회
-    // const { data: reviewsInfo } = useQuery({
-    //   queryKey: ["reviewsInfo", perfumeId],
-    //   queryFn: () => getReviews(perfumeId),
-    //   enabled: !!perfumeId,
-    //   retry: false,
-    // });
+    console.log(statisticsInfo);
 
-    // console.log(reviewsInfo);
+    // 코멘트 토픽 조회
+    const { data: reviewsInfo } = useQuery({
+      queryKey: ["reviewsInfo", perfumeId],
+      queryFn: () =>
+        getReviews(
+          perfumeId,
+          USER_COMMENT_FILTER_LIST.filter(item => item.title === "최신순")[0]
+            .code,
+        ),
+      enabled: !!perfumeId,
+      retry: false,
+    });
+
+    console.log(reviewsInfo);
 
     const chartData = [
       {
@@ -77,13 +88,9 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
         </S.TotalComment>
         <S.AverageScoreWrap>
           <S.Score>
-            <div>
-              {statisticsInfo && statisticsInfo.starRatingStatistics[0].score}
-            </div>
+            <div>{currentPerfumeInfo.averageScore ?? 0}</div>
             <ReadonlyRating
-              rate={
-                statisticsInfo && statisticsInfo.starRatingStatistics[0].score
-              }
+              rate={currentPerfumeInfo.averageScore ?? 0}
               size={23}
               gap={0.7}
             />
@@ -93,7 +100,7 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
           </S.ChartWrap>
         </S.AverageScoreWrap>
         <S.TopicWrap>
-          {statisticsInfo &&
+          {/* {statisticsInfo &&
             statisticsInfo.evaluationStatistics.map(
               (item: EvaluationStatisticInfo) => {
                 return (
@@ -104,13 +111,13 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
                   />
                 );
               },
-            )}
+            )} */}
         </S.TopicWrap>
         <S.TotalComment>
           <S.CommentWrap>
             <S.CommentTitle>
               <span>코멘트</span>
-              <span>(25)</span>
+              <span>({reviewsInfo && reviewsInfo.reviews.length})</span>
             </S.CommentTitle>
             <S.CommentMsg>
               동일한 제품에 대해 작성된 코멘트로, 향수 용량은 다를 수 있습니다.
@@ -124,7 +131,10 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
         <CommentBox />
         <DetailCommentBox />
         <S.CommentButtonWrap>
-          <button> 23개 코멘트 전체보기</button>
+          <button>
+            {" "}
+            {reviewsInfo && reviewsInfo.reviews.length}개 코멘트 전체보기
+          </button>
         </S.CommentButtonWrap>
       </S.Wrapper>
     );

@@ -1,12 +1,19 @@
 import { mostVotedOptionInfo } from "@/types/res/perfumeDetail";
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "@emotion/styled";
+import { FieldDefinitionsWithCode } from "@/constant/comment.const";
 
 type Props = {
   infoData: mostVotedOptionInfo;
 };
 
 const SeasonGraph = ({ infoData }: Props) => {
+  const seasonEvalutaionColor = useMemo(() => {
+    return FieldDefinitionsWithCode.season.options.filter(
+      item => item.optionCode === infoData.optionCode,
+    )[0].color;
+  }, [infoData]);
+
   return (
     <S.Wrapper>
       <S.ImgWrap>
@@ -19,7 +26,7 @@ const SeasonGraph = ({ infoData }: Props) => {
         <div
           style={{
             width: `${infoData.votePercent}%`,
-            backgroundColor: `${"red"}`,
+            backgroundColor: `${seasonEvalutaionColor}`,
           }}
         ></div>
       </S.BarGraph>
