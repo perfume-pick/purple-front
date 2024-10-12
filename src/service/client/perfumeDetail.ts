@@ -13,7 +13,7 @@ const endPoint = {
     "/perpicks/perfumes/{PERFUME_ID}/fragrantica-evaluation",
   GET_STATISTICS: "/perpicks/perfumes/{PERFUME_ID}/statistics",
   GET_REVIEWS: "/perpicks/perfumes/{PERFUME_ID}/reviews",
-  POST_VISIT_HISTORY: "/perpicks/users/my/visit-history/{PERFUME_ID}",
+  POST_VISIT_HISTORY: "/perpicks/users/my/visit-histories/{PERFUME_ID}",
 };
 
 // 메인어코드, 노트
@@ -65,7 +65,7 @@ async function getStatistics(queryParams: string) {
 }
 
 // 코멘트 전체 조회
-async function getReviews(queryParams: string) {
+async function getReviews(queryParams: string, sortType: string) {
   const changedEndPoint = endPoint.GET_REVIEWS.replace(
     "{PERFUME_ID}",
     queryParams,
@@ -73,7 +73,9 @@ async function getReviews(queryParams: string) {
   const response = await clientHttp.get<
     never,
     FullRestResponse<RestResponseType<Reviews>>
-  >(`${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`);
+  >(
+    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}?sort-type=${sortType}`,
+  );
 
   if (response.data) {
     return response.data.responseData;
