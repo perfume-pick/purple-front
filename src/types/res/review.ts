@@ -2,7 +2,7 @@ export interface Reviews {
   reviews: Review[];
 }
 
-interface Review {
+export interface Review {
   reviewId: string;
   nickname: string;
   imageUrl: string;
@@ -14,6 +14,7 @@ interface Review {
   isComplained: boolean;
   isLiked: boolean;
   likeCount: number;
+  reviewType: string;
 }
 
 interface PerfumeEvaluationInfo {

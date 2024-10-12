@@ -4,9 +4,8 @@ import { theme } from "@/styles/theme";
 
 type Props = {
   chartData: {
-    rate: number;
-    percentage: number;
-    userNumber: number;
+    score: number;
+    votePercent: number;
   }[];
 };
 
@@ -14,23 +13,23 @@ const RatingDistributionChart = ({ chartData }: Props) => {
   const modifiedArray = useMemo(() => {
     const newArray = [...chartData];
     // 배열을 변경하는 로직
-    newArray.sort((a, b) => b.percentage - a.percentage);
+    newArray.sort((a, b) => b.votePercent - a.votePercent);
     return newArray;
   }, [chartData]);
 
   return (
     <S.ChartWrap>
       {modifiedArray.map((chartItem, index) => (
-        <li key={chartItem.rate}>
-          {index === 0 && <S.Tooltip>NN</S.Tooltip>}
+        <li key={chartItem.score}>
+          {index === 0 && <S.Tooltip>{chartItem.votePercent}</S.Tooltip>}
           <S.LineChart className={index === 0 ? "first" : ""}>
             <S.LineChartInner
-              heightPercent={chartItem.percentage}
+              heightPercent={chartItem.votePercent}
             ></S.LineChartInner>
           </S.LineChart>
           <S.ChartText
             className={index === 0 ? "first" : ""}
-          >{`${chartItem.rate}점`}</S.ChartText>
+          >{`${chartItem.score}점`}</S.ChartText>
         </li>
       ))}
     </S.ChartWrap>
@@ -64,6 +63,7 @@ const Tooltip = styled.div`
   color: ${theme.color.white};
   background: url("/assets/images/text_bubble.png") no-repeat center top / 100%;
   margin-bottom: 0.4rem;
+  text-align: center;
 `;
 
 const LineChart = styled.div`
