@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { useEffect } from "react";
 import { usePerfumeDetailStore } from "@/store/perfumeDetailStore";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+// import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import IosShareIcon from "@mui/icons-material/IosShare";
 import DetailPageContent from "./_components";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
@@ -37,7 +37,7 @@ function DetailPage() {
             display: "flex",
           }}
         >
-          <FavoriteBorderIcon sx={{ fontSize: "2.4rem" }} />
+          {/* <FavoriteBorderIcon sx={{ fontSize: "2.4rem" }} /> */}
           <IosShareIcon sx={{ fontSize: "2.4rem", marginLeft: "2.4rem" }} />
         </div>
       </NavHeader>
