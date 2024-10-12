@@ -20,6 +20,10 @@ export const PERFUME_ACCORD_COLORS = [
     hexColor: "#2F94D5",
   },
   {
+    accordName: "salty",
+    hexColor: "#F0FFFB",
+  },
+  {
     accordName: "marine",
     hexColor: "#58A3D3",
   },
