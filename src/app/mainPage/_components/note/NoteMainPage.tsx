@@ -1,6 +1,6 @@
 "use client";
 
-import Banner from "@/components/banner/banner";
+import Banner from "@/components/banner/Banner";
 import { S } from "../../styles";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 // import { useEffect, useState } from "react";
