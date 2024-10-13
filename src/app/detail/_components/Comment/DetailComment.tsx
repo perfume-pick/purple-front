@@ -2,17 +2,19 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import React, { forwardRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { S } from "./styles";
-import Topic from "./Topic/Topic";
-import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
-import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
-import CommentBox from "@/components/organism/CommentBox/CommentBox";
-import DetailCommentBox from "@/components/organism/CommentBox/DetailCommentBox";
 import { getReviews, getStatistics } from "@/service/client/perfumeDetail";
 import { EvaluationStatisticInfo } from "@/types/res/perfumeDetail";
 import { USER_COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
 import { usePerfumeDetailStore } from "@/store/perfumeDetailStore";
 import { PerfumeDetailStore } from "@/store/types";
 import { DetailPerfumeInfo } from "@/types/res/perfume";
+import { Review } from "@/types/res/review";
+import { EvaluationOptionInfo } from "@/types/res/perfumeDetail";
+import Topic from "./Topic/Topic";
+import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
+import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
+import CommentBox from "@/components/organism/CommentBox/CommentBox";
+import DetailCommentBox from "@/components/organism/CommentBox/DetailCommentBox";
 
 interface DetailCommentProps {
   perfumeId: string;
@@ -31,8 +33,6 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
       // retry: false,
     });
 
-    console.log(statisticsInfo);
-
     // 코멘트 토픽 조회
     const { data: reviewsInfo } = useQuery({
       queryKey: ["reviewsInfo", perfumeId],
@@ -45,36 +45,6 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
       enabled: !!perfumeId,
       retry: false,
     });
-
-    console.log(reviewsInfo);
-
-    const chartData = [
-      {
-        rate: 5,
-        percentage: 65,
-        userNumber: 100,
-      },
-      {
-        rate: 4,
-        percentage: 10,
-        userNumber: 100,
-      },
-      {
-        rate: 3,
-        percentage: 8,
-        userNumber: 100,
-      },
-      {
-        rate: 2,
-        percentage: 2,
-        userNumber: 100,
-      },
-      {
-        rate: 1,
-        percentage: 15,
-        userNumber: 100,
-      },
-    ];
 
     return (
       <S.Wrapper ref={ref}>
@@ -96,22 +66,30 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
             />
           </S.Score>
           <S.ChartWrap>
-            <RatingDistributionChart chartData={chartData} />
+            <RatingDistributionChart
+              chartData={statisticsInfo?.starRatingStatistics ?? []}
+            />
           </S.ChartWrap>
         </S.AverageScoreWrap>
         <S.TopicWrap>
-          {/* {statisticsInfo &&
+          {statisticsInfo &&
             statisticsInfo.evaluationStatistics.map(
               (item: EvaluationStatisticInfo) => {
                 return (
-                  <Topic
-                    key={item.fieldCode}
-                    fieldName={item.fieldName}
-                    evaluationOptions={item.evaluationOptions}
-                  />
+                  item.evaluationOptions.filter(
+                    (option: EvaluationOptionInfo) => {
+                      option.votePercent > 0;
+                    },
+                  ).length > 0 && (
+                    <Topic
+                      key={item.fieldCode}
+                      fieldName={item.fieldName}
+                      evaluationOptions={item.evaluationOptions}
+                    />
+                  )
                 );
               },
-            )} */}
+            )}
         </S.TopicWrap>
         <S.TotalComment>
           <S.CommentWrap>
@@ -127,13 +105,17 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
             style={{ color: "#9b9b9e", fontSize: "1.2rem" }}
           />
         </S.TotalComment>
-        <CommentBox />
-        <CommentBox />
-        <DetailCommentBox />
+        {reviewsInfo?.reviews.map((review: Review) => {
+          return review.reviewType === "SIMPLE" ? (
+            <CommentBox key={review.reviewId} reviewInfo={review} />
+          ) : (
+            <DetailCommentBox key={review.reviewId} />
+          );
+        })}
         <S.CommentButtonWrap>
           <button>
             {" "}
-            {reviewsInfo && reviewsInfo.reviews.length}개 코멘트 전체보기
+            {reviewsInfo && reviewsInfo?.reviews.length}개 코멘트 전체보기
           </button>
         </S.CommentButtonWrap>
       </S.Wrapper>
