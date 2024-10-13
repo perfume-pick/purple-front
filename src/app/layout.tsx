@@ -2,6 +2,7 @@ import "./global.css";
 import type { Metadata } from "next";
 import ReactQueryProviders from "@/provider/reactQueryProviders";
 import { ReactNode } from "react";
+import MobileBottomNav from "@/components/mobileBottomNav/MobileBottomNav";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,7 +13,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
-        <ReactQueryProviders>{children}</ReactQueryProviders>
+        <ReactQueryProviders>
+          {children}
+          <MobileBottomNav />
+        </ReactQueryProviders>
       </body>
     </html>
   );
