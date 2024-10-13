@@ -1,5 +1,7 @@
+import { DetailPerfumeInfo } from "@/types/res/perfume";
+
 export type PerfumeDetailStore = {
-  currentPerfumeInfo: {};
-  setUpdatePerfumeInfo: (newPerfumeInfo: {}) => void;
+  currentPerfumeInfo: DetailPerfumeInfo;
+  updatePerfumeInfo: (newPerfumeInfo: DetailPerfumeInfo) => void;
   removePerfumeInfo: () => void;
 };

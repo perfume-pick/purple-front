@@ -16,7 +16,7 @@ const ProgressBar = ({
   return (
     <S.ProgressBarWrap style={{ height: `${height}` }}>
       <ProgressBarInner
-        style={{ width: `${progressValue}%`, barColor: barColor }}
+        style={{ width: `${progressValue}%`, backgroundColor: barColor }}
       ></ProgressBarInner>
     </S.ProgressBarWrap>
   );

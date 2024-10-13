@@ -17,12 +17,12 @@ function DetailPage() {
   const perfumeId = searchParams.get("perfumeId");
 
   useEffect(() => {
-    postVisitHistory(perfumeId);
+    perfumeId && postVisitHistory(perfumeId);
     return () => {
       // 컴포넌트가 언마운트되기 직전에 향수 상세정보 데이터 삭제
       removePerfumeInfo();
     };
-  }, []);
+  }, [perfumeId, removePerfumeInfo]);
 
   return (
     <S.Wrapper>
@@ -42,7 +42,7 @@ function DetailPage() {
         </div>
       </NavHeader>
       <HeaderBottomContents>
-        <DetailPageContent perfumeId={perfumeId} />
+        {perfumeId && <DetailPageContent perfumeId={perfumeId} />}
       </HeaderBottomContents>
     </S.Wrapper>
   );

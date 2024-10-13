@@ -7,7 +7,7 @@ import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
 import FilterBox from "@/components/organism/FilterBox/FilterBox";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
-import CommentBox from "@/components/organism/CommentBox/CommentBox";
+// import CommentBox from "@/components/organism/CommentBox/CommentBox";
 
 const CommentsPage = () => {
   return (
@@ -17,7 +17,7 @@ const CommentsPage = () => {
       </NavHeader>
       <HeaderBottomContents>
         <FilterBox filterList={USER_COMMENT_FILTER_LIST} />
-        <CommentBox />
+        {/* <CommentBox /> */}
       </HeaderBottomContents>
     </S.Wrapper>
   );
