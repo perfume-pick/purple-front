@@ -1,19 +1,29 @@
 import { S } from "./styles";
 import { FiberManualRecord, Star } from "@mui/icons-material";
+import { usePerfumeDetailStore } from "@/store/perfumeDetailStore";
+import { PerfumeDetailStore } from "@/store/types";
+import { DetailPerfumeInfo } from "@/types/res/perfume";
 
 function DetailPageBanner() {
+  const currentPerfumeInfo: DetailPerfumeInfo = usePerfumeDetailStore(
+    (state: PerfumeDetailStore) => state.currentPerfumeInfo,
+  );
+
   return (
     <S.BannerWrapper>
-      <S.BannerImage src={"/assets/images/test_image.png"} />
+      <S.BannerImage
+        src={currentPerfumeInfo.imageUrl}
+        alt={currentPerfumeInfo.perfumeName}
+      />
       <S.BannerContentWrap>
-        <span>바이레도</span>
-        <S.Title>모하비 고스트 오 드 퍼퓸</S.Title>
+        <span>{currentPerfumeInfo.brandName}</span>
+        <S.Title>{currentPerfumeInfo.perfumeName}</S.Title>
         <S.ScoreWrap>
           <Star style={{ color: "red", marginRight: "0.5rem" }} />
-          <div>4.8</div>
+          <div>{currentPerfumeInfo.averageScore}</div>
           <S.CategoryWrap>
             <FiberManualRecord style={{ width: "4px" }} />
-            <span>플로럴</span>
+            <span>{currentPerfumeInfo.accordName}</span>
           </S.CategoryWrap>
         </S.ScoreWrap>
       </S.BannerContentWrap>

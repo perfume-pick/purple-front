@@ -4,13 +4,19 @@ import styled from "@emotion/styled";
 
 type Props = {
   progressValue: number;
+  height?: string;
+  barColor?: string;
 };
 
-const ProgressBar = ({ progressValue }: Props) => {
+const ProgressBar = ({
+  progressValue,
+  height = "0.8rem",
+  barColor = "#ff4647",
+}: Props) => {
   return (
-    <S.ProgressBarWrap>
+    <S.ProgressBarWrap style={{ height: `${height}` }}>
       <ProgressBarInner
-        style={{ width: `${progressValue}%` }}
+        style={{ width: `${progressValue}%`, backgroundColor: barColor }}
       ></ProgressBarInner>
     </S.ProgressBarWrap>
   );

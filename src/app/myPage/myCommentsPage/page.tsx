@@ -3,7 +3,7 @@
 // import styled from "@emotion/styled";
 import { COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
-import CommentBox from "../../../components/organism/CommentBox/CommentBox";
+// import CommentBox from "../../../components/organism/CommentBox/CommentBox";
 import FilterBox from "@/components/organism/FilterBox/FilterBox";
 // import MoreButton from "../../../components/molecule/MoreButton/MoreButton";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
@@ -29,7 +29,7 @@ const MyCommentsPage = () => {
       </NavHeader>
       <HeaderBottomContents>
         <FilterBox filterList={COMMENT_FILTER_LIST} />
-        <CommentBox />
+        {/* <CommentBox /> */}
         {/* <S.BrandCommentTopArea>
             <div>
               <img

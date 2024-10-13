@@ -4,7 +4,6 @@ import { AuthLoginTryDTO, AuthJwtTokenDTO } from "@/types/authTypes";
 import { FullRestResponse, RestResponseType } from "@/types/res/response";
 
 export async function clientCreateLoginTry(type: OauthType) {
-  console.log(type);
   const response = await clientHttp.post<
     never,
     FullRestResponse<RestResponseType<AuthLoginTryDTO>>

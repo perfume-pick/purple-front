@@ -1,8 +1,15 @@
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-// import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import React, { forwardRef } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { S } from "./styles";
+import { getReviews, getStatistics } from "@/service/client/perfumeDetail";
+import { EvaluationStatisticInfo } from "@/types/res/perfumeDetail";
+import { USER_COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
+import { usePerfumeDetailStore } from "@/store/perfumeDetailStore";
+import { PerfumeDetailStore } from "@/store/types";
+import { DetailPerfumeInfo } from "@/types/res/perfume";
+import { Review } from "@/types/res/review";
+import { EvaluationOptionInfo } from "@/types/res/perfumeDetail";
 import Topic from "./Topic/Topic";
 import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
 import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
@@ -10,38 +17,34 @@ import CommentBox from "@/components/organism/CommentBox/CommentBox";
 import DetailCommentBox from "@/components/organism/CommentBox/DetailCommentBox";
 
 interface DetailCommentProps {
-  // 필요한 props 정의
+  perfumeId: string;
 }
 
 const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
-  (props, ref) => {
-    const chartData = [
-      {
-        rate: 5,
-        percentage: 65,
-        userNumber: 100,
-      },
-      {
-        rate: 4,
-        percentage: 10,
-        userNumber: 100,
-      },
-      {
-        rate: 3,
-        percentage: 8,
-        userNumber: 100,
-      },
-      {
-        rate: 2,
-        percentage: 2,
-        userNumber: 100,
-      },
-      {
-        rate: 1,
-        percentage: 15,
-        userNumber: 100,
-      },
-    ];
+  ({ perfumeId }, ref) => {
+    const currentPerfumeInfo: DetailPerfumeInfo = usePerfumeDetailStore(
+      (state: PerfumeDetailStore) => state.currentPerfumeInfo,
+    );
+    // 코멘트 토픽 조회
+    const { data: statisticsInfo } = useQuery({
+      queryKey: ["statisticsInfo", perfumeId],
+      queryFn: () => getStatistics(perfumeId),
+      enabled: !!perfumeId,
+      // retry: false,
+    });
+
+    // 코멘트 토픽 조회
+    const { data: reviewsInfo } = useQuery({
+      queryKey: ["reviewsInfo", perfumeId],
+      queryFn: () =>
+        getReviews(
+          perfumeId,
+          USER_COMMENT_FILTER_LIST.filter(item => item.title === "최신순")[0]
+            .code,
+        ),
+      enabled: !!perfumeId,
+      retry: false,
+    });
 
     return (
       <S.Wrapper ref={ref}>
@@ -55,19 +58,44 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
         </S.TotalComment>
         <S.AverageScoreWrap>
           <S.Score>
-            <div>4.8</div>
-            <ReadonlyRating rate={4.8} size={23} gap={0.7} />
+            <div>{currentPerfumeInfo.averageScore ?? 0}</div>
+            <ReadonlyRating
+              rate={currentPerfumeInfo.averageScore ?? 0}
+              size={23}
+              gap={0.7}
+            />
           </S.Score>
           <S.ChartWrap>
-            <RatingDistributionChart chartData={chartData} />
+            <RatingDistributionChart
+              chartData={statisticsInfo?.starRatingStatistics ?? []}
+            />
           </S.ChartWrap>
         </S.AverageScoreWrap>
-        <Topic />
+        <S.TopicWrap>
+          {statisticsInfo &&
+            statisticsInfo.evaluationStatistics.map(
+              (item: EvaluationStatisticInfo) => {
+                return (
+                  item.evaluationOptions.filter(
+                    (option: EvaluationOptionInfo) => {
+                      option.votePercent > 0;
+                    },
+                  ).length > 0 && (
+                    <Topic
+                      key={item.fieldCode}
+                      fieldName={item.fieldName}
+                      evaluationOptions={item.evaluationOptions}
+                    />
+                  )
+                );
+              },
+            )}
+        </S.TopicWrap>
         <S.TotalComment>
           <S.CommentWrap>
             <S.CommentTitle>
               <span>코멘트</span>
-              <span>(25)</span>
+              <span>({reviewsInfo && reviewsInfo.reviews.length})</span>
             </S.CommentTitle>
             <S.CommentMsg>
               동일한 제품에 대해 작성된 코멘트로, 향수 용량은 다를 수 있습니다.
@@ -77,11 +105,18 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
             style={{ color: "#9b9b9e", fontSize: "1.2rem" }}
           />
         </S.TotalComment>
-        <CommentBox />
-        <CommentBox />
-        <DetailCommentBox />
+        {reviewsInfo?.reviews.map((review: Review) => {
+          return review.reviewType === "SIMPLE" ? (
+            <CommentBox key={review.reviewId} reviewInfo={review} />
+          ) : (
+            <DetailCommentBox key={review.reviewId} />
+          );
+        })}
         <S.CommentButtonWrap>
-          <button> 23개 코멘트 전체보기</button>
+          <button>
+            {" "}
+            {reviewsInfo && reviewsInfo?.reviews.length}개 코멘트 전체보기
+          </button>
         </S.CommentButtonWrap>
       </S.Wrapper>
     );
