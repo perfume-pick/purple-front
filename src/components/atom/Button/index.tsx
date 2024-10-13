@@ -21,6 +21,13 @@ function Button({
   type?: "button" | "submit" | "reset" | undefined;
   styleProps?: CSSProperties;
 }) {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (type !== "submit") {
+      e.preventDefault();
+    }
+    clickCallback?.();
+  };
+
   return (
     <ButtonBox className={className}>
       <button
@@ -28,10 +35,7 @@ function Button({
         css={size ? sizeCSS[size] : undefined}
         style={{ ...styleProps }}
         disabled={disabled}
-        onClick={e => {
-          e.preventDefault();
-          clickCallback?.();
-        }}
+        onClick={handleClick}
         type={type ?? "button"}
       >
         {buttonText}
