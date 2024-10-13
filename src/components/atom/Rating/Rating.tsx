@@ -71,7 +71,7 @@
 // };
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { UseFormGetValues, UseFormSetValue } from "react-hook-form";
 import { FieldDefinitionsType } from "@/types/commentTypes";
@@ -83,7 +83,7 @@ type RatingProps = {
 };
 
 // TODO : rating이 사용되는곳이 어떤식으로 될지에 따라 변경해야함.
-function Rating({ setValue }: RatingProps) {
+function Rating({ getValues, setValue, selectedCommentIdx }: RatingProps) {
   const [rating, setRating] = useState(0);
 
   const handleRatingClick = (selectRating: number) => {
@@ -100,14 +100,14 @@ function Rating({ setValue }: RatingProps) {
    */
 
   // commentPage 코멘트목록 클릭 시 별점 초기화.
-  // useEffect(() => {
-  //   if (getValues("rating")) {
-  //     setRating(0);
-  //     if (setValue) {
-  //       setValue("rating", undefined);
-  //     }
-  //   }
-  // }, [selectedCommentIdx]);
+  useEffect(() => {
+    if (getValues("rating")) {
+      setRating(0);
+      if (setValue) {
+        setValue("rating", undefined);
+      }
+    }
+  }, [selectedCommentIdx, getValues, setValue]);
 
   return (
     <S.Wrapper>
