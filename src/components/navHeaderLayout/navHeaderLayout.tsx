@@ -12,12 +12,14 @@ function NavHeader({
   iconColor,
   bgColor,
   hasBackBtn = true,
+  rightIcon,
 }: {
   children?: ReactNode;
   style?: CSSProperties;
   iconColor?: string;
   bgColor?: string;
   hasBackBtn?: boolean;
+  rightIcon?: ReactNode;
 }) {
   const router = useRouter();
 
@@ -44,6 +46,7 @@ function NavHeader({
       <div style={style}>
         <div>{children}</div>
       </div>
+      {rightIcon && rightIcon}
     </S.Wrapper>
   );
 }

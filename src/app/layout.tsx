@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import ReactQueryProviders from "@/provider/reactQueryProviders";
 import { ReactNode } from "react";
 import MobileBottomNav from "@/components/mobileBottomNav/MobileBottomNav";
+import EmotionThemeProvider from "@/provider/EmotionThemeProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body suppressHydrationWarning={true}>
         <ReactQueryProviders>
-          {children}
+          <EmotionThemeProvider>{children}</EmotionThemeProvider>
           <MobileBottomNav />
         </ReactQueryProviders>
       </body>

@@ -73,7 +73,7 @@ const ButtonWrap = styled.div`
   button {
     width: calc(100% - 3.2rem);
     height: 5rem;
-    background-color: ${theme.color.primary};
+    background-color: ${theme.color.primary.coral[400]};
     padding: 1rem 0;
     border-radius: 1rem;
     font-size: ${theme.fontSize.md};

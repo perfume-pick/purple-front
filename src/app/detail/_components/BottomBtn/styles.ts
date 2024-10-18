@@ -41,7 +41,7 @@ const ButtonWrap = styled.div`
   }
 
   & > button:last-of-type {
-    background-color: ${theme.color.primary};
+    background-color: ${theme.color.primary.coral[400]};
   }
 `;
 

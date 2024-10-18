@@ -38,7 +38,7 @@ const TitleWrap = styled.div`
       &:last-child {
         font-weight: ${theme.fontWeight.semiBold};
         margin-left: 0.4rem;
-        color: ${theme.color.primary};
+        color: ${theme.color.primary.coral[400]};
       }
     }
   }

@@ -55,9 +55,9 @@ const ButtonWrap = styled.div`
 
   & > button:last-of-type {
     border-radius: 0 0 1rem 0;
-    background-color: ${theme.color.primary};
+    background-color: ${theme.color.primary.coral[400]};
     color: ${theme.color.white};
-    border-top: 1px solid ${theme.color.primary};
+    border-top: 1px solid ${theme.color.primary.coral[400]};
   }
 `;
 
@@ -83,7 +83,7 @@ const AlertButtonWrap = styled.div`
   & > button {
     width: 100%;
     color: ${theme.color.white};
-    background-color: ${theme.color.primary};
+    background-color: ${theme.color.primary.coral[400]};
     border-radius: 1rem;
     border: none;
   }

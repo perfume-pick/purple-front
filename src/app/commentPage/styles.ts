@@ -31,7 +31,8 @@ const CommentBtn = styled.div<{ isSelected: boolean }>`
   justify-content: center;
   align-items: center;
   border-radius: 2.4rem;
-  background-color: ${props => (props.isSelected ? theme.color.primary : "")};
+  background-color: ${props =>
+    props.isSelected ? theme.color.primary.coral[400] : ""};
   font-weight: ${props => (props.isSelected ? theme.fontWeight.bold : "")};
   color: ${props => (props.isSelected ? theme.color.white : "")};
 `;
