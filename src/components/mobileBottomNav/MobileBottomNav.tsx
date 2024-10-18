@@ -77,7 +77,7 @@ const IconWrap = styled.div<{ route: boolean }>`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: ${props => (props.route ? theme.color.primary : "")};
+  color: ${props => (props.route ? theme.color.primary.coral[400] : "")};
 
   & > span {
     font-size: ${theme.fontSize.xs};

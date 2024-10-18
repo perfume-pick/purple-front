@@ -77,7 +77,7 @@ const LineChart = styled.div`
     height: 50%;
     & > div {
       height: 100%;
-      background: ${theme.color.primary};
+      background: ${theme.color.primary.coral[400]};
     }
   }
 `;
@@ -100,7 +100,7 @@ const ChartText = styled.span`
   padding-top: 0.4rem;
 
   &.first {
-    color: ${theme.color.primary};
+    color: ${theme.color.primary.coral[400]};
   }
 `;
 

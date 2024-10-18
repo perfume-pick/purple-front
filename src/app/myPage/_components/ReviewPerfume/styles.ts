@@ -23,7 +23,7 @@ const Bar = styled.div`
 `;
 
 const EmphasizeText = styled.span`
-  color: ${props => props.theme.color.primary};
+  color: ${props => props.theme.color.primary.coral[400]};
 `;
 
 const DescriptionBox = styled.span`
@@ -39,7 +39,7 @@ const Message = styled.div`
   height: 2.8rem;
   position: relative;
   background-color: #ffe2e0;
-  color: ${props => props.theme.color.primary};
+  color: ${props => props.theme.color.primary.coral[400]};
   font-weight: ${props => props.theme.fontWeight.regular};
   border-radius: 0.6rem;
   font-size: ${props => props.theme.fontSize.sm};

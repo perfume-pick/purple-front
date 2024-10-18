@@ -1,5 +1,19 @@
 const color = {
-  primary: "#FF6E62",
+  primary: {
+    coral: {
+      5: "#FFF0F2",
+      50: "#FFEEF1",
+      100: "#FFD5D8",
+      200: "#F9A9A6",
+      300: "#F28883",
+      400: "#FF6E62", // main
+      500: "#FF6148",
+      600: "#F75B48",
+      700: "#E45242",
+      800: "#D74B3B",
+      900: "#C8412F",
+    },
+  },
   subPrimary: "#F9A9A6",
   secondaryViolet: "#7248CD",
   secondaryBlue: "#5A4DFF",

@@ -46,7 +46,9 @@ const FocusComponent = styled.div<{ focus: boolean }>`
   & > div {
     display: flex;
     border-bottom: ${({ focus }) =>
-      focus ? `2px solid ${theme.color.primary}` : `1px solid #d2d2d2`};
+      focus
+        ? `2px solid ${theme.color.primary.coral[400]}`
+        : `1px solid #d2d2d2`};
     font-weight: ${({ focus }) => (focus ? "700" : "")};
     align-items: center;
     justify-content: center;

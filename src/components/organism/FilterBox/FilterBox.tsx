@@ -46,7 +46,7 @@ const FilterWrap = styled.div`
     color: ${theme.color.textColor[100]};
 
     & > span {
-      color: ${theme.color.primary};
+      color: ${theme.color.primary.coral[400]};
     }
   }
 `;

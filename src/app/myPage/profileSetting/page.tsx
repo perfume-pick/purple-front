@@ -47,7 +47,7 @@ const ProfileSettingPage = () => {
         style={{
           justifyContent: "center",
         }}
-        bgColor={theme.color.primary}
+        bgColor={theme.color.primary.coral[400]}
       >
         <S.HeaderInner>
           <span>프로필 수정</span>
