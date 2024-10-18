@@ -3,13 +3,12 @@
 import { S } from "./styles";
 import { useRouter } from "next/navigation";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import ProfileBox from "./_components/ProfileBox/ProfileBox";
 // import PerfumeScroll from "./_components/PerfumeScroll/PerfumeScroll";
 import TasteStatisticBox from "@/components/organism/TasteStatisticBox/TasteStatisticBox";
 import Link from "next/link";
-import NavHeaderInner from "../../components/navHeaderLayout/NavHeaderInner";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
+import MyPageNavHeader from "./_components/NavHeader/NavHeader";
 
 const MyPage = () => {
   const router = useRouter();
@@ -54,9 +53,7 @@ const MyPage = () => {
 
   return (
     <S.Wrapper>
-      <NavHeader style={{ justifyContent: "center" }}>
-        <NavHeaderInner text="마이페이지" />
-      </NavHeader>
+      <MyPageNavHeader />
       <HeaderBottomContents>
         <S.ProfileBoxOuter>
           <ProfileBox onClick={() => router.push("/myPage/profileSetting")} />
