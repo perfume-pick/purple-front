@@ -6,6 +6,7 @@ import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottom
 import MyPageNavHeader from "./_components/NavHeader/NavHeader";
 import ReviewPerfume from "./_components/ReviewPerfume/ReviewPerfume";
 import Accord from "./_components/Accord/Accord";
+import Brand from "./_components/\bBrand/Brand";
 
 const MyPage = () => {
   return (
@@ -15,6 +16,7 @@ const MyPage = () => {
         <ProfileBox />
         <ReviewPerfume />
         <Accord />
+        <Brand />
       </HeaderBottomContents>
     </S.Wrapper>
   );
