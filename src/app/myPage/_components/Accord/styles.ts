@@ -37,8 +37,78 @@ const Tab = styled.div<{ isSelected: boolean }>`
     props.isSelected &&
     `
     color: ${props.theme.color.white};
-    background-color: ${props.theme.color.primary};
+    background-color: ${props.theme.color.primary.coral[400]};
     `}
+`;
+
+const ProgressBarTitle = styled.p`
+  color: ${props => props.theme.color.primary.coral[400]};
+  background-color: ${props => props.theme.color.primary.coral[5]};
+  padding: 1.1rem 1.4rem;
+  margin: 2.8rem 0;
+  font-weight: 500;
+  font-size: ${props => props.theme.fontSize.sm};
+  line-height: 1.4;
+`;
+
+const ProgressBarContainer = styled.div`
+  width: 100%;
+  height: 2.8rem;
+  display: flex;
+  gap: 0.4rem;
+`;
+
+const ProgressBar = styled.div<{ width: string; backgroundColor: string }>`
+  width: ${props => props.width};
+
+  background-color: ${props => props.backgroundColor};
+
+  &:nth-child(1) {
+    border-radius: 0.6rem 0 0 0.6rem;
+  }
+  &:nth-child(3) {
+    border-radius: 0 0.6rem 0.6rem 0;
+  }
+`;
+
+const ProgressBarSegmentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 2.4rem;
+`;
+
+const ProgressBarSegment = styled.div`
+  color: ${props => props.theme.color.textColor[100]};
+  border: 2px solid #ffe2e0;
+  padding: 1.4rem 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ProgressBarSegmentLabelBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+`;
+
+const ProgressBarSegmentColorCircle = styled.div<{ backgroundColor: string }>`
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+
+  background-color: ${props => props.backgroundColor};
+`;
+
+const ProgressBarSegmentCountText = styled.span`
+  font-size: ${props => props.theme.fontSize.sm};
+`;
+
+const ProgressBarSegmentDescription = styled.p`
+  text-align: right;
+  color: ${props => props.theme.color.textColor[100]};
+  font-size: ${props => props.theme.fontSize.xs};
 `;
 
 export const S = {
@@ -47,4 +117,13 @@ export const S = {
   Title,
   TabContainer,
   Tab,
+  ProgressBarTitle,
+  ProgressBarContainer,
+  ProgressBar,
+  ProgressBarSegmentContainer,
+  ProgressBarSegment,
+  ProgressBarSegmentLabelBox,
+  ProgressBarSegmentCountText,
+  ProgressBarSegmentColorCircle,
+  ProgressBarSegmentDescription,
 };
