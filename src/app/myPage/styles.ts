@@ -40,10 +40,6 @@ const TitleButton = styled.div`
   }
 `;
 
-const ProfileBoxOuter = styled.div`
-  padding: 2.4rem 0 4.4rem 0;
-`;
-
 const TasteStatisticsWrap = styled.div`
   padding: 0 1.6rem;
   margin-bottom: 2.4rem;
@@ -51,7 +47,6 @@ const TasteStatisticsWrap = styled.div`
 
 export const S = {
   Title,
-  ProfileBoxOuter,
   TitleButton,
   TasteStatisticsWrap,
   Wrapper,

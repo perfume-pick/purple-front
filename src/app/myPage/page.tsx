@@ -1,7 +1,6 @@
 "use client";
 
 import { S } from "./styles";
-import { useRouter } from "next/navigation";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ProfileBox from "./_components/ProfileBox/ProfileBox";
 // import PerfumeScroll from "./_components/PerfumeScroll/PerfumeScroll";
@@ -11,7 +10,6 @@ import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottom
 import MyPageNavHeader from "./_components/NavHeader/NavHeader";
 
 const MyPage = () => {
-  const router = useRouter();
   // const [pageButtonList, setPageButtonList] = useState([
   //   {
   //     title: "평가향수",
@@ -55,9 +53,7 @@ const MyPage = () => {
     <S.Wrapper>
       <MyPageNavHeader />
       <HeaderBottomContents>
-        <S.ProfileBoxOuter>
-          <ProfileBox onClick={() => router.push("/myPage/profileSetting")} />
-        </S.ProfileBoxOuter>
+        <ProfileBox />
         <S.Title>취향통계</S.Title>
         <S.TasteStatisticsWrap>
           <TasteStatisticBox chartData={tempChartData} reviewsNum={30}>
