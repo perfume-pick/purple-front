@@ -42,7 +42,7 @@ const RadioBtn = styled.input`
 
   /* 선택됐을 때 */
   :checked {
-    background-color: ${theme.color.primary};
+    background-color: ${theme.color.primary.coral[400]};
     ::after {
       background-color: ${theme.color.white};
     }

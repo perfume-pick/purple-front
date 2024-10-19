@@ -57,7 +57,7 @@ const ButtonBox = styled.div<{
 
   & > button {
     display: flex;
-    background-color: ${theme.color.primary};
+    background-color: ${theme.color.primary.coral[400]};
     flex-direction: row;
     cursor: pointer;
     justify-content: center;

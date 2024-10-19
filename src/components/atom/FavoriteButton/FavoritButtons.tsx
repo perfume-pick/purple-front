@@ -14,7 +14,9 @@ const FavoritButtons = ({ isClicked, favoriteCount, clickFavorite }: Props) => {
       <FavoriteIcon
         sx={{
           marginRight: "0.4rem",
-          color: isClicked ? theme.color.primary : theme.color.grayColor[500],
+          color: isClicked
+            ? theme.color.primary.coral[400]
+            : theme.color.grayColor[500],
         }}
         onClick={clickFavorite}
       />
