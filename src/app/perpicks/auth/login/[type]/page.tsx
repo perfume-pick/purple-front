@@ -56,7 +56,7 @@ const KakaoCallbackPage = (req: Req) => {
     fetchToken();
   }, [router, searchParams.code, type]);
 
-  return <div>카카오 로그인 중...</div>;
+  return <></>;
 };
 
 export default KakaoCallbackPage;

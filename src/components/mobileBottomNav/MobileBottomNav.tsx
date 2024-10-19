@@ -39,7 +39,7 @@ const MobileBottomNav = () => {
   ];
   return (
     <>
-      {!hiddenRoutes.includes(path) && (
+      {!hiddenRoutes.some(route => path.startsWith(route)) && (
         <S.Wrapper>
           {NAV_LIST.map((list, idx) => (
             <S.IconWrap
