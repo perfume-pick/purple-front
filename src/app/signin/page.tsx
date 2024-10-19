@@ -22,10 +22,11 @@ export default function SignInPage() {
     <S.Wrapper>
       <Image
         src={logoImg}
-        layout="intrinsic"
         width={100}
         height={100}
+        style={{ height: "auto" }}
         alt="로고 이미지"
+        priority
       />
       <OAuthLoginButton type={OauthType.KAKAO} onClick={onClickLoginType} />
     </S.Wrapper>
