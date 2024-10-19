@@ -1,9 +1,11 @@
 // import Rating from "@/components/atom/Rating/Rating";
-import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { S } from "./styles";
 import { useQuery } from "@tanstack/react-query";
 import { getMyReview } from "@/service/client/perfumeDetail";
-import { useRouter } from "next/navigation";
+import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
+import { COMMENT_STAR_RATING_MESSAGE_LIST } from "@/constant/comment/starRatingText";
 
 type Props = {
   perfumeId: string;
@@ -11,6 +13,8 @@ type Props = {
 
 function DetailEvaluation({ perfumeId }: Props) {
   const router = useRouter();
+  const [ratingMessage, setRatingMessage] = useState("");
+
   // 향수 리뷰 조회
   const { data: myReviewInfo } = useQuery({
     queryKey: ["myReviewInfo", perfumeId],
@@ -18,6 +22,18 @@ function DetailEvaluation({ perfumeId }: Props) {
     enabled: !!perfumeId,
     retry: false,
   });
+
+  useEffect(() => {
+    // 별점 갯수에 맞는 텍스트 업데이트
+    const starRating = Math.ceil(myReviewInfo?.review.score);
+    const matchedItem = COMMENT_STAR_RATING_MESSAGE_LIST.filter(
+      item => item.value === starRating,
+    )[0];
+
+    setRatingMessage(
+      matchedItem ? matchedItem.text : COMMENT_STAR_RATING_MESSAGE_LIST[0].text,
+    );
+  }, [myReviewInfo]);
 
   const handleClickStarRating = () => {
     router.push(`/commentPage?perfumeId=${perfumeId}`);
@@ -45,7 +61,7 @@ function DetailEvaluation({ perfumeId }: Props) {
         </S.Score>
       </S.RatingWrap>
       <S.ClickGuide>
-        <div>별을 클릭하세요</div>
+        <div>{ratingMessage}</div>
       </S.ClickGuide>
     </S.Wrapper>
   );

@@ -3,7 +3,11 @@
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import { S } from "./styles";
 import Product from "./_components/Product/Product";
-import { CommentType, FieldDefinitions } from "@/constant/comment.const";
+import {
+  CommentType,
+  FieldDefinitions,
+  FieldDefinitionsWithCode,
+} from "@/constant/comment.const";
 import Rating from "@/components/atom/Rating/Rating";
 import Button from "@/components/atom/Button";
 import { TEXTAREA_LENGTH } from "@/constant/common/textLength";
@@ -15,6 +19,8 @@ import { CheckboxForm } from "./_components/CheckLists/CheckboxType/CheckboxForm
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 import { useEffect, useState } from "react";
+import { getCommentEvaluationForm } from "@/service/client/commentRegistration";
+import { useCommentRegStore } from "@/store/commentRegStore";
 
 const CommentPage = () => {
   const {
@@ -29,20 +35,32 @@ const CommentPage = () => {
     formState: { errors },
   } = useForm<FieldDefinitionsType>();
   const [selectedCommentIdx, setSelectedCommentIdx] = useState(0);
+  const { updateCommentEvaluationForm, commentEvaluationForm } =
+    useCommentRegStore();
 
   const onSubmit = async (data: FieldDefinitionsType) => {
     alert(JSON.stringify(data));
-    console.log(data);
   };
+
+  useEffect(() => {
+    if (commentEvaluationForm.length < 1) {
+      getCommentEvaluationForm().then(res => {
+        console.log(res?.responseData);
+        updateCommentEvaluationForm(res?.responseData);
+
+        setTimeout(() => {
+          console.log(commentEvaluationForm);
+        }, 100);
+      });
+    }
+    console.log(commentEvaluationForm);
+  }, []);
 
   useEffect(() => {
     if (watch("rating")) {
       clearErrors("rating");
-      console.log("????");
     }
   }, [watch, clearErrors]);
-
-  console.log(selectedCommentIdx);
 
   useEffect(() => {
     reset();
@@ -127,43 +145,52 @@ const CommentPage = () => {
               <ErrorMessage error={errors.textReview.message || ""} />
             )}
           </S.ReviewWrap>
-          {selectedCommentIdx === 1 && (
+          {/* 자세한 코멘트 */}
+          {selectedCommentIdx === 1 && commentEvaluationForm && (
             <>
               <RadioForm
                 control={control}
-                options={FieldDefinitions.persistence.options}
+                options={
+                  commentEvaluationForm.evaluationFields[0].evaluationOptions
+                }
                 name="persistence"
                 rules={validationMessages.persistence}
-                label={FieldDefinitions.persistence.label}
+                label={FieldDefinitionsWithCode.persistence.fieldName}
                 errors={errors}
               />
               <RadioForm
                 control={control}
-                options={FieldDefinitions.residualScent.options}
+                options={
+                  commentEvaluationForm.evaluationFields[1].evaluationOptions
+                }
                 name="residualScent"
                 rules={validationMessages.residualScent}
-                label={FieldDefinitions.residualScent.label}
+                label={FieldDefinitionsWithCode.residualScent.fieldName}
                 errors={errors}
               />
               <CheckboxForm
                 control={control}
-                options={FieldDefinitions.season.options}
+                options={
+                  commentEvaluationForm.evaluationFields[2].evaluationOptions
+                }
                 name="season"
                 rules={validationMessages.season}
-                label={FieldDefinitions.season.label}
+                label={FieldDefinitionsWithCode.season.fieldName}
                 errors={errors}
               />
               <RadioForm
                 control={control}
-                options={FieldDefinitions.gender.options}
+                options={
+                  commentEvaluationForm.evaluationFields[3].evaluationOptions
+                }
                 name="gender"
                 rules={validationMessages.gender}
-                label={FieldDefinitions.gender.label}
+                label={FieldDefinitionsWithCode.gender.fieldName}
                 errors={errors}
               />
               <CheckboxForm
                 control={control}
-                options={FieldDefinitions.mood.options}
+                options={commentEvaluationForm.moods}
                 name="mood"
                 rules={validationMessages.mood}
                 label={FieldDefinitions.mood.label}
@@ -187,11 +214,3 @@ const CommentPage = () => {
   );
 };
 export default CommentPage;
-
-// "use client";
-
-// const CommentPage = () => {
-//   return <div>commentPage</div>;
-// };
-
-// export default CommentPage;
