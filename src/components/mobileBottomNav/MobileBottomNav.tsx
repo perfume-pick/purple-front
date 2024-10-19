@@ -12,7 +12,7 @@ import { usePathname, useRouter } from "next/navigation";
 const MobileBottomNav = () => {
   const router = useRouter();
   const path = usePathname();
-  const hiddenRoutes = ["/signin", "/onBoarding"];
+  const hiddenRoutes = ["/signin", "/onBoarding", "/commentPage"];
 
   // TODO: router경로는 페이지가 만들어지면 수정 필요.
   const NAV_LIST = [
