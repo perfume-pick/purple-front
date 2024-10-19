@@ -51,7 +51,7 @@ function DetailPageContent({ perfumeId }: Props) {
 
   return (
     <>
-      <DetailTop />
+      <DetailTop perfumeId={perfumeId} />
       <S.SelectBtnWrapper>
         {Object.entries(sections).map(([key, value]) => (
           <S.FocusComponent

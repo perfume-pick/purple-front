@@ -1,11 +1,15 @@
 import DetailEvaluation from "./DetailEvaluation";
 import DetailPageBanner from "./DetailPageBanner";
 
-function DetailTop() {
+type Props = {
+  perfumeId: string;
+};
+
+function DetailTop({ perfumeId }: Props) {
   return (
     <>
       <DetailPageBanner />
-      <DetailEvaluation />
+      <DetailEvaluation perfumeId={perfumeId} />
     </>
   );
 }

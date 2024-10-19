@@ -7,13 +7,14 @@ type Props = {
   rate: number;
   size: number;
   gap: number;
+  onClick: () => void;
 };
 
-const ReadonlyRating = ({ rate, size, gap }: Props) => {
+const ReadonlyRating = ({ rate, size, gap, onClick }: Props) => {
   const percentage = (rate / 5) * 100;
 
   return (
-    <S.RatingWrap size={size} gap={gap}>
+    <S.RatingWrap size={size} gap={gap} onClick={onClick}>
       {[...Array(5)].map((_, index) => (
         <S.Star size={size} key={index}></S.Star>
       ))}
