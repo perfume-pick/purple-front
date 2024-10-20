@@ -42,11 +42,13 @@ const CommentPage = () => {
 
   const searchParams = useSearchParams();
   const perfumeId = searchParams.get("perfumeId");
+  const { updateCommentEvaluationForm, commentEvaluationForm } =
+    useCommentRegStore();
 
   const [isInitialized, setIsInitialized] = useState(false); // 초기화 상태 관리
   const [selectedCommentIdx, setSelectedCommentIdx] = useState(0);
-  const { updateCommentEvaluationForm, commentEvaluationForm } =
-    useCommentRegStore();
+
+  const [isModify, setIsModify] = useState(false);
 
   // 향수 리뷰 조회
   const { data: myReviewInfo } = useQuery({
@@ -67,6 +69,13 @@ const CommentPage = () => {
         updateCommentEvaluationForm(res?.responseData);
       });
     }
+
+    if (myReviewInfo?.review) {
+      setIsModify(true);
+    } else {
+      setIsModify(false);
+    }
+    console.log(`isModify: ${isModify}`);
   }, []);
 
   useEffect(() => {
