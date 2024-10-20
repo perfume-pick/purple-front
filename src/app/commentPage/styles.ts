@@ -55,7 +55,6 @@ const RatingWrap = styled.div`
 
 const ReviewWrap = styled.div`
   width: 100%;
-  margin-bottom: 9rem;
 `;
 
 const ReviewTitle = styled.div`
