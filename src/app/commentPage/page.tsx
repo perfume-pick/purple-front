@@ -2,6 +2,9 @@
 
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import { S } from "./styles";
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
+import { getMyReview } from "@/service/client/perfumeDetail";
 import Product from "./_components/Product/Product";
 import {
   CommentType,
@@ -21,6 +24,8 @@ import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottom
 import { useEffect, useState } from "react";
 import { getCommentEvaluationForm } from "@/service/client/commentRegistration";
 import { useCommentRegStore } from "@/store/commentRegStore";
+import EditableRating from "@/components/atom/Rating/EditableRating";
+import { OptionFields } from "@/types/res/commentRegForm";
 
 const CommentPage = () => {
   const {
@@ -34,26 +39,34 @@ const CommentPage = () => {
     setValue,
     formState: { errors },
   } = useForm<FieldDefinitionsType>();
+
+  const searchParams = useSearchParams();
+  const perfumeId = searchParams.get("perfumeId");
+
+  const [isInitialized, setIsInitialized] = useState(false); // 초기화 상태 관리
   const [selectedCommentIdx, setSelectedCommentIdx] = useState(0);
   const { updateCommentEvaluationForm, commentEvaluationForm } =
     useCommentRegStore();
 
+  // 향수 리뷰 조회
+  const { data: myReviewInfo } = useQuery({
+    queryKey: ["myReviewInfo", perfumeId],
+    queryFn: () => getMyReview(perfumeId),
+    enabled: !!perfumeId,
+    retry: false,
+  });
+
   const onSubmit = async (data: FieldDefinitionsType) => {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
+    console.log(data);
   };
 
   useEffect(() => {
     if (commentEvaluationForm.length < 1) {
       getCommentEvaluationForm().then(res => {
-        console.log(res?.responseData);
         updateCommentEvaluationForm(res?.responseData);
-
-        setTimeout(() => {
-          console.log(commentEvaluationForm);
-        }, 100);
       });
     }
-    console.log(commentEvaluationForm);
   }, []);
 
   useEffect(() => {
@@ -62,9 +75,63 @@ const CommentPage = () => {
     }
   }, [watch, clearErrors]);
 
+  // useEffect(() => {
+  //   reset();
+  // }, [selectedCommentIdx, reset]);
+
   useEffect(() => {
-    reset();
-  }, [selectedCommentIdx, reset]);
+    if (myReviewInfo?.review && !isInitialized) {
+      const { score, content, perfumeEvaluation, moodNames } =
+        myReviewInfo.review;
+
+      if (commentEvaluationForm.length < 1) {
+        return;
+      }
+
+      const persistenceOption =
+        commentEvaluationForm.evaluationFields[0].evaluationOptions.find(
+          (item: OptionFields) =>
+            item.optionName === perfumeEvaluation[0].options[0]?.optionName,
+        );
+
+      const residualScentOption =
+        commentEvaluationForm.evaluationFields[1].evaluationOptions.find(
+          (item: OptionFields) =>
+            item.optionName === perfumeEvaluation[1].options[0]?.optionName,
+        );
+
+      const selectedSeasonOptions =
+        perfumeEvaluation[2]?.options.map(
+          (option: { optionName: string }) => option.optionName,
+        ) || [];
+      const seasonCodes =
+        commentEvaluationForm.evaluationFields[2].evaluationOptions
+          .filter((option: OptionFields) =>
+            selectedSeasonOptions.includes(option.optionName),
+          )
+          .map((option: OptionFields) => option.optionCode); //
+
+      const genderOption =
+        commentEvaluationForm.evaluationFields[3].evaluationOptions.find(
+          (item: OptionFields) =>
+            item.optionName === perfumeEvaluation[3].options[0]?.optionName,
+        );
+
+      reset({
+        rating: score,
+        textReview: content,
+        persistence: persistenceOption ? persistenceOption.optionCode : "", // 여기서 optionCode 설정
+        residualScent: residualScentOption
+          ? residualScentOption.optionCode
+          : "",
+        season: seasonCodes || [],
+        gender: genderOption ? genderOption.optionCode : "",
+        mood: moodNames || [],
+      });
+
+      setIsInitialized(true); // 초기화 상태 변경
+    }
+  }, [myReviewInfo, reset, isInitialized, commentEvaluationForm]);
 
   const handleClick = (idx: number) => {
     setSelectedCommentIdx(idx);
@@ -110,10 +177,16 @@ const CommentPage = () => {
           <S.EvaluationWrap>
             <span>{FieldDefinitions.rating.label}</span>
             <S.RatingWrap {...register("rating", validationMessages.rating)}>
-              <Rating
+              {/* <Rating
                 getValues={getValues}
                 setValue={setValue}
                 selectedCommentIdx={selectedCommentIdx}
+              /> */}
+              <EditableRating
+                rate={watch("rating") || 0}
+                size={38}
+                gap={1.5}
+                onRateChange={newRate => setValue("rating", newRate)}
               />
               <div>향이 마음에 들어요</div>
             </S.RatingWrap>
@@ -177,6 +250,7 @@ const CommentPage = () => {
                 rules={validationMessages.season}
                 label={FieldDefinitionsWithCode.season.fieldName}
                 errors={errors}
+                initialValues={watch("season")}
               />
               <RadioForm
                 control={control}
@@ -195,6 +269,7 @@ const CommentPage = () => {
                 rules={validationMessages.mood}
                 label={FieldDefinitions.mood.label}
                 errors={errors}
+                initialValues={watch("mood")}
               />
             </>
           )}

@@ -25,11 +25,11 @@ const ButtonGroup = <T extends "mood" | "season">({
   name,
 }: ButtonGroupProps<T>) => {
   const handleClickBox = (value: string) => {
-    const isSelected = selectBtn.includes(value);
+    const isSelected = selectBtn?.includes(value);
     let newSelectedValues: string[] = [];
 
     if (isSelected) {
-      newSelectedValues = selectBtn.filter(val => val !== value);
+      newSelectedValues = selectBtn?.filter(val => val !== value);
     } else {
       newSelectedValues = [...selectBtn, value];
     }
@@ -43,7 +43,7 @@ const ButtonGroup = <T extends "mood" | "season">({
             <S.Box
               key={option.optionCode}
               onClick={() => handleClickBox(option.optionCode)}
-              selected={selectBtn.includes(option.optionCode)}
+              selected={selectBtn?.includes(option.optionCode)}
             >
               {option.optionName}
             </S.Box>
@@ -52,7 +52,7 @@ const ButtonGroup = <T extends "mood" | "season">({
             <S.Box
               key={option.name}
               onClick={() => handleClickBox(option.name)}
-              selected={selectBtn.includes(option.name)}
+              selected={selectBtn?.includes(option.name)}
             >
               {option.name}
             </S.Box>

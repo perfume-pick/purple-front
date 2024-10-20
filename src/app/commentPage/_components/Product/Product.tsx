@@ -1,12 +1,23 @@
 import { S } from "../styles";
+import { DetailPerfumeInfo } from "@/types/res/perfume";
+import { usePerfumeDetailStore } from "@/store/perfumeDetailStore";
+import { PerfumeDetailStore } from "@/store/types";
 
 const Product = () => {
+  const currentPerfumeInfo: DetailPerfumeInfo = usePerfumeDetailStore(
+    (state: PerfumeDetailStore) => state.currentPerfumeInfo,
+  );
+  console.log(currentPerfumeInfo);
+
   return (
     <S.Wrapper>
-      <img src="/assets/images/bannerImg.png" alt="bannerImg" />
+      <img
+        src={currentPerfumeInfo.imageUrl}
+        alt={currentPerfumeInfo.perfumeName}
+      />
       <S.TitleWrap>
-        <span>바이레도</span>
-        <span>모하비고스트</span>
+        <span>{currentPerfumeInfo.brandName}</span>
+        <span>{currentPerfumeInfo.perfumeName}</span>
       </S.TitleWrap>
     </S.Wrapper>
   );

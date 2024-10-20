@@ -3,7 +3,7 @@ import { theme } from "@/styles/theme";
 import { CheckboxType, FieldDefinitionsType } from "@/types/commentTypes";
 import { OptionFields } from "@/types/res/commentRegForm";
 import styled from "@emotion/styled";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
   Control,
   Controller,
@@ -34,6 +34,7 @@ interface CheckboxProps<T extends keyof CheckboxType> {
   children?: ReactNode;
   options: CheckboxOptions<T>;
   rules?: Rules;
+  initialValues: string[];
 }
 
 export const CheckboxForm = <T extends keyof CheckboxType>({
@@ -43,8 +44,14 @@ export const CheckboxForm = <T extends keyof CheckboxType>({
   options,
   errors,
   rules,
+  initialValues,
 }: CheckboxProps<T>) => {
   const [selectBtn, setSelectedValues] = useState<string[]>([]);
+
+  useEffect(() => {
+    setSelectedValues(initialValues);
+  }, [initialValues]);
+
   return (
     <S.Wrap>
       <S.CheckboxTitleWrap>
