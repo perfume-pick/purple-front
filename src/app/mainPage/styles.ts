@@ -11,11 +11,8 @@ const Wrapper = styled.div`
   overflow-y: hidden;
 `;
 
-const TopWrap = styled.div`
-  .search-wrap {
-    width: auto;
-    margin: 1.6rem;
-  }
+const SearchBarContainer = styled.div`
+  margin: 1.6rem;
 `;
 
 const BannerWrap = styled.div`
@@ -70,7 +67,7 @@ const MyPreference = styled.div`
 
 export const S = {
   Wrapper,
-  TopWrap,
+  SearchBarContainer,
   BannerWrap,
   SelectBtnWrapper,
   PreferenceNoteWrap,

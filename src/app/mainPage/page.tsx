@@ -15,14 +15,14 @@ function MainPage() {
 
   return (
     <S.Wrapper>
-      <S.TopWrap>
-        <PerpickLogo />
+      <PerpickLogo />
+      <S.SearchBarContainer>
         <SearchBar
           placeholderText="나의 향을 검색해보세요"
           onClick={handleClickSearchBar}
           isReadonly={true}
         />
-      </S.TopWrap>
+      </S.SearchBarContainer>
       <Taps />
     </S.Wrapper>
   );
