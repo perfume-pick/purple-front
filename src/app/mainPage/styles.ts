@@ -26,28 +26,6 @@ const SelectBtnWrapper = styled.div`
   display: flex;
 `;
 
-const FocusComponent = styled.div<{ focus: boolean }>`
-  display: flex;
-  width: 100%;
-  background-color: ${theme.color.white};
-  justify-content: space-around;
-  align-items: center;
-  font-size: ${theme.fontSize.base};
-  & > div {
-    display: flex;
-    border-bottom: ${({ focus }) =>
-      focus
-        ? `2px solid ${theme.color.primary.coral[400]}`
-        : `1px solid #d2d2d2`};
-    font-weight: ${({ focus }) => (focus ? "700" : "")};
-    align-items: center;
-    justify-content: center;
-    height: 6rem;
-    width: 100%;
-    cursor: pointer;
-  }
-`;
-
 const PreferenceNoteWrap = styled.div`
   box-shadow: 0px 5px 10px 0px #f5f5f5;
   border-radius: 0.4rem;
@@ -95,7 +73,6 @@ export const S = {
   TopWrap,
   BannerWrap,
   SelectBtnWrapper,
-  FocusComponent,
   PreferenceNoteWrap,
   LikeNote,
   NoteRanking,
