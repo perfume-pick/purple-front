@@ -2,19 +2,19 @@ import { S } from "./styles";
 import { useQuery } from "@tanstack/react-query";
 import { getRecommendPerfumesByComment } from "@/service/client/recommendPerfume";
 import Perfume from "../perfume/Perfume";
+import { useRecommendPerfumeType } from "@/store/recommendPerfumeTypeStore";
 
 const CommentPerfumes = () => {
+  const { perfumeType } = useRecommendPerfumeType();
+
   const { data } = useQuery({
-    queryKey: ["recommendPerfumes", "COMMENT"],
+    queryKey: ["recommendPerfumes", perfumeType],
     queryFn: getRecommendPerfumesByComment,
   });
 
   const {
-    // timeStamp,
     responseData: { perfumes },
   } = data ?? { timeStamp: null, responseData: { perfumes: [] } };
-
-  console.log(data);
 
   return (
     <S.Wrapper>
