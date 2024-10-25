@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   cursor: pointer;
 `;
 
-const BannerImg = styled.img`
+const PerfumeImg = styled.img`
   aspect-ratio: 1.44;
   width: 100%;
 `;
@@ -26,6 +26,7 @@ const ContentWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 0.4rem;
   & > span {
     color: ${theme.color.textDisabled};
     font-size: ${theme.fontSize.xs};
@@ -45,7 +46,8 @@ const Title = styled.div`
 const Score = styled.div`
   display: flex;
   color: ${theme.color.textDisabled};
-  margin: 0.8rem 0;
+  gap: 0.4rem;
+  align-items: center;
 `;
 
 const CategoryWrap = styled.div`
@@ -57,8 +59,8 @@ const CategoryWrap = styled.div`
   }
 `;
 
-const BannerInfo = styled.div`
-  margin-top: auto;
+const PerfumeInfo = styled.div`
+  margin-top: 0.8rem;
   font-size: ${theme.fontSize.sm};
   color: ${theme.color.textColor[200]};
   line-height: 2.2rem;
@@ -72,9 +74,9 @@ const BannerInfo = styled.div`
 
 export const S = {
   Wrapper,
-  BannerImg,
+  PerfumeImg,
   ContentWrap,
-  BannerInfo,
+  PerfumeInfo,
   Title,
   Score,
   CategoryWrap,
