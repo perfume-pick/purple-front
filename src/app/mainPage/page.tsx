@@ -5,6 +5,7 @@ import { S } from "./styles";
 import { useRouter } from "next/navigation";
 import PerpickLogo from "./_components/logo/Perpick";
 import Taps from "./_components/taps/Taps";
+import Perfumes from "./_components/perfumes/Perfumes";
 
 function MainPage() {
   const router = useRouter();
@@ -24,6 +25,7 @@ function MainPage() {
         />
       </S.SearchBarContainer>
       <Taps />
+      <Perfumes />
     </S.Wrapper>
   );
 }

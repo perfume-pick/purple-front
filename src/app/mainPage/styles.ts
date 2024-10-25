@@ -15,10 +15,6 @@ const SearchBarContainer = styled.div`
   margin: 1.6rem;
 `;
 
-const BannerWrap = styled.div`
-  padding: 2rem;
-`;
-
 const SelectBtnWrapper = styled.div`
   display: flex;
 `;
@@ -68,7 +64,6 @@ const MyPreference = styled.div`
 export const S = {
   Wrapper,
   SearchBarContainer,
-  BannerWrap,
   SelectBtnWrapper,
   PreferenceNoteWrap,
   LikeNote,
