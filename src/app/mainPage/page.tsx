@@ -7,6 +7,7 @@ import { useState } from "react";
 import { MainPageType, MainPageValueType } from "@/constant/mainPage.const";
 import CommentMainPage from "./_components/comment/CommentMainPage";
 import { useRouter } from "next/navigation";
+import PerpickLogo from "./_components/logo/Perpick";
 
 function MainPage() {
   const router = useRouter();
@@ -41,9 +42,7 @@ function MainPage() {
   return (
     <S.Wrapper>
       <S.TopWrap>
-        <S.LogoWrap>
-          <img src="/assets/images/colorLogo.png" alt="colorLogo" />
-        </S.LogoWrap>
+        <PerpickLogo />
         <SearchBar
           placeholderText="나의 향을 검색해보세요"
           inputValue={keyword}

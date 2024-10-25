@@ -2,7 +2,8 @@ import { theme } from "@/styles/theme";
 import styled from "@emotion/styled";
 
 const Wrapper = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   gap: 10px;
   justify-content: center;
@@ -14,17 +15,6 @@ const TopWrap = styled.div`
   .search-wrap {
     width: auto;
     margin: 1.6rem;
-  }
-`;
-
-const LogoWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 0.4rem 0;
-
-  & > img {
-    width: 100%;
-    cursor: pointer;
   }
 `;
 
@@ -103,7 +93,6 @@ const MyPreference = styled.div`
 export const S = {
   Wrapper,
   TopWrap,
-  LogoWrap,
   BannerWrap,
   SelectBtnWrapper,
   FocusComponent,
