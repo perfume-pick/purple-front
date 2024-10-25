@@ -11,7 +11,6 @@ import PerpickLogo from "./_components/logo/Perpick";
 
 function MainPage() {
   const router = useRouter();
-  const [keyword, setKeyword] = useState("");
   const [selectedComponent, setSelectedComponent] =
     useState<MainPageValueType>("NOTE");
 
@@ -45,8 +44,6 @@ function MainPage() {
         <PerpickLogo />
         <SearchBar
           placeholderText="나의 향을 검색해보세요"
-          inputValue={keyword}
-          onChange={e => setKeyword(e.target.value)}
           onClick={handleClickSearchBar}
           isReadonly={true}
         />
