@@ -4,7 +4,6 @@ import { InputHTMLAttributes, ChangeEvent } from "react";
 export interface RadioBtnOption {
   optionCode: string;
   optionName: string;
-  value: string;
 }
 
 // RadioBtnGroup 컴포넌트의 props

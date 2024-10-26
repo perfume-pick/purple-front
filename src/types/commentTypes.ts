@@ -1,3 +1,5 @@
+import { OptionFields } from "./res/commentRegForm";
+
 export interface RadioType {
   persistence?: string;
   residualScent?: string;
@@ -5,8 +7,8 @@ export interface RadioType {
 }
 
 export interface CheckboxType {
-  season?: string;
-  mood?: string;
+  mood?: { name: string }[];
+  season?: OptionFields[];
 }
 
 export interface FieldDefinitionsType {
@@ -14,7 +16,7 @@ export interface FieldDefinitionsType {
   textReview?: string;
   persistence?: string;
   residualScent?: string;
-  season?: string;
+  season?: string[];
   gender?: string;
-  mood?: string;
+  mood?: string[];
 }

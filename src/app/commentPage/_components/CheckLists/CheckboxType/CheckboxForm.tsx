@@ -12,15 +12,10 @@ import {
 } from "react-hook-form";
 import ButtonGroup from "./_components/ButtonGroup";
 
-type Rules = Omit<
-  RegisterOptions<CheckboxType>,
+type Rules<T extends keyof CheckboxType> = Omit<
+  RegisterOptions<FieldDefinitionsType, T>,
   "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
 >;
-
-type CheckboxType = {
-  mood: { name: string }[];
-  season: OptionFields[];
-};
 
 type CheckboxOptions<T extends keyof CheckboxType> = T extends "mood"
   ? { name: string }[]
@@ -33,7 +28,8 @@ interface CheckboxProps<T extends keyof CheckboxType> {
   errors: FieldErrors<FieldDefinitionsType>;
   children?: ReactNode;
   options: CheckboxOptions<T>;
-  rules?: Rules;
+  // rules?: Rules;
+  rules?: Rules<T>;
   initialValues: string[];
 }
 
@@ -46,6 +42,7 @@ export const CheckboxForm = <T extends keyof CheckboxType>({
   rules,
   initialValues,
 }: CheckboxProps<T>) => {
+  console.log(rules);
   const [selectBtn, setSelectedValues] = useState<string[]>([]);
 
   useEffect(() => {

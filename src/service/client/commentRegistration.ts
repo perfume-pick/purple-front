@@ -13,8 +13,8 @@ const endPoint = {
   GET_PERFUME_EVALUATION_FORM: "/perpicks/reviews/evaluation-form",
   POST_SIMPLE_REVIEW: "/perpicks/reviews/simple",
   POST_DETAIL_REVIEW: "/perpicks/reviews/detail",
-  PATCH_SIMPLE_REVIEW: "/perpicks/reviews/{PERFUME_ID}/simple",
-  PATCH_DETAIL_REVIEW: "/perpicks/reviews/{PERFUME_ID}/detail",
+  PATCH_SIMPLE_REVIEW: "/perpicks/reviews/{REVIEW_ID}/simple",
+  PATCH_DETAIL_REVIEW: "/perpicks/reviews/{REVIEW_ID}/detail",
   POST_COMPLAIN_REVIEW: "/perpicks/reviews/{PERFUME_ID}/complain",
   DELETE_REVIEW: "/perpicks/reviews/{PERFUME_ID}",
 };
@@ -38,7 +38,7 @@ async function getCommentEvaluationForm() {
 
 // 간단한 리뷰 작성(신규)
 async function postSimpleReview(payload: SimpleReviewReg) {
-  const response = await clientHttp.get<SimpleReviewReg, FullRestResponse>(
+  const response = await clientHttp.post<SimpleReviewReg, FullRestResponse>(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.POST_SIMPLE_REVIEW}`,
     {
       ...payload,
@@ -50,7 +50,8 @@ async function postSimpleReview(payload: SimpleReviewReg) {
 
 // 자세한 리뷰 작성(신규)
 async function postDetailReview(payload: SimpleReviewReg) {
-  const response = await clientHttp.get<DetailReviewReg, FullRestResponse>(
+  console.log(payload);
+  const response = await clientHttp.post<DetailReviewReg, FullRestResponse>(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.POST_DETAIL_REVIEW}`,
     {
       ...payload,
@@ -66,11 +67,11 @@ async function patchSimpleReview(
   payload: SimpleReviewRegWithoutPerfumeId,
 ) {
   const changedEndPoint = endPoint.PATCH_SIMPLE_REVIEW.replace(
-    "{PERFUME_ID}",
+    "{REVIEW_ID}",
     queryParams,
   );
 
-  const response = await clientHttp.get<
+  const response = await clientHttp.patch<
     SimpleReviewRegWithoutPerfumeId,
     FullRestResponse
   >(`${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`, {
@@ -86,11 +87,11 @@ async function patchDetailReview(
   payload: DetailReviewRegWithoutPerfumeId,
 ) {
   const changedEndPoint = endPoint.PATCH_DETAIL_REVIEW.replace(
-    "{PERFUME_ID}",
+    "{REVIEW_ID}",
     queryParams,
   );
 
-  const response = await clientHttp.get<
+  const response = await clientHttp.patch<
     DetailReviewRegWithoutPerfumeId,
     FullRestResponse
   >(`${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`, {
@@ -107,7 +108,7 @@ async function deleteReview(queryParams: string) {
     queryParams,
   );
 
-  const response = await clientHttp.get<never, FullRestResponse>(
+  const response = await clientHttp.delete<never, FullRestResponse>(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`,
   );
 
@@ -121,7 +122,7 @@ async function complainReview(queryParams: string) {
     queryParams,
   );
 
-  const response = await clientHttp.get<never, FullRestResponse>(
+  const response = await clientHttp.post<never, FullRestResponse>(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`,
   );
 

@@ -7,7 +7,7 @@ type Props = {
   rate: number;
   size: number;
   gap: number;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const ReadonlyRating = ({ rate, size, gap, onClick }: Props) => {

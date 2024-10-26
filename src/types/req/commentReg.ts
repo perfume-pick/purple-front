@@ -24,5 +24,5 @@ export type DetailReviewRegWithoutPerfumeId = Omit<
 
 interface EvaluationFieldItem {
   fieldCode: string;
-  optionCodes: string;
+  optionCodes: string[];
 }

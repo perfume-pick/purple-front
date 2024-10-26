@@ -25,7 +25,9 @@ function DetailEvaluation({ perfumeId }: Props) {
 
   useEffect(() => {
     // 별점 갯수에 맞는 텍스트 업데이트
-    const starRating = Math.ceil(myReviewInfo?.review.score);
+    const starRating = myReviewInfo?.review.score
+      ? Math.ceil(myReviewInfo?.review.score)
+      : 0;
     const matchedItem = COMMENT_STAR_RATING_MESSAGE_LIST.filter(
       item => item.value === starRating,
     )[0];
@@ -53,9 +55,11 @@ function DetailEvaluation({ perfumeId }: Props) {
         />
         <S.Score>
           <span>
-            {myReviewInfo?.review.score % 1 === 0
-              ? myReviewInfo?.review.score.toFixed(1)
-              : myReviewInfo?.review.score}
+            {myReviewInfo?.review?.score != null
+              ? myReviewInfo.review.score % 1 === 0
+                ? myReviewInfo.review.score.toFixed(1)
+                : myReviewInfo.review.score
+              : null}
           </span>
           <span>/ 5.0</span>
         </S.Score>

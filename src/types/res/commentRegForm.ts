@@ -3,7 +3,7 @@ export interface CommentRegForm {
   moods: Mood[];
 }
 
-interface CommonFields {
+export interface CommonFields {
   fieldCode: string;
   fieldName: string;
   evaluationOptions: OptionFields[];

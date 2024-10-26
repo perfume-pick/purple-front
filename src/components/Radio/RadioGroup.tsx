@@ -20,23 +20,21 @@ const RadioBtnGroup = ({ options, onChange, value }: RadioBtnGroupProps) => {
   }
 
   function renderOptions() {
-    return options.map(
-      ({ optionName, value: optionValue, optionCode }: RadioBtnOption) => {
-        const optionId = optionCode;
-        const isChecked = value === optionCode;
+    return options.map(({ optionName, optionCode }: RadioBtnOption) => {
+      const optionId = optionCode;
+      const isChecked = value === optionCode;
 
-        return (
-          <Radio
-            value={optionCode}
-            label={optionName}
-            key={optionCode}
-            id={optionId}
-            onChange={handleRadioChange}
-            checked={isChecked}
-          />
-        );
-      },
-    );
+      return (
+        <Radio
+          value={optionCode}
+          label={optionName}
+          key={optionCode}
+          id={optionId}
+          onChange={handleRadioChange}
+          checked={isChecked}
+        />
+      );
+    });
   }
   return <S.Wrapper>{renderOptions()}</S.Wrapper>;
 };
