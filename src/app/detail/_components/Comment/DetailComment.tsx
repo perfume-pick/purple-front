@@ -14,7 +14,6 @@ import Topic from "./Topic/Topic";
 import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
 import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
 import CommentBox from "@/components/organism/CommentBox/CommentBox";
-import DetailCommentBox from "@/components/organism/CommentBox/DetailCommentBox";
 
 interface DetailCommentProps {
   perfumeId: string;
@@ -106,11 +105,7 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
           />
         </S.TotalComment>
         {reviewsInfo?.reviews.map((review: Review) => {
-          return review.reviewType === "SIMPLE" ? (
-            <CommentBox key={review.reviewId} reviewInfo={review} />
-          ) : (
-            <DetailCommentBox key={review.reviewId} />
-          );
+          return <CommentBox key={review.reviewId} reviewInfo={review} />;
         })}
         <S.CommentButtonWrap>
           <button>

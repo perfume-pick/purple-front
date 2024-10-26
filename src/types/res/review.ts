@@ -4,7 +4,7 @@ export interface Reviews {
 
 interface ReviewCommonFields {
   reviewId: string;
-  reviewType: string;
+  reviewType: "SIMPLE" | "DETAIL";
   score: number;
   content: string;
   perfumeEvaluation: PerfumeEvaluationInfo[];
