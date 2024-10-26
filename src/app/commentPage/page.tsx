@@ -2,7 +2,7 @@
 
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import { S } from "./styles";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import { getMyReview } from "@/service/client/perfumeDetail";
@@ -21,7 +21,7 @@ import { validationMessages } from "@/constant/validation/commentValidation";
 import { CheckboxForm } from "./_components/CheckLists/CheckboxType/CheckboxForm";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   getCommentEvaluationForm,
   patchDetailReview,
@@ -36,8 +36,11 @@ import {
   CommonFields,
   OptionFields,
 } from "@/types/res/commentRegForm";
+import { COMMENT_STAR_RATING_MESSAGE_LIST } from "@/constant/comment/starRatingText";
 
 const CommentPage = () => {
+  const queryClient = useQueryClient();
+
   const {
     handleSubmit,
     control,
@@ -155,6 +158,9 @@ const CommentPage = () => {
         }
       }
 
+      // 캐시 무효화 및 재조회
+      await queryClient.invalidateQueries(["myReviewInfo", perfumeId]);
+
       // 이전 페이지로
       router.back();
     } catch (e) {
@@ -265,6 +271,17 @@ const CommentPage = () => {
     const value = watch(fieldName);
     return Array.isArray(value) ? value : [];
   };
+
+  const ratingText = useMemo(() => {
+    const starRating = watch("rating") ? Math.ceil(watch("rating")) : 0;
+    const matchedItem = COMMENT_STAR_RATING_MESSAGE_LIST.filter(
+      item => item.value === starRating,
+    )[0];
+    return matchedItem
+      ? matchedItem.text
+      : COMMENT_STAR_RATING_MESSAGE_LIST[0].text;
+  }, [watch("rating")]);
+
   return (
     <>
       <NavHeader style={{ justifyContent: "center" }}>
@@ -294,18 +311,13 @@ const CommentPage = () => {
           <S.EvaluationWrap>
             <span>{FieldDefinitions.rating.label}</span>
             <S.RatingWrap {...register("rating", validationMessages.rating)}>
-              {/* <Rating
-                getValues={getValues}
-                setValue={setValue}
-                selectedCommentIdx={selectedCommentIdx}
-              /> */}
               <EditableRating
                 rate={watch("rating") || 0}
                 size={38}
                 gap={1.5}
                 onRateChange={newRate => setValue("rating", newRate)}
               />
-              <div>향이 마음에 들어요</div>
+              <p className="rating-text">{ratingText}</p>
             </S.RatingWrap>
             {errors.rating && (
               <ErrorMessage error={errors.rating.message || ""} />

@@ -7,7 +7,6 @@ const Product = () => {
   const currentPerfumeInfo: DetailPerfumeInfo = usePerfumeDetailStore(
     (state: PerfumeDetailStore) => state.currentPerfumeInfo,
   );
-  console.log(currentPerfumeInfo);
 
   return (
     <S.Wrapper>
