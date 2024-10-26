@@ -38,4 +38,13 @@ export const USER_COMMENT_FILTER_LIST: DropdownType[] = [
   },
 ];
 
-export const COMMENT_BOX_FILTER: string[] = ["코멘트 수정", "코멘트 삭제"];
+export const COMMENT_BOX_FILTER: DropdownType[] = [
+  {
+    title: "코멘트 수정",
+    code: "EDIT_COMMENT",
+  },
+  {
+    title: "코멘트 삭제",
+    code: "DELETE_COMMENT",
+  },
+];

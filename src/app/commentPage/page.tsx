@@ -176,6 +176,10 @@ const CommentPage = () => {
     }
 
     if (myReviewInfo?.review) {
+      if (myReviewInfo.review.reviewType === "DETAIL") {
+        setSelectedCommentIdx(1);
+      }
+
       setIsModify(true);
     } else {
       setIsModify(false);

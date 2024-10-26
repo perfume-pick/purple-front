@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { S } from "./styles";
 import dayjs from "dayjs";
 import StarIcon from "@mui/icons-material/Star";
@@ -9,12 +10,18 @@ import { Review } from "@/types/res/review";
 import FavoritButtons from "../../atom/FavoriteButton/FavoritButtons";
 import MoreButton from "@/components/molecule/MoreButton/MoreButton";
 import { EvaluationType } from "@/constant/detail.const";
+import { deleteReview } from "@/service/client/commentRegistration";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   reviewInfo: Review;
+  perfumeId: string;
 };
 
-const CommentBox = ({ reviewInfo }: Props) => {
+const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
   const [isShowAllText, setIsShowAllText] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteCount, setFavoriteCount] = useState(0);
@@ -40,6 +47,9 @@ const CommentBox = ({ reviewInfo }: Props) => {
   useEffect(() => {
     setIsFavorite(isLiked);
     setFavoriteCount(likeCount);
+    // if (content) {
+    //   checkTextOverflow();
+    // }
   }, [reviewInfo]);
 
   useEffect(() => {
@@ -101,11 +111,22 @@ const CommentBox = ({ reviewInfo }: Props) => {
     setFavoriteCount(prev => (isFavorite ? prev - 1 : prev + 1));
   };
 
-  const handleDeleteComment = () => {
+  const handleDeleteComment = async (typeText: string) => {
+    console.log(typeText);
     if (!isCurrentUserReview) {
       return;
     }
-    console.log("delete");
+
+    if (typeText === "EDIT_COMMENT") {
+      router.push(`/commentPage?perfumeId=${perfumeId}`);
+    } else if (typeText === "DELETE_COMMENT") {
+      try {
+        await deleteReview(reviewId);
+        await queryClient.invalidateQueries(["myReviewInfo", perfumeId]);
+      } catch {
+        alert("코멘트가 정상적으로 삭제되지 않았습니다.");
+      }
+    }
   };
 
   return (
@@ -152,7 +173,10 @@ const CommentBox = ({ reviewInfo }: Props) => {
                     <div>
                       {options.length > 0 &&
                         options.map(innerItem => (
-                          <span key={innerItem.optionName}>
+                          <span
+                            className="info-text"
+                            key={innerItem.optionName}
+                          >
                             {innerItem.optionName}
                           </span>
                         ))}

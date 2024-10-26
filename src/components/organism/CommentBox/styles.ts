@@ -89,6 +89,11 @@ const InfoContent = styled.div`
     color: ${theme.color.textColor[100]};
     width: 35%;
   }
+  .info-text {
+    & + .info-text {
+      margin-left: 0.4rem;
+    }
+  }
   & > div {
     font-weight: ${theme.fontWeight.semiBold};
   }

@@ -105,7 +105,13 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
           />
         </S.TotalComment>
         {reviewsInfo?.reviews.map((review: Review) => {
-          return <CommentBox key={review.reviewId} reviewInfo={review} />;
+          return (
+            <CommentBox
+              key={review.reviewId}
+              reviewInfo={review}
+              perfumeId={perfumeId}
+            />
+          );
         })}
         <S.CommentButtonWrap>
           <button>
