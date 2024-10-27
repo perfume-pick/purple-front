@@ -7,11 +7,15 @@ import dayjs from "dayjs";
 import StarIcon from "@mui/icons-material/Star";
 import { COMMENT_BOX_FILTER } from "@/constant/dropdown/commentFilterList";
 import { Review } from "@/types/res/review";
+import { EvaluationType } from "@/constant/detail.const";
+import {
+  deleteCommentLike,
+  deleteReview,
+  setCommentLike,
+} from "@/service/client/commentRegistration";
+import { useQueryClient } from "@tanstack/react-query";
 import FavoritButtons from "../../atom/FavoriteButton/FavoritButtons";
 import MoreButton from "@/components/molecule/MoreButton/MoreButton";
-import { EvaluationType } from "@/constant/detail.const";
-import { deleteReview } from "@/service/client/commentRegistration";
-import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   reviewInfo: Review;
@@ -32,7 +36,7 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
     content,
     date,
     imageUrl,
-    isComplained,
+    // isComplained,
     isCurrentUserReview,
     isLiked,
     likeCount,
@@ -47,16 +51,11 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
   useEffect(() => {
     setIsFavorite(isLiked);
     setFavoriteCount(likeCount);
-    // if (content) {
-    //   checkTextOverflow();
-    // }
   }, [reviewInfo]);
 
   useEffect(() => {
     checkTextOverflow();
   }, [content]);
-
-  console.log(reviewInfo);
 
   const extractOptionName = (name: string): { optionName: string }[] => {
     const filtered = perfumeEvaluation.find(item =>
@@ -91,28 +90,58 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
   };
 
   useEffect(() => {
-    const element = reviewTextRef.current;
-    if (!element) {
-      return;
-    }
+    // 화면 렌더링 시점 문제로 더보기가 표시되지 않는 문제가 있어 타이머 설정
+    const timer = setTimeout(() => {
+      const element = reviewTextRef.current;
+      if (!element) {
+        return;
+      }
 
-    if (!element.classList.contains("brief-text")) {
-      element.classList.add("brief-text");
-    } else {
-      element.classList.remove("brief-text");
-    }
+      if (!element.classList.contains("brief-text")) {
+        element.classList.add("brief-text");
+      } else {
+        element.classList.remove("brief-text");
+      }
+    }, 100);
+    return () => clearTimeout(timer);
   }, [isShowAllText]);
 
-  const handleFavoriteClick = () => {
-    {
-      /*TODO: 좋아요 api가 나오지 않아, 추후 api 연결 필요 */
+  const handleFavoriteClick = async () => {
+    try {
+      if (isFavorite) {
+        await deleteCommentLike(reviewId);
+      } else {
+        await setCommentLike(reviewId);
+      }
+      await updateReviewData();
+    } catch (error) {
+      console.error("좋아요 처리 중 오류가 발생했습니다:", error);
     }
+  };
+
+  const updateReviewData = () => {
+    queryClient.setQueryData(["reviewsInfo", perfumeId], (oldData: any) => {
+      if (!oldData) return;
+
+      const updatedReviews = oldData?.reviews.map((review: Review) =>
+        review.reviewId === reviewId
+          ? {
+              ...review,
+              isLiked: !isFavorite,
+              likeCount: isFavorite
+                ? review.likeCount - 1
+                : review.likeCount + 1,
+            }
+          : review,
+      );
+
+      return { ...oldData, reviews: updatedReviews };
+    });
     setIsFavorite(prev => !prev);
     setFavoriteCount(prev => (isFavorite ? prev - 1 : prev + 1));
   };
 
   const handleDeleteComment = async (typeText: string) => {
-    console.log(typeText);
     if (!isCurrentUserReview) {
       return;
     }
@@ -123,8 +152,8 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
       try {
         await deleteReview(reviewId);
         await queryClient.invalidateQueries(["myReviewInfo", perfumeId]);
-      } catch {
-        alert("코멘트가 정상적으로 삭제되지 않았습니다.");
+      } catch (error) {
+        console.error("코멘트 처리 중 오류가 발생했습니다:", error);
       }
     }
   };

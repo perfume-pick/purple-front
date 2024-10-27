@@ -17,6 +17,9 @@ const endPoint = {
   PATCH_DETAIL_REVIEW: "/perpicks/reviews/{REVIEW_ID}/detail",
   POST_COMPLAIN_REVIEW: "/perpicks/reviews/{PERFUME_ID}/complain",
   DELETE_REVIEW: "/perpicks/reviews/{REVIEW_ID}",
+
+  POST_COMMENT_LIKE: "/perpicks/reviews/{REVIEW_ID}/like",
+  DELETE_COMMENT_LIKE: "/perpicks/reviews/{REVIEW_ID}/like",
 };
 
 // 코멘트 폼 항목 조회
@@ -129,6 +132,34 @@ async function complainReview(queryParams: string) {
   return response;
 }
 
+// 리뷰 좋아요
+async function setCommentLike(queryParams: string) {
+  const changedEndPoint = endPoint.POST_COMMENT_LIKE.replace(
+    "{REVIEW_ID}",
+    queryParams,
+  );
+
+  const response = await clientHttp.post<never, FullRestResponse>(
+    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`,
+  );
+
+  return response;
+}
+
+// 리뷰 좋아요 취소
+async function deleteCommentLike(queryParams: string) {
+  const changedEndPoint = endPoint.POST_COMMENT_LIKE.replace(
+    "{REVIEW_ID}",
+    queryParams,
+  );
+
+  const response = await clientHttp.delete<never, FullRestResponse>(
+    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`,
+  );
+
+  return response;
+}
+
 export {
   getCommentEvaluationForm,
   postSimpleReview,
@@ -137,4 +168,6 @@ export {
   patchDetailReview,
   deleteReview,
   complainReview,
+  setCommentLike,
+  deleteCommentLike,
 };

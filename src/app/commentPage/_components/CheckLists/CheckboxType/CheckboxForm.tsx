@@ -42,7 +42,6 @@ export const CheckboxForm = <T extends keyof CheckboxType>({
   rules,
   initialValues,
 }: CheckboxProps<T>) => {
-  console.log(rules);
   const [selectBtn, setSelectedValues] = useState<string[]>([]);
 
   useEffect(() => {
