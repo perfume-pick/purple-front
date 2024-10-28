@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 const Wrapper = styled.div`
   & > div {
-    & > div:last-child {
+    & > div:last-child:not(.filter-wrap) {
       padding-top: 3rem;
     }
   }

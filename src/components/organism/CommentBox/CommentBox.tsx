@@ -120,7 +120,7 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
   };
 
   const updateReviewData = () => {
-    queryClient.setQueryData(["reviewsInfo", perfumeId], (oldData: any) => {
+    queryClient.setQueryData(["reviewsInDetail", perfumeId], (oldData: any) => {
       if (!oldData) return;
 
       const updatedReviews = oldData?.reviews.map((review: Review) =>

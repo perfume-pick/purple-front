@@ -1,5 +1,6 @@
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import React, { forwardRef } from "react";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { S } from "./styles";
 import { getReviews, getStatistics } from "@/service/client/perfumeDetail";
@@ -21,6 +22,8 @@ interface DetailCommentProps {
 
 const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
   ({ perfumeId }, ref) => {
+    const router = useRouter();
+
     const currentPerfumeInfo: DetailPerfumeInfo = usePerfumeDetailStore(
       (state: PerfumeDetailStore) => state.currentPerfumeInfo,
     );
@@ -34,7 +37,7 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
 
     // 코멘트 토픽 조회
     const { data: reviewsInfo } = useQuery({
-      queryKey: ["reviewsInfo", perfumeId],
+      queryKey: ["reviewsInDetail", perfumeId],
       queryFn: () =>
         getReviews(
           perfumeId,
@@ -44,6 +47,10 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
       enabled: !!perfumeId,
       retry: false,
     });
+
+    const handleClickCommentPage = () => {
+      router.push(`/detail/comments?perfumeId=${perfumeId}`);
+    };
 
     return (
       <S.Wrapper ref={ref}>
@@ -91,7 +98,7 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
             )}
         </S.TopicWrap>
         <S.TotalComment>
-          <S.CommentWrap>
+          <S.CommentWrap onClick={handleClickCommentPage}>
             <S.CommentTitle>
               <span>코멘트</span>
               <span>({reviewsInfo && reviewsInfo.reviews.length})</span>

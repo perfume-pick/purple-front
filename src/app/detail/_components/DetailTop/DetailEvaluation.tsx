@@ -44,9 +44,7 @@ function DetailEvaluation({ perfumeId }: Props) {
   return (
     <S.Wrapper>
       <span>평가하기</span>
-      {/* <div>평가하기의 부연설명</div> */}
       <S.RatingWrap>
-        {/* <Rating /> */}
         <ReadonlyRating
           rate={myReviewInfo?.review.score ?? 0}
           size={40}
