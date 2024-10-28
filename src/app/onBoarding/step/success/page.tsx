@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 const SuccessPage = () => {
   const router = useRouter();
   const handleClickConfirmBtn = () => {
-    router.push("/");
+    router.push("/", { scroll: false });
   };
   return (
     <S.Wrapper>

@@ -22,7 +22,7 @@ const ProductCard = ({ perfumeInfo, type = "GRID" }: Props) => {
 
   const handleClickProduct = () => {
     updatePerfumeInfo(perfumeInfo);
-    router.push(`/detail?perfumeId=${perfumeId}`);
+    router.push(`/detail?perfumeId=${perfumeId}`, { scroll: false });
   };
 
   return (

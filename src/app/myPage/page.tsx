@@ -59,7 +59,7 @@ const MyPage = () => {
       </NavHeader>
       <HeaderBottomContents>
         <S.ProfileBoxOuter>
-          <ProfileBox onClick={() => router.push("/myPage/profileSetting")} />
+          <ProfileBox onClick={() => router.push("/myPage/profileSetting", {scroll:false})} />
         </S.ProfileBoxOuter>
         <S.Title>취향통계</S.Title>
         <S.TasteStatisticsWrap>

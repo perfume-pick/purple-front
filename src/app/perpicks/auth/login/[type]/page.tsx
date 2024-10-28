@@ -42,9 +42,9 @@ const KakaoCallbackPage = (req: Req) => {
             TokenClientService.setToken(jwtToken);
 
             if (isSignUp) {
-              router.push("/onBoarding/nickName");
+              router.push("/onBoarding/nickName", { scroll: false });
             } else {
-              router.push("/");
+              router.push("/", { scroll: false });
             }
           }
         });

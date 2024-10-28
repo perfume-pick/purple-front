@@ -38,7 +38,7 @@ function DetailEvaluation({ perfumeId }: Props) {
   }, [myReviewInfo]);
 
   const handleClickStarRating = () => {
-    router.push(`/commentPage?perfumeId=${perfumeId}`);
+    router.push(`/commentPage?perfumeId=${perfumeId}`, { scroll: false });
   };
 
   return (

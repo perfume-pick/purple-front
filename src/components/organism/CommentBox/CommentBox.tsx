@@ -147,11 +147,15 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
     }
 
     if (typeText === "EDIT_COMMENT") {
-      router.push(`/commentPage?perfumeId=${perfumeId}`);
+      router.push(`/commentPage?perfumeId=${perfumeId}`, { scroll: false });
     } else if (typeText === "DELETE_COMMENT") {
       try {
         await deleteReview(reviewId);
-        await queryClient.invalidateQueries(["myReviewInfo", perfumeId]);
+        if (perfumeId) {
+          await queryClient.invalidateQueries({
+            queryKey: ["myReviewInfo", perfumeId as string],
+          });
+        }
       } catch (error) {
         console.error("코멘트 처리 중 오류가 발생했습니다:", error);
       }

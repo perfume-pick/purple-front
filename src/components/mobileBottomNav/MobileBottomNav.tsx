@@ -50,7 +50,7 @@ const MobileBottomNav = () => {
             <S.IconWrap
               route={list.router === path}
               key={idx}
-              onClick={() => router.push(list.router)}
+              onClick={() => router.push(list.router, { scroll: false })}
             >
               <>{list.icon}</>
               <span>{list.name}</span>

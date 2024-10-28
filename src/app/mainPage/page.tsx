@@ -35,7 +35,7 @@ function MainPage() {
   };
 
   const handleClickSearchBar = () => {
-    router.push("/searchPage");
+    router.push("/searchPage", { scroll: false });
   };
 
   return (

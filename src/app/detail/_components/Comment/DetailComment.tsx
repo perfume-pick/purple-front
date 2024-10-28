@@ -49,7 +49,7 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
     });
 
     const handleClickCommentPage = () => {
-      router.push(`/detail/comments?perfumeId=${perfumeId}`);
+      router.push(`/detail/comments?perfumeId=${perfumeId}`, { scroll: false });
     };
 
     return (
