@@ -1,13 +1,13 @@
 "use client";
 
 // import styled from "@emotion/styled";
-import { COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
+// import { COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 // import CommentBox from "../../../components/organism/CommentBox/CommentBox";
-import FilterBox from "@/components/organism/FilterBox/FilterBox";
+// import FilterBox from "@/components/organism/FilterBox/FilterBox";
 // import MoreButton from "../../../components/molecule/MoreButton/MoreButton";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
-import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
+// import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 // import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
 // import EditableRating from "../../../components/atom/Rating/EditableRating";
 
@@ -27,10 +27,10 @@ const MyCommentsPage = () => {
       <NavHeader style={{ justifyContent: "center" }}>
         <NavHeaderInner text="작성한 코멘트" />
       </NavHeader>
-      <HeaderBottomContents>
+      {/* <HeaderBottomContents>
         <FilterBox filterList={COMMENT_FILTER_LIST} />
-        {/* <CommentBox /> */}
-        {/* <S.BrandCommentTopArea>
+        <CommentBox />
+        <S.BrandCommentTopArea>
             <div>
               <img
                 src="https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9&s=dd060fe209b4a56733a1dcc9b5aea53a"
@@ -52,8 +52,8 @@ const MyCommentsPage = () => {
               selectList={COMMENT_BOX_FILTER}
               handleDropdown={handleDeleteComment}
             />
-          </S.BrandCommentTopArea> */}
-      </HeaderBottomContents>
+          </S.BrandCommentTopArea>
+      </HeaderBottomContents> */}
     </>
   );
 };

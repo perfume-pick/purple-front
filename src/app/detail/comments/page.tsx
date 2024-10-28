@@ -25,7 +25,12 @@ const CommentsPage = () => {
   // 코멘트 토픽 조회
   const { data: reviewsInfo } = useQuery({
     queryKey: ["reviewsInDetailComments", perfumeId, selectedFilter],
-    queryFn: () => getReviews(perfumeId, selectedFilter),
+    queryFn: () => {
+      if (perfumeId && selectedFilter) {
+        return getReviews(perfumeId, selectedFilter);
+      }
+      return Promise.resolve(null);
+    },
     enabled: !!perfumeId,
     retry: false,
   });
@@ -61,7 +66,7 @@ const CommentsPage = () => {
               <CommentBox
                 key={review.reviewId}
                 reviewInfo={review}
-                perfumeId={perfumeId}
+                perfumeId={perfumeId ?? ""}
               />
             ))
           : null}

@@ -159,7 +159,11 @@ const CommentPage = () => {
       }
 
       // 캐시 무효화 및 재조회
-      await queryClient.invalidateQueries(["myReviewInfo", perfumeId]);
+      if (perfumeId) {
+        await queryClient.invalidateQueries({
+          queryKey: ["myReviewInfo", perfumeId as string],
+        });
+      }
 
       // 이전 페이지로
       router.back();
@@ -184,7 +188,7 @@ const CommentPage = () => {
     } else {
       setIsModify(false);
     }
-  }, []);
+  }, [perfumeId]);
 
   useEffect(() => {
     if (watch("rating")) {
@@ -276,15 +280,15 @@ const CommentPage = () => {
     return Array.isArray(value) ? value : [];
   };
 
+  const rating = watch("rating");
+
   const ratingText = useMemo(() => {
-    const starRating = watch("rating") ? Math.ceil(watch("rating")) : 0;
-    const matchedItem = COMMENT_STAR_RATING_MESSAGE_LIST.filter(
+    const starRating = Math.ceil(rating ?? 0);
+    const matchedItem = COMMENT_STAR_RATING_MESSAGE_LIST.find(
       item => item.value === starRating,
-    )[0];
-    return matchedItem
-      ? matchedItem.text
-      : COMMENT_STAR_RATING_MESSAGE_LIST[0].text;
-  }, [watch("rating")]);
+    );
+    return matchedItem ? matchedItem.text : "";
+  }, [rating]);
 
   return (
     <>
