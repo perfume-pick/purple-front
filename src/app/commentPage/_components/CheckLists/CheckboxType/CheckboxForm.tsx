@@ -93,7 +93,7 @@ const Title = styled.div`
 const Notification = styled.div`
   font-size: 1rem;
   font-weight: ${theme.fontWeight.semiBold};
-  color: ${theme.color.primary};
+  color: ${theme.color.primary.coral[400]};
 `;
 
 const S = { Wrap, CheckboxTitleWrap, Title, Notification };

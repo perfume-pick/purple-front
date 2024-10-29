@@ -69,12 +69,14 @@ const ButtonWrap = styled.div`
 
 const Box = styled.div<{ selected: boolean }>`
   background-color: ${props =>
-    props.selected ? `${theme.color.primary}` : `${theme.color.white}`};
+    props.selected
+      ? `${theme.color.primary.coral[400]}`
+      : `${theme.color.white}`};
   color: ${props =>
     props.selected ? ` ${theme.color.white}` : `${theme.color.textDisabled}`};
   border: ${props =>
     props.selected
-      ? `1px solid ${theme.color.primary}`
+      ? `1px solid ${theme.color.primary.coral[400]}`
       : `1px solid ${theme.color.grayColor[500]}`};
   border-radius: 0.5rem;
   padding: 0.5rem 1.39rem;

@@ -22,7 +22,7 @@ const Contents = styled.div`
 
   button {
     width: 100%;
-    background: ${theme.color.primary};
+    background: ${theme.color.primary.coral[400]};
     padding: 1.8rem;
     border-radius: 0.8rem;
     color: ${theme.color.white};
