@@ -1,5 +1,6 @@
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import React, { forwardRef } from "react";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { S } from "./styles";
 import { getReviews, getStatistics } from "@/service/client/perfumeDetail";
@@ -14,7 +15,6 @@ import Topic from "./Topic/Topic";
 import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
 import RatingDistributionChart from "./RatingDistributionChart/RatingDistributionChart";
 import CommentBox from "@/components/organism/CommentBox/CommentBox";
-import DetailCommentBox from "@/components/organism/CommentBox/DetailCommentBox";
 
 interface DetailCommentProps {
   perfumeId: string;
@@ -22,6 +22,8 @@ interface DetailCommentProps {
 
 const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
   ({ perfumeId }, ref) => {
+    const router = useRouter();
+
     const currentPerfumeInfo: DetailPerfumeInfo = usePerfumeDetailStore(
       (state: PerfumeDetailStore) => state.currentPerfumeInfo,
     );
@@ -35,7 +37,7 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
 
     // 코멘트 토픽 조회
     const { data: reviewsInfo } = useQuery({
-      queryKey: ["reviewsInfo", perfumeId],
+      queryKey: ["reviewsInDetail", perfumeId],
       queryFn: () =>
         getReviews(
           perfumeId,
@@ -45,6 +47,10 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
       enabled: !!perfumeId,
       retry: false,
     });
+
+    const handleClickCommentPage = () => {
+      router.push(`/detail/comments?perfumeId=${perfumeId}`, { scroll: false });
+    };
 
     return (
       <S.Wrapper ref={ref}>
@@ -92,7 +98,7 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
             )}
         </S.TopicWrap>
         <S.TotalComment>
-          <S.CommentWrap>
+          <S.CommentWrap onClick={handleClickCommentPage}>
             <S.CommentTitle>
               <span>코멘트</span>
               <span>({reviewsInfo && reviewsInfo.reviews.length})</span>
@@ -106,10 +112,12 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
           />
         </S.TotalComment>
         {reviewsInfo?.reviews.map((review: Review) => {
-          return review.reviewType === "SIMPLE" ? (
-            <CommentBox key={review.reviewId} reviewInfo={review} />
-          ) : (
-            <DetailCommentBox key={review.reviewId} />
+          return (
+            <CommentBox
+              key={review.reviewId}
+              reviewInfo={review}
+              perfumeId={perfumeId}
+            />
           );
         })}
         <S.CommentButtonWrap>

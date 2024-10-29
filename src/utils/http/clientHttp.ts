@@ -72,16 +72,16 @@ clientHttp.interceptors.response.use(
   httpParserHelper,
   async (error: AxiosError) => {
     const { config } = error;
-    // const status = error.response ? error.response.status : null;
+    const status = error.response ? error.response.status : null;
 
-    // 토큰 만료 시, status 코드가 500대로 와서 임시처리
-    // if (status !== 401 || status !== 403) {
-    //   return Promise.reject(error);
-    // }
+    console.log(status);
+    console.log(config);
 
-    // if (config && config.sent) {
-    //   return Promise.reject(error);
-    // }
+    // 토큰 만료 시, status 코드가 403 || 500로 옴
+    // 데이터가 없는 경우(review) 상태값이 404로 와서 리프레쉬 토큰 api를 호출하게 됨. 예외처리
+    if (status === 404) {
+      return Promise.reject(error);
+    }
 
     // 토큰 만료일 때
     // if (error.response?.status === 401) {

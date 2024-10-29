@@ -1,8 +1,9 @@
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import { theme } from "@/styles/theme";
 import { CheckboxType, FieldDefinitionsType } from "@/types/commentTypes";
+import { OptionFields } from "@/types/res/commentRegForm";
 import styled from "@emotion/styled";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
   Control,
   Controller,
@@ -11,31 +12,42 @@ import {
 } from "react-hook-form";
 import ButtonGroup from "./_components/ButtonGroup";
 
-type Rules = Omit<
-  RegisterOptions<CheckboxType>,
+type Rules<T extends keyof CheckboxType> = Omit<
+  RegisterOptions<FieldDefinitionsType, T>,
   "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
 >;
 
-interface CheckboxProps {
-  name: keyof CheckboxType;
+type CheckboxOptions<T extends keyof CheckboxType> = T extends "mood"
+  ? { name: string }[]
+  : OptionFields[];
+interface CheckboxProps<T extends keyof CheckboxType> {
+  name: T;
   label: string;
   value?: string | number;
   control: Control<FieldDefinitionsType>;
   errors: FieldErrors<FieldDefinitionsType>;
   children?: ReactNode;
-  options: Record<string, string>;
-  rules?: Rules;
+  options: CheckboxOptions<T>;
+  // rules?: Rules;
+  rules?: Rules<T>;
+  initialValues: string[];
 }
 
-export const CheckboxForm: React.FC<CheckboxProps> = ({
+export const CheckboxForm = <T extends keyof CheckboxType>({
   name,
   control,
   label,
   options,
   errors,
   rules,
-}) => {
+  initialValues,
+}: CheckboxProps<T>) => {
   const [selectBtn, setSelectedValues] = useState<string[]>([]);
+
+  useEffect(() => {
+    setSelectedValues(initialValues);
+  }, [initialValues]);
+
   return (
     <S.Wrap>
       <S.CheckboxTitleWrap>
@@ -54,6 +66,7 @@ export const CheckboxForm: React.FC<CheckboxProps> = ({
               setSelectedValues(values);
               field.onChange(values);
             }}
+            name={name}
           />
         )}
       />

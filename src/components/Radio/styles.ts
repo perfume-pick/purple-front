@@ -31,8 +31,8 @@ const RadioBtn = styled.input`
     content: "";
     display: block;
     border-radius: 50%;
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 1.7rem;
+    height: 1.7rem;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -44,6 +44,8 @@ const RadioBtn = styled.input`
   :checked {
     background-color: ${theme.color.primary.coral[400]};
     ::after {
+      width: 1.2rem;
+      height: 1.2rem;
       background-color: ${theme.color.white};
     }
   }
@@ -58,6 +60,9 @@ const Label = styled.label`
   width: 5.5rem;
   text-align: center;
   white-space: pre-line;
+  margin-top: 1.2rem;
+  word-break: keep-all;
+  color: ${theme.color.textColor[100]};
 `;
 
 export const S = {

@@ -158,7 +158,7 @@ const TwoStep = () => {
 
     postOnboardingRating(params).then(res => {
       if (res.status === 204) {
-        router.push(`/onBoarding/step/success`);
+        router.push(`/onBoarding/step/success`, { scroll: false });
       }
     });
   };

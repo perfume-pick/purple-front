@@ -4,18 +4,19 @@ import styled from "@emotion/styled";
 import { theme } from "@/styles/theme";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useEffect, useRef, useState } from "react";
+import { DropdownType } from "@/types/dropdownTypes";
 
 type Props = {
-  selectList: string[];
-  handleDropdown: () => void;
+  selectList: DropdownType[];
+  handleDropdown: (dropdownItem: string) => void;
 };
 
 const MoreButton = ({ selectList, handleDropdown }: Props) => {
   const [isShowDropdown, setIsShowDropdown] = useState(false);
   const dropDownRef = useRef<HTMLDivElement | null>(null);
 
-  const handleClickBox = () => {
-    handleDropdown();
+  const handleClickBox = (text: string) => {
+    handleDropdown(text);
     setIsShowDropdown(false);
   };
 
@@ -41,11 +42,14 @@ const MoreButton = ({ selectList, handleDropdown }: Props) => {
       />
       <S.DropdownWrap
         className={isShowDropdown ? "active" : ""}
-        onClick={handleClickBox}
         ref={dropDownRef}
       >
         {selectList.map((text, index) => {
-          return <p key={index}>{text}</p>;
+          return (
+            <p key={index} onClick={() => handleClickBox(text.code)}>
+              {text.title}
+            </p>
+          );
         })}
       </S.DropdownWrap>
     </S.MoreButtonWrap>

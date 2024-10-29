@@ -1,12 +1,12 @@
 "use client";
 
 import styled from "@emotion/styled";
-import { USER_COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
+// import { USER_COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
 // import ProductCardGrid from "@/components/organism/ProductCardGrid/ProductCardGrid";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
-import FilterBox from "@/components/organism/FilterBox/FilterBox";
-import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
+// import FilterBox from "@/components/organism/FilterBox/FilterBox";
+// import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 
 const EvaluationPerfumePage = () => {
   return (
@@ -14,10 +14,10 @@ const EvaluationPerfumePage = () => {
       <NavHeader style={{ justifyContent: "center" }}>
         <NavHeaderInner text="평가향수" />
       </NavHeader>
-      <HeaderBottomContents>
+      {/* <HeaderBottomContents>
         <FilterBox filterList={USER_COMMENT_FILTER_LIST} />
-        {/* <ProductCardGrid /> */}
-      </HeaderBottomContents>
+        <ProductCardGrid />
+      </HeaderBottomContents> */}
     </S.Wrapper>
   );
 };
