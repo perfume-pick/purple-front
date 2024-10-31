@@ -1,8 +1,10 @@
 import clientHttp from "@/utils/http/clientHttp";
 import { UpdateNicknameRequestDTO } from "../../types/req/userInfo";
 import { FullRestResponse } from "@/types/res/response";
+import { Profile } from "@/types/res/profile";
 
 const endPoint = {
+  GET_PROFILE: "/perpicks/users/my/profile",
   UPDATE_NICKNAME: "/perpicks/users/my/profile",
 };
 
@@ -30,4 +32,12 @@ async function updateUserNickname(payload: {
   return response;
 }
 
-export { updateUserNickname };
+async function getUserProfile() {
+  const { data } = await clientHttp.get<Profile>(endPoint.GET_PROFILE);
+
+  const { timeStamp, responseData } = data;
+
+  return { timeStamp, ...responseData };
+}
+
+export { updateUserNickname, getUserProfile };
