@@ -75,9 +75,9 @@ const CommentInfoWrap = styled.div`
 `;
 
 const InfoWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
   margin: 1rem 0;
 `;
 
@@ -87,7 +87,12 @@ const InfoContent = styled.div`
   margin: 0.7rem 0;
   & > span {
     color: ${theme.color.textColor[100]};
-    width: 20%;
+    width: 35%;
+  }
+  .info-text {
+    & + .info-text {
+      margin-left: 0.4rem;
+    }
   }
   & > div {
     font-weight: ${theme.fontWeight.semiBold};

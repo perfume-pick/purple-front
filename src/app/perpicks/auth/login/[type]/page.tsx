@@ -42,9 +42,9 @@ const KakaoCallbackPage = (req: Req) => {
             TokenClientService.setToken(jwtToken);
 
             if (isSignUp) {
-              router.push("/onBoarding/nickName");
+              router.push("/onBoarding/nickName", { scroll: false });
             } else {
-              router.push("/");
+              router.push("/", { scroll: false });
             }
           }
         });
@@ -56,7 +56,7 @@ const KakaoCallbackPage = (req: Req) => {
     fetchToken();
   }, [router, searchParams.code, type]);
 
-  return <div>카카오 로그인 중...</div>;
+  return <></>;
 };
 
 export default KakaoCallbackPage;

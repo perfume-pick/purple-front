@@ -52,11 +52,14 @@ const RatingWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .rating-text {
+    padding-top: 0.8rem;
+  }
 `;
 
 const ReviewWrap = styled.div`
   width: 100%;
-  margin-bottom: 9rem;
 `;
 
 const ReviewTitle = styled.div`

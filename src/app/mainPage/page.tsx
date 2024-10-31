@@ -11,7 +11,7 @@ function MainPage() {
   const router = useRouter();
 
   const handleClickSearchBar = () => {
-    router.push("/searchPage");
+    router.push("/searchPage", { scroll: false });
   };
 
   return (

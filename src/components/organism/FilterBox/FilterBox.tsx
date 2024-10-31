@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { theme } from "@/styles/theme";
 import { DropdownType } from "@/types/dropdownTypes";
@@ -6,21 +6,33 @@ import Dropdown from "@/components/molecule/Dropdown/Dropdown";
 
 type Props = {
   filterList: DropdownType[];
+  commentCount: number;
+  isDetail: boolean;
+  selectedFilter: string;
+  handleSetIsDetail: () => void;
+  handleChangeSelectedFilter: (code: string) => void;
 };
 
-const FilterBox = ({ filterList }: Props) => {
-  const [selectedFilter, setSelectedFilter] = useState(filterList[0].code);
-
-  const handleChangeSelectedFilter = (code: string) => {
-    setSelectedFilter(code);
-  };
+const FilterBox = ({
+  filterList,
+  commentCount,
+  isDetail,
+  selectedFilter,
+  handleSetIsDetail,
+  handleChangeSelectedFilter,
+}: Props) => {
   return (
-    <S.FilterWrap>
+    <S.FilterWrap className="filter-wrap">
       <p>
-        전체 <span>25</span>건
+        전체 <span>{commentCount}</span>건
       </p>
       <S.Filters>
-        <input type="checkbox" id="only-detail" />
+        <input
+          type="checkbox"
+          id="only-detail"
+          checked={isDetail}
+          onChange={handleSetIsDetail}
+        />
         <label htmlFor="only-detail">자세한 리뷰만</label>
         <Dropdown
           selectedCode={selectedFilter}
@@ -35,6 +47,9 @@ const FilterBox = ({ filterList }: Props) => {
 export default FilterBox;
 
 const FilterWrap = styled.div`
+  position: sticky;
+  z-index: 1;
+  top: 4.8rem;
   display: flex;
   justify-content: space-between;
   align-items: center;

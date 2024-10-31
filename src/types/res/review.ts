@@ -2,20 +2,28 @@ export interface Reviews {
   reviews: Review[];
 }
 
-export interface Review {
+interface ReviewCommonFields {
   reviewId: string;
-  nickname: string;
-  imageUrl: string;
-  date: string;
+  reviewType: "SIMPLE" | "DETAIL";
   score: number;
   content: string;
   perfumeEvaluation: PerfumeEvaluationInfo[];
   moodNames: string[];
+}
+
+type ExtendReview<T> = ReviewCommonFields & T;
+
+export type Review = ExtendReview<{
+  nickname: string;
+  imageUrl: string;
+  date: string;
   isComplained: boolean;
   isLiked: boolean;
   likeCount: number;
-  reviewType: string;
-}
+  isCurrentUserReview: boolean;
+}>;
+
+export type MyReview = ReviewCommonFields;
 
 interface PerfumeEvaluationInfo {
   fieldName: string;

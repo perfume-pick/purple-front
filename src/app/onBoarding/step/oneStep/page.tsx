@@ -50,6 +50,7 @@ const OneStep = () => {
     if (selectedBrandList.length > 0) {
       router.push(
         `/onBoarding/step/twoStep?selectedBrands=${selectPerfumesArrayString}`,
+        { scroll: false },
       );
     } else {
       setOpenAlert(true);

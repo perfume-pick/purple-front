@@ -2,8 +2,8 @@ import { InputHTMLAttributes, ChangeEvent } from "react";
 
 // 라디오 버튼 옵션
 export interface RadioBtnOption {
-  label: string;
-  value: string;
+  optionCode: string;
+  optionName: string;
 }
 
 // RadioBtnGroup 컴포넌트의 props

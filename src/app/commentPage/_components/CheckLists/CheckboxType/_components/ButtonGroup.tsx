@@ -2,23 +2,34 @@ import React from "react";
 import styled from "@emotion/styled";
 import { theme } from "@/styles/theme";
 
-interface ButtonGroupProps {
-  options: Record<string, string>;
+type Option = {
+  optionCode: string;
+  optionName: string;
+};
+
+type ButtonGroupOptions<T extends "mood" | "season"> = T extends "mood"
+  ? { name: string }[]
+  : Option[];
+
+interface ButtonGroupProps<T extends "mood" | "season"> {
+  options: ButtonGroupOptions<T>;
   selectBtn: string[];
   onChange: (selectBtn: string[]) => void;
+  name?: "mood" | "season";
 }
 
-const ButtonGroup: React.FC<ButtonGroupProps> = ({
+const ButtonGroup = <T extends "mood" | "season">({
   options,
   selectBtn,
   onChange,
-}) => {
+  name,
+}: ButtonGroupProps<T>) => {
   const handleClickBox = (value: string) => {
-    const isSelected = selectBtn.includes(value);
+    const isSelected = selectBtn?.includes(value);
     let newSelectedValues: string[] = [];
 
     if (isSelected) {
-      newSelectedValues = selectBtn.filter(val => val !== value);
+      newSelectedValues = selectBtn?.filter(val => val !== value);
     } else {
       newSelectedValues = [...selectBtn, value];
     }
@@ -27,15 +38,25 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ({
 
   return (
     <S.ButtonWrap>
-      {Object.entries(options).map(([key, label]) => (
-        <S.Box
-          key={key}
-          onClick={() => handleClickBox(key)}
-          selected={selectBtn.includes(key)}
-        >
-          {label}
-        </S.Box>
-      ))}
+      {name === "season"
+        ? (options as Option[]).map(option => (
+            <S.Box
+              key={option.optionCode}
+              onClick={() => handleClickBox(option.optionCode)}
+              selected={selectBtn?.includes(option.optionCode)}
+            >
+              {option.optionName}
+            </S.Box>
+          ))
+        : (options as { name: string }[]).map(option => (
+            <S.Box
+              key={option.name}
+              onClick={() => handleClickBox(option.name)}
+              selected={selectBtn?.includes(option.name)}
+            >
+              {option.name}
+            </S.Box>
+          ))}
     </S.ButtonWrap>
   );
 };
