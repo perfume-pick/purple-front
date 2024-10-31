@@ -1,5 +1,6 @@
 import { theme } from "@/styles/theme";
 import styled from "@emotion/styled";
+import Image from "next/image";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,9 +16,15 @@ const Wrapper = styled.div`
   cursor: pointer;
 `;
 
-const PerfumeImg = styled.img`
-  aspect-ratio: 1.44;
+const PerfumeContainer = styled.div`
   width: 100%;
+  height: 25rem;
+  position: relative;
+`;
+
+const PerfumeImg = styled(Image)`
+  width: 100%;
+  height: 100%;
 `;
 
 const ContentWrap = styled.div`
@@ -74,6 +81,7 @@ const PerfumeInfo = styled.div`
 
 export const S = {
   Wrapper,
+  PerfumeContainer,
   PerfumeImg,
   ContentWrap,
   PerfumeInfo,

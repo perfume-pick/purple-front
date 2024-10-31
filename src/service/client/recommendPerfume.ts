@@ -13,7 +13,7 @@ const endPoint = {
 
 // 코멘트 전체 조회
 async function getRecommendPerfumesByAccord() {
-  const { data } = await clientHttp.get<RecommendPerfumeByAccord[]>(
+  const { data } = await clientHttp.get<RecommendPerfumeByAccord>(
     endPoint.GET_RECOMMEND_PERFUMES_BY_ACCORD,
   );
 

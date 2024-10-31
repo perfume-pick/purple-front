@@ -1,6 +1,6 @@
 export interface UserAccord {
   accordName: string;
-  order: 0;
+  order: number;
 }
 
 export interface Perfume {
