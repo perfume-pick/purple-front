@@ -1,8 +1,14 @@
+import { useQuery } from "@tanstack/react-query";
 import { S } from "./styles";
 import { useRouter } from "next/navigation";
+import { getUserReviewCount } from "@/service/client/userInfo";
 
 const ReviewPerfume = () => {
   const router = useRouter();
+  const { data: review } = useQuery({
+    queryKey: ["userReviewCount"],
+    queryFn: getUserReviewCount,
+  });
 
   return (
     <>
@@ -12,7 +18,10 @@ const ReviewPerfume = () => {
             <span>평가한 향수</span>
             <br />
             <S.DescriptionBox>
-              <S.EmphasizeText>00개</S.EmphasizeText>의 향수를
+              <S.EmphasizeText>
+                {review?.currentUserReviewCounts}개
+              </S.EmphasizeText>
+              의 향수를
               <br />
               뿌려봤어요
             </S.DescriptionBox>
@@ -20,7 +29,7 @@ const ReviewPerfume = () => {
         </S.TitleContainer>
         <S.BarContainer>
           <S.BarBox isDisabled>
-            <S.Message>35개</S.Message>
+            <S.Message>{review?.averageUserReviewCounts}개</S.Message>
             <S.Bar />
             <span>평균</span>
           </S.BarBox>

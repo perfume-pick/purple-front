@@ -1,10 +1,11 @@
 import clientHttp from "@/utils/http/clientHttp";
 import { UpdateNicknameRequestDTO } from "../../types/req/userInfo";
 import { FullRestResponse } from "@/types/res/response";
-import { Profile } from "@/types/res/profile";
+import { Profile, ReviewCount } from "@/types/res/profile";
 
 const endPoint = {
   GET_PROFILE: "/perpicks/users/my/profile",
+  GET_REVIEW_COUNT: "/perpicks/users/my/review-counts",
   UPDATE_NICKNAME: "/perpicks/users/my/profile",
 };
 
@@ -40,4 +41,12 @@ async function getUserProfile() {
   return { timeStamp, ...responseData };
 }
 
-export { updateUserNickname, getUserProfile };
+async function getUserReviewCount() {
+  const { data } = await clientHttp.get<ReviewCount>(endPoint.GET_REVIEW_COUNT);
+
+  const { timeStamp, responseData } = data;
+
+  return { timeStamp, ...responseData };
+}
+
+export { updateUserNickname, getUserProfile, getUserReviewCount };
