@@ -36,3 +36,16 @@ export interface UserAccords {
     };
   };
 }
+
+export interface Top3ReviewBrands {
+  timeStamp: string;
+  responseData: {
+    reviewedBrandDTOs: [
+      {
+        order: number;
+        brandName: string;
+        reviewCounts: number;
+      },
+    ];
+  };
+}

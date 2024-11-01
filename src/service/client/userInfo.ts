@@ -1,12 +1,18 @@
 import clientHttp from "@/utils/http/clientHttp";
 import { UpdateNicknameRequestDTO } from "../../types/req/userInfo";
 import { FullRestResponse } from "@/types/res/response";
-import { Profile, ReviewCount, UserAccords } from "@/types/res/profile";
+import {
+  Profile,
+  ReviewCount,
+  UserAccords,
+  Top3ReviewBrands,
+} from "@/types/res/profile";
 
 const endPoint = {
   GET_PROFILE: "/perpicks/users/my/profile",
   GET_REVIEW_COUNT: "/perpicks/users/my/review-counts",
   GET_USER_ACCORDS: "/perpicks/users/my/user-accords",
+  GET_TOP3_REVIEWED_BRANDS: "/perpicks/users/my/top3-reviewed-brands",
   UPDATE_NICKNAME: "/perpicks/users/my/profile",
 };
 
@@ -58,9 +64,20 @@ async function getUserAccords() {
   return { timeStamp, ...responseData };
 }
 
+async function getTop3ReviewBrands() {
+  const { data } = await clientHttp.get<Top3ReviewBrands>(
+    endPoint.GET_TOP3_REVIEWED_BRANDS,
+  );
+
+  const { timeStamp, responseData } = data;
+
+  return { timeStamp, ...responseData };
+}
+
 export {
   updateUserNickname,
   getUserProfile,
   getUserReviewCount,
   getUserAccords,
+  getTop3ReviewBrands,
 };
