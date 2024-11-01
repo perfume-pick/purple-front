@@ -5,8 +5,8 @@ import SearchIcon from "@mui/icons-material/Search";
 
 type Props = {
   placeholderText: string;
-  inputValue: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  inputValue?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: () => void;
   isReadonly?: boolean;
 };

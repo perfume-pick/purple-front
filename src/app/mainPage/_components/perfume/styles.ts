@@ -1,5 +1,6 @@
 import { theme } from "@/styles/theme";
 import styled from "@emotion/styled";
+import Image from "next/image";
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,9 +16,15 @@ const Wrapper = styled.div`
   cursor: pointer;
 `;
 
-const BannerImg = styled.img`
-  aspect-ratio: 1.44;
+const PerfumeContainer = styled.div`
   width: 100%;
+  height: 25rem;
+  position: relative;
+`;
+
+const PerfumeImg = styled(Image)`
+  width: 100%;
+  height: 100%;
 `;
 
 const ContentWrap = styled.div`
@@ -26,6 +33,7 @@ const ContentWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  gap: 0.4rem;
   & > span {
     color: ${theme.color.textDisabled};
     font-size: ${theme.fontSize.xs};
@@ -45,7 +53,8 @@ const Title = styled.div`
 const Score = styled.div`
   display: flex;
   color: ${theme.color.textDisabled};
-  margin: 0.8rem 0;
+  gap: 0.4rem;
+  align-items: center;
 `;
 
 const CategoryWrap = styled.div`
@@ -57,8 +66,8 @@ const CategoryWrap = styled.div`
   }
 `;
 
-const BannerInfo = styled.div`
-  margin-top: auto;
+const PerfumeInfo = styled.div`
+  margin-top: 0.8rem;
   font-size: ${theme.fontSize.sm};
   color: ${theme.color.textColor[200]};
   line-height: 2.2rem;
@@ -72,9 +81,10 @@ const BannerInfo = styled.div`
 
 export const S = {
   Wrapper,
-  BannerImg,
+  PerfumeContainer,
+  PerfumeImg,
   ContentWrap,
-  BannerInfo,
+  PerfumeInfo,
   Title,
   Score,
   CategoryWrap,

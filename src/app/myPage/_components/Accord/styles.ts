@@ -63,10 +63,10 @@ const ProgressBar = styled.div<{ width: string; backgroundColor: string }>`
 
   background-color: ${props => props.backgroundColor};
 
-  &:nth-child(1) {
+  &:nth-of-type(1) {
     border-radius: 0.6rem 0 0 0.6rem;
   }
-  &:nth-child(3) {
+  &:nth-of-type(3) {
     border-radius: 0 0.6rem 0.6rem 0;
   }
 `;
