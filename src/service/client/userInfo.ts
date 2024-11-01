@@ -1,11 +1,12 @@
 import clientHttp from "@/utils/http/clientHttp";
 import { UpdateNicknameRequestDTO } from "../../types/req/userInfo";
 import { FullRestResponse } from "@/types/res/response";
-import { Profile, ReviewCount } from "@/types/res/profile";
+import { Profile, ReviewCount, UserAccords } from "@/types/res/profile";
 
 const endPoint = {
   GET_PROFILE: "/perpicks/users/my/profile",
   GET_REVIEW_COUNT: "/perpicks/users/my/review-counts",
+  GET_USER_ACCORDS: "/perpicks/users/my/user-accords",
   UPDATE_NICKNAME: "/perpicks/users/my/profile",
 };
 
@@ -49,4 +50,17 @@ async function getUserReviewCount() {
   return { timeStamp, ...responseData };
 }
 
-export { updateUserNickname, getUserProfile, getUserReviewCount };
+async function getUserAccords() {
+  const { data } = await clientHttp.get<UserAccords>(endPoint.GET_USER_ACCORDS);
+
+  const { timeStamp, responseData } = data;
+
+  return { timeStamp, ...responseData };
+}
+
+export {
+  updateUserNickname,
+  getUserProfile,
+  getUserReviewCount,
+  getUserAccords,
+};

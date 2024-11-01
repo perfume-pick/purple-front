@@ -14,3 +14,25 @@ export interface ReviewCount {
     averageUserReviewCounts: number;
   };
 }
+
+export interface UserAccords {
+  timeStamp: string;
+  responseData: {
+    userAccord: {
+      preferredAccord: [
+        {
+          accordName: string;
+          count: number;
+          percentage: number;
+        },
+      ];
+      dislikedAccord: [
+        {
+          accordName: string;
+          count: number;
+          percentage: number;
+        },
+      ];
+    };
+  };
+}
