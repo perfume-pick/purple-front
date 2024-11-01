@@ -6,3 +6,11 @@ export interface Profile {
     email: string;
   };
 }
+
+export interface ReviewCount {
+  timeStamp: string;
+  responseData: {
+    currentUserReviewCounts: number;
+    averageUserReviewCounts: number;
+  };
+}
