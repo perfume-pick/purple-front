@@ -4,8 +4,9 @@ import React from "react";
 import styled from "@emotion/styled";
 import { theme } from "@/styles/theme";
 import { FaRegSmile } from "react-icons/fa";
-import { PiHeartBold } from "react-icons/pi";
-import { LuMenu } from "react-icons/lu";
+// import { PiHeartBold } from "react-icons/pi";
+// import { LuMenu } from "react-icons/lu";
+import { IoIosSearch } from "react-icons/io";
 import { RiHome4Line } from "react-icons/ri";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -17,6 +18,7 @@ const MobileBottomNav = () => {
     "/onBoarding",
     "/commentPage",
     "/detail/comments",
+    "/perpicks/auth",
   ];
 
   // TODO: router경로는 페이지가 만들어지면 수정 필요.
@@ -27,15 +29,15 @@ const MobileBottomNav = () => {
       router: "/",
     },
     {
-      name: "카테고리",
-      icon: <LuMenu />,
-      router: "/",
+      name: "검색",
+      icon: <IoIosSearch />,
+      router: "/searchPage",
     },
-    {
-      name: "찜 목록",
-      icon: <PiHeartBold />,
-      router: "/detail",
-    },
+    // {
+    //   name: "찜 목록",
+    //   icon: <PiHeartBold />,
+    //   router: "/detail",
+    // },
     {
       name: "마이페이지",
       icon: <FaRegSmile />,
