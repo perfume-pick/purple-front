@@ -87,12 +87,12 @@ const CommentPage = () => {
     } = data;
 
     const simpleCommentParams = {
-      perfumeId: perfumeId ? parseInt(perfumeId) : -1,
+      perfumeId: perfumeId ? perfumeId : "",
       score: rating ?? 0,
       content: textReview ?? "",
     };
     const detailCommentParams = {
-      perfumeId: perfumeId ? parseInt(perfumeId) : -1,
+      perfumeId: perfumeId ? perfumeId : "",
       score: rating ?? 0,
       content: textReview ?? "",
       evaluationFieldVOs: [

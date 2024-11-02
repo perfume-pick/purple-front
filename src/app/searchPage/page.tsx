@@ -103,9 +103,7 @@ const SearchPage = () => {
           inputValue={keyword}
           onChange={e => setKeyword(e.target.value)}
         />
-        <button onClick={() => router.push("/", { scroll: false })}>
-          취소
-        </button>
+        <button onClick={() => router.push("/")}>취소</button>
       </S.SearchBarWrap>
       {!keyword && (
         <div>

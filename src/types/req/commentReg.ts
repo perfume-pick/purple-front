@@ -1,5 +1,5 @@
 export interface SimpleReviewReg {
-  perfumeId: number;
+  perfumeId: string;
   score: number;
   content: string;
 }
@@ -10,7 +10,7 @@ export type SimpleReviewRegWithoutPerfumeId = Omit<
 >;
 
 export interface DetailReviewReg {
-  perfumeId: number;
+  perfumeId: string;
   score: number;
   content: string;
   evaluationFieldVOs: EvaluationFieldItem[];

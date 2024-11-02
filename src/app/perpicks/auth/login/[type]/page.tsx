@@ -44,7 +44,7 @@ const KakaoCallbackPage = (req: Req) => {
             if (isSignUp) {
               router.push("/onBoarding/nickName", { scroll: false });
             } else {
-              router.push("/", { scroll: false });
+              router.push("/");
             }
           }
         });
