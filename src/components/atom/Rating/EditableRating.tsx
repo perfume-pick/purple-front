@@ -24,13 +24,9 @@ const EditableRating = ({ rate, size, gap, onRateChange }: Props) => {
     const remToPx = gap * 10;
     const starWidth = (width - remToPx * 4) / 5;
     const totalStarWidth = starWidth + remToPx;
-    const starIndex = Math.floor(posX / totalStarWidth);
-    const isLeftSide = posX % totalStarWidth < starWidth / 2;
+    const newRate = Math.ceil(posX / totalStarWidth); // 1점씩 증가하도록 소수점 반올림
 
-    let newRate = starIndex + (isLeftSide ? 0.5 : 1);
-    newRate = Math.round(newRate * 2) / 2;
-    newRate = Math.min(5, Math.max(0, newRate));
-    onRateChange(parseFloat(newRate.toFixed(2)));
+    onRateChange(Math.min(5, Math.max(1, newRate))); // 1점 이상, 5점 이하로 범위 제한
   };
 
   return (
