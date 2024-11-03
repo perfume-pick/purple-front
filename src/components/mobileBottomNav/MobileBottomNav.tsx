@@ -19,6 +19,7 @@ const MobileBottomNav = () => {
     "/commentPage",
     "/detail/comments",
     "/perpicks/auth",
+    "/detail",
   ];
 
   // TODO: router경로는 페이지가 만들어지면 수정 필요.
