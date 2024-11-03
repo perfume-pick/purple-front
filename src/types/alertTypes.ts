@@ -11,3 +11,13 @@ export interface ConfirmAlertType extends AlertType {
 export interface ProfileAlertType extends AlertType {
   delete: string;
 }
+
+export interface DialogAlertType {
+  message: string;
+  leftText: string;
+  rightText: string;
+  leftBgColor: string;
+  rightBgColor: string;
+  leftColor: string;
+  rightColor: string;
+}
