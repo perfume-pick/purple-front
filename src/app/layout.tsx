@@ -15,7 +15,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body suppressHydrationWarning={true}>
         <ReactQueryProviders>
-          <EmotionThemeProvider>{children}</EmotionThemeProvider>
+          <EmotionThemeProvider>
+            <div id="portal" />
+            {children}
+          </EmotionThemeProvider>
           <MobileBottomNav />
         </ReactQueryProviders>
       </body>
