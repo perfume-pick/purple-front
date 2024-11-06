@@ -40,7 +40,7 @@ const ReviewPerfume = () => {
         </S.BarContainer>
       </S.Wrapper>
       <S.ReviewPerfumeButton
-        disabled
+        disabled={false}
         onClick={() => router.push("/myPage/evaluationPerfumePage")}
       >
         내 평가 전체보기
