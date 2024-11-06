@@ -1,5 +1,9 @@
 import clientHttp from "@/utils/http/clientHttp";
-import { UpdateNicknameRequestDTO } from "../../types/req/userInfo";
+import {
+  UpdateProfileBody,
+  UpdateProfileParams,
+  UpdateNicknameRequestDTO,
+} from "@/types/req/userInfo";
 import { FullRestResponse } from "@/types/res/response";
 import {
   Profile,
@@ -14,6 +18,7 @@ const endPoint = {
   GET_USER_ACCORDS: "/perpicks/users/my/user-accords",
   GET_TOP3_REVIEWED_BRANDS: "/perpicks/users/my/top3-reviewed-brands",
   UPDATE_NICKNAME: "/perpicks/users/my/profile",
+  UPDATE_PROFILE: "/perpicks/users/my/profile",
 };
 
 async function updateUserNickname(payload: {
@@ -74,8 +79,31 @@ async function getTop3ReviewBrands() {
   return { timeStamp, ...responseData };
 }
 
+async function patchProfile({
+  params,
+  body,
+}: {
+  params: UpdateProfileParams;
+  body: UpdateProfileBody;
+}) {
+  const paramString = Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+  const url = `${endPoint.UPDATE_PROFILE}?${paramString}`;
+  const { data } = await clientHttp.patch<Profile>(url, body, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  const { timeStamp, responseData } = data;
+
+  return { timeStamp, ...responseData };
+}
+
 export {
   updateUserNickname,
+  patchProfile,
   getUserProfile,
   getUserReviewCount,
   getUserAccords,
