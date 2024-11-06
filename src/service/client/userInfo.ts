@@ -84,7 +84,7 @@ async function patchProfile({
   body,
 }: {
   params: UpdateProfileParams;
-  body: UpdateProfileBody;
+  body: UpdateProfileBody["picture"];
 }) {
   const paramString = Object.entries(params)
     .map(([key, value]) => `${key}=${value}`)

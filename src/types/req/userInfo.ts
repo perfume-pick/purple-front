@@ -8,5 +8,10 @@ export interface UpdateProfileParams {
 }
 
 export interface UpdateProfileBody {
-  picture: string | null;
+  picture: FormData | null;
+  // picture: string | null;
+}
+
+export interface ProfilePreview {
+  preview: string | null;
 }

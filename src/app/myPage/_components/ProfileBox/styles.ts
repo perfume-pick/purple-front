@@ -14,6 +14,7 @@ const Container = styled.div`
 
 const TextWrap = styled.div`
   width: calc(100% - 6rem);
+  height: 4.5rem;
   padding-left: 1.2rem;
   font-size: ${theme.fontSize.base};
   line-height: 1.6rem;

@@ -11,6 +11,7 @@ const TitleContainer = styled.div`
 `;
 
 const TitleBox = styled.div`
+  width: 19.6rem;
   font-weight: ${props => props.theme.fontWeight.semiBold};
   line-height: 1.4;
   padding: 1.6rem 3.7rem 1.6rem 1.6rem;

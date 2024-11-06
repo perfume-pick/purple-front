@@ -21,7 +21,13 @@ export type FormValues = {
 
 type UpdateProfile = {
   params: UpdateProfileParams;
-  body: UpdateProfileBody;
+  body: UpdateProfileBody["picture"];
+};
+
+export type ImageForm = {
+  isChange: boolean;
+  imgUrl: FormData | null;
+  previewImgUrl: string | null;
 };
 
 const ProfileSettingPage = () => {
@@ -44,13 +50,22 @@ const ProfileSettingPage = () => {
     },
   });
 
-  const [picture, setPicture] = useState<UpdateProfileBody["picture"]>(null);
+  const [image, setImage] = useState<ImageForm>({
+    isChange: false,
+    imgUrl: null,
+    previewImgUrl: null,
+  });
   const [openAlert, setOpenAlert] = useState(false);
 
+  const imageUrl = image.isChange
+    ? image.previewImgUrl || ""
+    : profile && profile.imageUrl
+      ? `${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}${profile?.imageUrl}`
+      : "";
+
   const onSubmit: SubmitHandler<FormValues> = ({ nickname }) => {
-    const body = { picture };
-    const isChangePicture = !!picture;
-    const params = { nickname, isChanged: isChangePicture };
+    const body = image.imgUrl;
+    const params = { nickname, isChanged: image.isChange };
 
     updateProfile({ params, body });
     router.back();
@@ -77,7 +92,7 @@ const ProfileSettingPage = () => {
           <Profile
             width="8rem"
             height="8rem"
-            image={picture ?? profile?.imageUrl ?? ""}
+            image={imageUrl}
             isEdit
             onClick={handleClickProfile}
           />
@@ -85,7 +100,7 @@ const ProfileSettingPage = () => {
             <ProfileAlert
               message={EDIT_PROFILE_ALERT}
               setOpenAlert={setOpenAlert}
-              setPicture={setPicture}
+              setImage={setImage}
             />
           )}
           <form onSubmit={handleSubmit(onSubmit)}>

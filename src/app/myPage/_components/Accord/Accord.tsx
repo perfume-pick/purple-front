@@ -18,8 +18,6 @@ const Accord = () => {
   const accordPerfumeTotal =
     currentAccords?.reduce((acc, cur) => acc + cur.count, 0) ?? 0;
 
-  console.log(currentAccords);
-
   return (
     <S.Wrapper>
       <S.TitleTabContainer>
