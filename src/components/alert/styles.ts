@@ -143,7 +143,7 @@ const ProfileBtn = styled.div`
     font-size: ${theme.fontSize.sm};
   }
 
-  & > div:first-of-type {
+  & > label:first-of-type {
     color: #007aff;
     font-weight: ${theme.fontWeight.semiBold};
   }
@@ -151,6 +151,10 @@ const ProfileBtn = styled.div`
   & > div:last-of-type {
     color: #ff453a;
   }
+`;
+
+const ProfilePictureInput = styled.input`
+  display: none;
 `;
 
 export const S = {
@@ -164,4 +168,5 @@ export const S = {
   ProfileWrapper,
   ProfileContentsWrap,
   ProfileBtn,
+  ProfilePictureInput,
 };
