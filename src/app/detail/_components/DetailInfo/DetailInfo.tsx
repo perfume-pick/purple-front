@@ -38,7 +38,7 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
       retry: false,
     });
 
-    console.log(perfumeDetailInfo);
+    // console.log(perfumeDetailInfo);
 
     // 프라그란티카 평가 상세 정보 조회
     const { data: fragranticaEvaluationInfo } = useQuery({

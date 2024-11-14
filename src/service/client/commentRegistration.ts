@@ -53,7 +53,6 @@ async function postSimpleReview(payload: SimpleReviewReg) {
 
 // 자세한 리뷰 작성(신규)
 async function postDetailReview(payload: SimpleReviewReg) {
-  console.log(payload);
   const response = await clientHttp.post<DetailReviewReg, FullRestResponse>(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.POST_DETAIL_REVIEW}`,
     {

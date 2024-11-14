@@ -150,7 +150,6 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
   };
 
   const handleClickSelectBox = async (typeText: string) => {
-    console.log(typeText);
     if (!isCurrentUserReview) {
       return;
     }

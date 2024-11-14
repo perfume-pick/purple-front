@@ -10,7 +10,6 @@ type Props = {
 };
 
 const ProductHorizontalScroll = ({ dataList }: Props) => {
-  console.log(dataList);
   return (
     <S.Wrapper>
       <ul>

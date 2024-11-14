@@ -28,7 +28,6 @@ const MoreButton = ({ selectList, handleDropdown }: Props) => {
   const dropDownRef = useRef<HTMLDivElement | null>(null);
 
   const handleClickBox = (code: string) => {
-    console.log(code);
     if (code === "DELETE_COMMENT") {
       setIsOpenDeleteModal(true);
     } else {
