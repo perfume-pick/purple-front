@@ -1,4 +1,4 @@
-import { AlertType, DialogAlertType } from "@/types/alertTypes";
+import { DialogAlertType } from "@/types/alertTypes";
 import ModalLayout from "../modalLayout/modalLayout";
 import Portal from "./Portal";
 import { S } from "./styles";
