@@ -10,7 +10,7 @@ import {
   NoteType,
 } from "@/types/res/perfumeDetail";
 import {
-  getAccordsNotes,
+  getPerfumeDetail,
   getFragranticaEvaluation,
 } from "@/service/client/perfumeDetail";
 import { useQuery } from "@tanstack/react-query";
@@ -31,12 +31,14 @@ type TempNoteObj = {
 const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
   ({ perfumeId }, ref) => {
     // 향수 상세 정보 조회
-    const { data: accordNoteInfo } = useQuery({
-      queryKey: ["accordNoteInfo", perfumeId],
-      queryFn: () => getAccordsNotes(perfumeId),
+    const { data: perfumeDetailInfo } = useQuery({
+      queryKey: ["perfumeDetailInfo", perfumeId],
+      queryFn: () => getPerfumeDetail(perfumeId),
       enabled: !!perfumeId,
       retry: false,
     });
+
+    console.log(perfumeDetailInfo);
 
     // 프라그란티카 평가 상세 정보 조회
     const { data: fragranticaEvaluationInfo } = useQuery({
@@ -47,7 +49,7 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
     });
 
     const noteInfoList = useMemo(() => {
-      if (!accordNoteInfo?.notes) {
+      if (!perfumeDetailInfo?.notes) {
         return [];
       }
 
@@ -69,7 +71,7 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
         },
       ];
 
-      accordNoteInfo.notes.forEach((note: NoteInfo) => {
+      perfumeDetailInfo.notes.forEach((note: NoteInfo) => {
         const target = tempNoteObjList.find(item => item.type === note.type);
         if (target) {
           target.notes.push(note.name);
@@ -77,7 +79,7 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
       });
 
       return tempNoteObjList;
-    }, [accordNoteInfo]);
+    }, [perfumeDetailInfo]);
 
     return (
       <S.Wrapper ref={ref}>
@@ -87,8 +89,8 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
             <span>메인어코드</span>
           </S.InfoTitle>
           <S.GraphWrap>
-            {accordNoteInfo &&
-              accordNoteInfo?.accords.map((item: AccordInfo) => {
+            {perfumeDetailInfo &&
+              perfumeDetailInfo?.accords.map((item: AccordInfo) => {
                 const accordColor = PERFUME_ACCORD_COLORS.filter(
                   accord => accord.accordName === item.accordName,
                 )[0].hexColor;
