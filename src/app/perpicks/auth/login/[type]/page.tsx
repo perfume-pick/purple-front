@@ -26,6 +26,7 @@ const KakaoCallbackPage = (req: Req) => {
         const response = await getJwtToken(
           type.toUpperCase(),
           searchParams.code,
+          window.location.origin,
         );
         const {
           responseData: { jwtToken, isSignUp },

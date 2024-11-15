@@ -13,8 +13,10 @@ export default function SignInPage() {
   const router = useRouter();
   const onClickLoginType = async (type: OauthType) => {
     deleteToken();
-
-    const { responseData } = await clientCreateLoginTry(type);
+    const { responseData } = await clientCreateLoginTry(
+      type,
+      window.location.origin,
+    );
     router.push(responseData.uri, { scroll: false });
   };
 

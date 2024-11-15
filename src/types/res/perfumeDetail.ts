@@ -1,4 +1,9 @@
-export interface PerfumeAccordsNote {
+export interface PerfumeDetailInfo {
+  perfumeId: string;
+  perfumeName: string;
+  brandName: string;
+  imageUrl: string;
+  averageScore: number;
   accords: AccordInfo[];
   notes: NoteInfo[];
 }

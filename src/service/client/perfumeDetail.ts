@@ -2,13 +2,13 @@ import clientHttp from "@/utils/http/clientHttp";
 import { FullRestResponse, RestResponseType } from "@/types/res/response";
 import {
   FragranticaEvaluation,
-  PerfumeAccordsNote,
+  PerfumeDetailInfo,
   Statistic,
 } from "@/types/res/perfumeDetail";
 import { MyReview, Reviews } from "@/types/res/review";
 
 const endPoint = {
-  GET_ACCORDS_NOTES: "/perpicks/perfumes/{PERFUME_ID}/accords-notes",
+  GET_DETAIL: "/perpicks/perfumes/{PERFUME_ID}/detail",
   GET_FRAGRANTICA_EVALUATION:
     "/perpicks/perfumes/{PERFUME_ID}/fragrantica-evaluation",
   GET_STATISTICS: "/perpicks/perfumes/{PERFUME_ID}/statistics",
@@ -18,18 +18,18 @@ const endPoint = {
 };
 
 // 메인어코드, 노트
-async function getAccordsNotes(queryParams: string) {
-  const changedEndPoint = endPoint.GET_ACCORDS_NOTES.replace(
+async function getPerfumeDetail(queryParams: string) {
+  const changedEndPoint = endPoint.GET_DETAIL.replace(
     "{PERFUME_ID}",
     queryParams,
   );
   const response = await clientHttp.get<
     never,
-    FullRestResponse<RestResponseType<PerfumeAccordsNote>>
+    FullRestResponse<RestResponseType<{ perfumeDetail: PerfumeDetailInfo }>>
   >(`${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`);
 
   if (response.data) {
-    return response.data.responseData;
+    return response.data.responseData.perfumeDetail;
   }
 }
 
@@ -113,7 +113,7 @@ async function getMyReview(queryParams: string) {
 }
 
 export {
-  getAccordsNotes,
+  getPerfumeDetail,
   getFragranticaEvaluation,
   getStatistics,
   getReviews,

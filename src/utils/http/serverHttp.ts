@@ -11,8 +11,6 @@ const baseUrl = "http://localhost:3000";
 const getRefreshToken = async (): Promise<string | void> => {
   try {
     const originToken = cookies().get(TOKEN_SAVE_KEY)?.value;
-    console.log("originToken!!!!!");
-    console.log(originToken);
 
     const {
       data: {
@@ -39,12 +37,12 @@ const getRefreshToken = async (): Promise<string | void> => {
   }
 };
 const logout = async () => {
-  console.log("cookie1 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
+  // console.log("cookie1 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
 
   await fetch(`${baseUrl}/api/delete-token`, {
     method: "DELETE",
   }).then(() => {
-    console.log("cookie2 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
+    // console.log("cookie2 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
   });
 };
 
