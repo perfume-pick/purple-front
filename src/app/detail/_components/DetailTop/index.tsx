@@ -8,7 +8,7 @@ type Props = {
 function DetailTop({ perfumeId }: Props) {
   return (
     <>
-      <DetailPageBanner />
+      <DetailPageBanner perfumeId={perfumeId} />
       <DetailEvaluation perfumeId={perfumeId} />
     </>
   );
