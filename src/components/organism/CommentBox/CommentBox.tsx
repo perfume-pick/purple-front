@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { S } from "./styles";
 import dayjs from "dayjs";
@@ -114,6 +114,14 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
     return () => clearTimeout(timer);
   }, [isShowAllText]);
 
+  const madeSelectList = useMemo(() => {
+    return isCurrentUserReview
+      ? COMMENT_BOX_FILTER
+      : isComplained
+        ? COMMENT_BOX_FILTER_WITH_CANCEL_REPORT
+        : COMMENT_BOX_FILTER_WITH_REPORT;
+  }, [reviewInfo]);
+
   const handleFavoriteClick = async () => {
     try {
       if (isFavorite) {
@@ -150,10 +158,6 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
   };
 
   const handleClickSelectBox = async (typeText: string) => {
-    if (!isCurrentUserReview) {
-      return;
-    }
-
     if (typeText === "EDIT_COMMENT") {
       router.push(`/commentPage?perfumeId=${perfumeId}`, { scroll: false });
     } else if (typeText === "DELETE_COMMENT") {
@@ -185,7 +189,7 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
     } else if (typeText === "CANCEL_REPORT_COMMENT") {
       try {
         // api 추가
-        setToastText("코멘트 신고가 취소되었습니다..");
+        setToastText("코멘트 신고가 취소되었습니다.");
         setToast(true);
       } catch (error) {
         console.error("리뷰 신고 취소 처리 중 오류가 발생했습니다:", error);
@@ -221,13 +225,7 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
             </S.ProfileTextWrap>
           </S.ProfileArea>
           <MoreButton
-            selectList={
-              isCurrentUserReview
-                ? COMMENT_BOX_FILTER
-                : isComplained
-                  ? COMMENT_BOX_FILTER_WITH_CANCEL_REPORT
-                  : COMMENT_BOX_FILTER_WITH_REPORT
-            }
+            selectList={madeSelectList}
             handleDropdown={handleClickSelectBox}
           />
         </S.BrandCommentTopArea>
