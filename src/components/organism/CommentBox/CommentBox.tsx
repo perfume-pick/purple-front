@@ -203,7 +203,11 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
         <S.BrandCommentTopArea>
           <S.ProfileArea>
             <img
-              src={imageUrl ?? "/assets/images/user_avatar.png"}
+              src={
+                imageUrl
+                  ? `${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}${imageUrl}`
+                  : "/assets/images/user_avatar.png"
+              }
               alt="purfume image"
             />
             <S.ProfileTextWrap>
