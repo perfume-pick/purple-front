@@ -188,7 +188,6 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
       }
     } else if (typeText === "CANCEL_REPORT_COMMENT") {
       try {
-        console.log('코멘트 신고 취소')
         // api 추가
         setToastText("코멘트 신고가 취소되었습니다.");
         setToast(true);

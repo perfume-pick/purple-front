@@ -304,7 +304,7 @@ const CommentPage = () => {
       </NavHeader>
       <HeaderBottomContents>
         <S.Wrapper onSubmit={handleSubmit(onSubmit)}>
-          <Product perfumeId={perfumeId} />
+          <Product perfumeId={perfumeId ?? ""} />
           <S.CommentWrap>
             {Object.values(CommentType).map((comment, idx) => (
               <S.CommentBtn

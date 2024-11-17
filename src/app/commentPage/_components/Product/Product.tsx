@@ -18,12 +18,12 @@ const Product = ({ perfumeId }: Props) => {
   return (
     <S.Wrapper>
       <img
-        src={perfumeDetailInfo.imageUrl}
-        alt={perfumeDetailInfo.perfumeName}
+        src={perfumeDetailInfo?.imageUrl}
+        alt={perfumeDetailInfo?.perfumeName}
       />
       <S.TitleWrap>
-        <span>{perfumeDetailInfo.brandName}</span>
-        <span>{perfumeDetailInfo.perfumeName}</span>
+        <span>{perfumeDetailInfo?.brandName}</span>
+        <span>{perfumeDetailInfo?.perfumeName}</span>
       </S.TitleWrap>
     </S.Wrapper>
   );
