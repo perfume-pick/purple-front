@@ -94,7 +94,9 @@ const MoreButtonWrap = styled.div`
 `;
 const DropdownWrap = styled.div`
   position: absolute;
-  width: 10rem;
+  min-width: 10rem;
+  max-width: 12rem;
+  white-space: nowrap;
   top: 2.4rem;
   right: 0;
   border: 1px solid #dbdbdb;
