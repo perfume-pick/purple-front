@@ -35,7 +35,7 @@ function DetailPage() {
           }}
         >
           {/* <FavoriteBorderIcon sx={{ fontSize: "2.4rem" }} /> */}
-          <ShareButton description={"퍼핏 향수 상세 페이지"} />
+          <ShareButton />
         </div>
       </NavHeader>
       <HeaderBottomContents>
