@@ -14,7 +14,7 @@ const TokenService: TokenServiceType = {
       req,
       res,
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      // secure: process.env.NODE_ENV === "production",
       maxAge: 60 * 60 * 24 * 2, // 2 days
       path: "/",
     });
