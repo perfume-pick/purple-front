@@ -106,7 +106,7 @@ const SearchPage = () => {
         <button onClick={() => router.push("/")}>취소</button>
       </S.SearchBarWrap>
       {!keyword && (
-        <div>
+        <S.contentsWrap>
           <div>
             <S.SearchTitle>
               <span>최근 검색</span>
@@ -128,11 +128,15 @@ const SearchPage = () => {
             </S.SearchTitle>
           </div>
           <ProductHorizontalScroll perfumeList={visitHistories ?? []} />
-        </div>
+        </S.contentsWrap>
       )}
       {/* {isLoading && <p>로딩중...</p>} */}
       {keyword && (
-        <div>
+        <S.contentsWrap
+          className={
+            resultData?.responseData?.perfumes?.length > 0 ? "change" : ""
+          }
+        >
           {/* TODO : 메인의 scroll 위치를 기억해야하는 경우 */}
           {resultData && resultData.responseData.perfumes.length < 1 ? (
             <S.EmptyWrap>
@@ -155,7 +159,7 @@ const SearchPage = () => {
               dataList={resultData?.responseData.perfumes || []}
             />
           )}
-        </div>
+        </S.contentsWrap>
       )}
     </>
   );

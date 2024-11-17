@@ -1,6 +1,13 @@
 import { theme } from "@/styles/theme";
 import styled from "@emotion/styled";
 
+const contentsWrap = styled.div`
+  height: calc(100vh - 8.1rem);
+  &.change {
+    height: auto;
+  }
+`;
+
 const SearchTitle = styled.div`
   display: flex;
   justify-content: space-between;
@@ -92,4 +99,5 @@ export const S = {
   SearchBarWrap,
   EmptyWrap,
   SearchAutoCompleteArea,
+  contentsWrap,
 };

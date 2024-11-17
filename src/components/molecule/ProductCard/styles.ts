@@ -8,7 +8,7 @@ const Wrapper = styled.li`
   width: 14.1rem;
 
   &.type-grid {
-    flex: 1 1 50%;
+    /* flex: 1 1 50%; */
   }
 `;
 
