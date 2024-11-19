@@ -20,7 +20,7 @@ const MyCommentsPage = () => {
     queryFn: async () => await getUserReviews(sortFilterCode),
   });
 
-  const { timeStamp, reviews } = data ?? { timeStamp: null, reviews: [] };
+  const { reviews } = data ?? { timeStamp: null, reviews: [] };
   const reviewCount = reviews.length;
 
   const handleSelectDropBox = (selectedCode: string) => {
