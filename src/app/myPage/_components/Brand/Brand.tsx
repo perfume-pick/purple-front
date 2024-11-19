@@ -14,33 +14,35 @@ const Brand = () => {
     reviewedBrandDTOs.reduce((acc, cur) => acc + cur.reviewCounts, 0) ?? 0;
 
   const sorted = reviewedBrandDTOs.sort((a, b) => a.order - b.order);
+  const hasBrand = sorted.length > 0;
 
   return (
-    <S.Wrapper>
+    <S.Wrapper hasBrand={hasBrand}>
       <S.Title>브랜드</S.Title>
-      <S.BrandSegmentContainer>
-        {
-          sorted.length > 0
-            ? sorted.map(({ brandName, reviewCounts }, index) => (
-                <S.BrandSegment key={brandName}>
-                  <S.BrandSegmentLeftBox>
-                    <img alt="medal rank" src={brandMedal[index]} />
-                    <span>{brandName}</span>
-                  </S.BrandSegmentLeftBox>
-                  <div>
-                    <S.BrandCount isFirst={index === 0}>
-                      {reviewCounts}개
-                    </S.BrandCount>{" "}
-                    <S.BrandRatio isFirst={index === 0}>
-                      ({Math.floor((reviewCounts / brandPerfumeTotal) * 100)}%)
-                    </S.BrandRatio>
-                  </div>
-                </S.BrandSegment>
-              ))
-            : "브랜드가 없습니다. 평가해주세요" //! 브랜드가 없는경우 기획에 물어보기
-        }
-        <S.BrandDescription>* 브랜드별 향수 평가 수</S.BrandDescription>
-      </S.BrandSegmentContainer>
+      {!hasBrand && (
+        <S.ProgressBarTitle>작성한 항목이 아직 없습니다.</S.ProgressBarTitle>
+      )}
+      {hasBrand && (
+        <S.BrandSegmentContainer>
+          {sorted.map(({ brandName, reviewCounts }, index) => (
+            <S.BrandSegment key={brandName}>
+              <S.BrandSegmentLeftBox>
+                <img alt="medal rank" src={brandMedal[index]} />
+                <span>{brandName}</span>
+              </S.BrandSegmentLeftBox>
+              <div>
+                <S.BrandCount isFirst={index === 0}>
+                  {reviewCounts}개
+                </S.BrandCount>{" "}
+                <S.BrandRatio isFirst={index === 0}>
+                  ({Math.floor((reviewCounts / brandPerfumeTotal) * 100)}%)
+                </S.BrandRatio>
+              </div>
+            </S.BrandSegment>
+          ))}
+          <S.BrandDescription>* 브랜드별 향수 평가 수</S.BrandDescription>
+        </S.BrandSegmentContainer>
+      )}
     </S.Wrapper>
   );
 };

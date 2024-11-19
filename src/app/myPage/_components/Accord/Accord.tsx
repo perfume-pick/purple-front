@@ -15,6 +15,8 @@ const Accord = () => {
       selectedId === "like" ? "preferredAccord" : "dislikedAccord"
     ];
 
+  const hasAccords = (currentAccords?.length ?? 0) > 0;
+
   const accordPerfumeTotal =
     currentAccords?.reduce((acc, cur) => acc + cur.count, 0) ?? 0;
 
@@ -35,11 +37,11 @@ const Accord = () => {
         </S.TabContainer>
       </S.TitleTabContainer>
       <S.ProgressBarTitle>
-        평가한 향수에서 주로 이런 어코드를 좋아했어요!
+        {hasAccords
+          ? "평가한 향수에서 주로 이런 어코드를 좋아했어요!"
+          : "작성한 항목이 아직 없습니다."}
       </S.ProgressBarTitle>
-      {(currentAccords?.length ?? 0) === 0 ? (
-        "어코드가 없습니다 평가해 주세요" //! 어코드가 없는 경우 어떻게 보여줄지. 기획에 물어보기
-      ) : (
+      {hasAccords && (
         <>
           <S.ProgressBarContainer>
             {currentAccords?.map(({ accordName, count }, index) => (

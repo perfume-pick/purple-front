@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ hasUserReview: boolean }>`
   display: flex;
   gap: 1.8rem;
   padding-right: 3.2rem;
+  ${props => !props.hasUserReview && `padding-right: 0`}
 `;
 
 const TitleContainer = styled.div`
@@ -91,7 +92,10 @@ const BarBox = styled.div<{ isDisabled?: boolean }>`
   `};
 `;
 
-const ReviewPerfumeButton = styled.button<{ disabled: boolean }>`
+const ReviewPerfumeButton = styled.button<{
+  disabled?: boolean;
+  hasUserReview: boolean;
+}>`
   width: 100%;
   height: 5rem;
   font-size: 1.8rem;
@@ -105,7 +109,36 @@ const ReviewPerfumeButton = styled.button<{ disabled: boolean }>`
   color: ${props => props.theme.color.textDisabled};
   border: 1px solid #dfdfdf;
 
+  ${props =>
+    !props.hasUserReview &&
+    `
+    background-color: ${props.theme.color.black};
+    color: ${props.theme.color.white};
+      height: 6rem;
+  `}
+
   ${props => props.disabled && `cursor: not-allowed;`}
+`;
+
+const ReviewPerfumeButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: ${props => props.theme.fontWeight.semiBold};
+  gap: 0.6rem;
+  width: 100%;
+  padding: 6rem 0 3rem;
+  color: ${props => props.theme.color.textColor[100]};
+  text-align: center;
+`;
+
+const ReviewPerfumeNothingTitle = styled.p`
+  font-size: 2.4rem;
+`;
+
+const ReviewPerfumeNothingSubTitle = styled.p`
+  font-size: 1.6rem;
 `;
 
 export const S = {
@@ -120,4 +153,7 @@ export const S = {
   BarContainer,
   BarBox,
   ReviewPerfumeButton,
+  ReviewPerfumeButtonBox,
+  ReviewPerfumeNothingTitle,
+  ReviewPerfumeNothingSubTitle,
 };
