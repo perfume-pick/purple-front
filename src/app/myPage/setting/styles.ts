@@ -1,8 +1,12 @@
 import styled from "@emotion/styled";
 
+const Layout = styled.div`
+  height: 100%;
+  padding-top: 4.8rem;
+`;
+
 const HeaderBottomContents = styled.div`
-  margin-top: 4.8rem;
-  padding-top: 3.2rem;
+  padding: 3.2rem 0 5.8rem;
 `;
 
 const Block = styled.button`
@@ -39,6 +43,7 @@ const Anchor = styled.a`
 `;
 
 export const S = {
+  Layout,
   HeaderBottomContents,
   Block,
   Anchor,
