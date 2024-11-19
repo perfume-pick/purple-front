@@ -5,22 +5,27 @@ import NavHeaderInner from "@/components/navHeaderLayout/NavHeaderInner";
 import { useQuery } from "@tanstack/react-query";
 import { getUserReviews } from "@/service/client/userInfo";
 import { useState } from "react";
-import { USER_COMMENT_FILTER_LIST } from "../../../constant/dropdown/commentFilterList";
+import { USER_COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
 
 import { S } from "./styles";
 import ReviewCard from "../_components/ReviewCard/ReviewCard";
+import Dropdown from "@/components/molecule/Dropdown/Dropdown";
 
 const MyCommentsPage = () => {
-  const [sortFilter, setSortFilter] = useState(USER_COMMENT_FILTER_LIST[0]);
+  const [sortFilterCode, setSortFilterCode] = useState(
+    USER_COMMENT_FILTER_LIST[0].code,
+  );
   const { data } = useQuery({
-    queryKey: ["userReviews"],
-    queryFn: async () => await getUserReviews(sortFilter.code),
+    queryKey: ["userReviews", sortFilterCode],
+    queryFn: async () => await getUserReviews(sortFilterCode),
   });
 
   const { timeStamp, reviews } = data ?? { timeStamp: null, reviews: [] };
   const reviewCount = reviews.length;
 
-  console.log(reviews, sortFilter);
+  const handleSelectDropBox = (selectedCode: string) => {
+    setSortFilterCode(selectedCode);
+  };
 
   return (
     <>
@@ -37,7 +42,13 @@ const MyCommentsPage = () => {
                     전체 <S.NumberEmphasize>{reviewCount}</S.NumberEmphasize>건
                   </span>
                 </div>
-                <span>최근 등록순</span>
+                <S.DropdownBox>
+                  <Dropdown
+                    selectedCode={sortFilterCode}
+                    handleChangeSelectedFilter={handleSelectDropBox}
+                    filterList={USER_COMMENT_FILTER_LIST}
+                  />
+                </S.DropdownBox>
               </S.Snackbar>
             </S.SnackbarBox>
             <S.Container>

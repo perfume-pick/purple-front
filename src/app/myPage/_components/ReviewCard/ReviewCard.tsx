@@ -5,8 +5,8 @@ import { S } from "./styles";
 import DetailReviewCard from "./DetailReviewCard";
 import SimpleReviewCard from "./SimpleReviewCard";
 import { deleteReview } from "@/service/client/commentRegistration";
-import MoreButton from "../../../../components/molecule/MoreButton/MoreButton";
-import { COMMENT_DELETE_FILTER } from "../../../../constant/dropdown/commentFilterList";
+import MoreButton from "@/components/molecule/MoreButton/MoreButton";
+import { COMMENT_DELETE_FILTER } from "@/constant/dropdown/commentFilterList";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface ReviewCardProps extends UserReview {}

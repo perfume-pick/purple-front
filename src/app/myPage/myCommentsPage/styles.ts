@@ -32,11 +32,17 @@ const NothingReviews = styled.div`
   align-items: center;
 `;
 
+const DropdownBox = styled.div`
+  display: inline-block;
+  cursor: pointer;
+`;
+
 export const S = {
   Wrapper,
   Container,
   SnackbarBox,
   Snackbar,
+  DropdownBox,
   NumberEmphasize,
   NothingReviews,
 };
