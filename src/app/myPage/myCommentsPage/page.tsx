@@ -27,6 +27,8 @@ const MyCommentsPage = () => {
     setSortFilterCode(selectedCode);
   };
 
+  console.log(reviews);
+
   return (
     <>
       <S.Wrapper>
