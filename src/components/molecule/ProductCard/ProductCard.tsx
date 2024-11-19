@@ -2,13 +2,11 @@ import { S } from "./styles";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import { useRouter } from "next/navigation";
 import { DetailPerfumeInfo } from "@/types/res/perfume";
-import { usePerfumeDetailStore } from "@/store/perfumeDetailStore";
 
 type Props = { perfumeInfo: DetailPerfumeInfo; type?: "SCROLL" | "GRID" };
 
 const ProductCard = ({ perfumeInfo, type = "GRID" }: Props) => {
   const TYPE_CLASS = type === "SCROLL" ? "type-scroll" : "type-grid";
-  const { updatePerfumeInfo } = usePerfumeDetailStore();
 
   const {
     perfumeId,
@@ -21,7 +19,6 @@ const ProductCard = ({ perfumeInfo, type = "GRID" }: Props) => {
   const router = useRouter();
 
   const handleClickProduct = () => {
-    updatePerfumeInfo(perfumeInfo);
     router.push(`/detail?perfumeId=${perfumeId}`, { scroll: false });
   };
 

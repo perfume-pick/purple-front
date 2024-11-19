@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { theme } from "@/styles/theme";
 import { FaRegSmile } from "react-icons/fa";
@@ -13,12 +13,14 @@ import { usePathname, useRouter } from "next/navigation";
 const MobileBottomNav = () => {
   const router = useRouter();
   const path = usePathname();
+
   const hiddenRoutes = [
     "/signin",
     "/onBoarding",
     "/commentPage",
     "/detail/comments",
     "/perpicks/auth",
+    "/detail",
   ];
 
   // TODO: router경로는 페이지가 만들어지면 수정 필요.
@@ -44,6 +46,18 @@ const MobileBottomNav = () => {
       router: "/myPage",
     },
   ];
+
+  useEffect(() => {
+    if (!hiddenRoutes.some(route => path.startsWith(route))) {
+      document.body.classList.add("bot-padding");
+    } else {
+      document.body.classList.remove("bot-padding");
+    }
+
+    return () => {
+      document.body.classList.remove("bot-padding");
+    };
+  }, [path]);
   return (
     <>
       {!hiddenRoutes.some(route => path.startsWith(route)) && (
@@ -67,11 +81,11 @@ const MobileBottomNav = () => {
 export default MobileBottomNav;
 
 const Wrapper = styled.div`
-  position: fixed;
+  position: sticky;
   bottom: 0;
   width: 100%;
   max-width: 440px;
-  height: 9.7rem;
+  height: 5.8rem;
   z-index: 999;
   background-color: ${theme.color.white};
   display: flex;
@@ -83,6 +97,7 @@ const Wrapper = styled.div`
 `;
 
 const IconWrap = styled.div<{ route: boolean }>`
+  width: 33.3%;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,22 +1,29 @@
 import { S } from "../styles";
-import { DetailPerfumeInfo } from "@/types/res/perfume";
-import { usePerfumeDetailStore } from "@/store/perfumeDetailStore";
-import { PerfumeDetailStore } from "@/store/types";
+import { useQuery } from "@tanstack/react-query";
+import { getPerfumeDetail } from "@/service/client/perfumeDetail";
 
-const Product = () => {
-  const currentPerfumeInfo: DetailPerfumeInfo = usePerfumeDetailStore(
-    (state: PerfumeDetailStore) => state.currentPerfumeInfo,
-  );
+type Props = {
+  perfumeId: string;
+};
+
+const Product = ({ perfumeId }: Props) => {
+  // 향수 상세 정보 조회
+  const { data: perfumeDetailInfo } = useQuery({
+    queryKey: ["perfumeDetailInfo", perfumeId],
+    queryFn: () => getPerfumeDetail(perfumeId),
+    enabled: !!perfumeId,
+    retry: false,
+  });
 
   return (
     <S.Wrapper>
       <img
-        src={currentPerfumeInfo.imageUrl}
-        alt={currentPerfumeInfo.perfumeName}
+        src={perfumeDetailInfo?.imageUrl}
+        alt={perfumeDetailInfo?.perfumeName}
       />
       <S.TitleWrap>
-        <span>{currentPerfumeInfo.brandName}</span>
-        <span>{currentPerfumeInfo.perfumeName}</span>
+        <span>{perfumeDetailInfo?.brandName}</span>
+        <span>{perfumeDetailInfo?.perfumeName}</span>
       </S.TitleWrap>
     </S.Wrapper>
   );

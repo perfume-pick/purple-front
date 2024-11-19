@@ -3,12 +3,13 @@ import React, { forwardRef } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { S } from "./styles";
-import { getReviews, getStatistics } from "@/service/client/perfumeDetail";
+import {
+  getPerfumeDetail,
+  getReviews,
+  getStatistics,
+} from "@/service/client/perfumeDetail";
 import { EvaluationStatisticInfo } from "@/types/res/perfumeDetail";
 import { USER_COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
-import { usePerfumeDetailStore } from "@/store/perfumeDetailStore";
-import { PerfumeDetailStore } from "@/store/types";
-import { DetailPerfumeInfo } from "@/types/res/perfume";
 import { Review } from "@/types/res/review";
 import { EvaluationOptionInfo } from "@/types/res/perfumeDetail";
 import Topic from "./Topic/Topic";
@@ -24,15 +25,20 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
   ({ perfumeId }, ref) => {
     const router = useRouter();
 
-    const currentPerfumeInfo: DetailPerfumeInfo = usePerfumeDetailStore(
-      (state: PerfumeDetailStore) => state.currentPerfumeInfo,
-    );
     // 코멘트 토픽 조회
     const { data: statisticsInfo } = useQuery({
       queryKey: ["statisticsInfo", perfumeId],
       queryFn: () => getStatistics(perfumeId),
       enabled: !!perfumeId,
       // retry: false,
+    });
+
+    // 향수 상세 정보 조회
+    const { data: perfumeDetailInfo } = useQuery({
+      queryKey: ["perfumeDetailInfo", perfumeId],
+      queryFn: () => getPerfumeDetail(perfumeId),
+      enabled: !!perfumeId,
+      retry: false,
     });
 
     // 코멘트 토픽 조회
@@ -64,9 +70,9 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
         </S.TotalComment>
         <S.AverageScoreWrap>
           <S.Score>
-            <div>{currentPerfumeInfo.averageScore ?? 0}</div>
+            <div>{perfumeDetailInfo?.averageScore ?? 0}</div>
             <ReadonlyRating
-              rate={currentPerfumeInfo.averageScore ?? 0}
+              rate={perfumeDetailInfo?.averageScore ?? 0}
               size={23}
               gap={0.7}
             />
@@ -120,12 +126,13 @@ const DetailComment = forwardRef<HTMLDivElement, DetailCommentProps>(
             />
           );
         })}
-        <S.CommentButtonWrap>
-          <button>
-            {" "}
-            {reviewsInfo && reviewsInfo?.reviews.length}개 코멘트 전체보기
-          </button>
-        </S.CommentButtonWrap>
+        {reviewsInfo && reviewsInfo?.reviews.length > 0 && (
+          <S.CommentButtonWrap>
+            <button onClick={handleClickCommentPage}>
+              {reviewsInfo?.reviews.length}개 코멘트 전체보기
+            </button>
+          </S.CommentButtonWrap>
+        )}
       </S.Wrapper>
     );
   },

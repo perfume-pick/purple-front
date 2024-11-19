@@ -2,10 +2,8 @@
 
 import { S } from "./styles";
 import { FiberManualRecord, Star } from "@mui/icons-material";
-
 import { Perfume as PerfumeType } from "@/types/res/recommend";
 import { useRouter } from "next/navigation";
-import { usePerfumeDetailStore } from "@/store/perfumeDetailStore";
 
 interface PerfumeProps extends PerfumeType {}
 
@@ -19,17 +17,7 @@ function Perfume({
 }: PerfumeProps) {
   const router = useRouter();
 
-  const { updatePerfumeInfo } = usePerfumeDetailStore();
-
   const handlePerfumeClick = () => {
-    updatePerfumeInfo({
-      perfumeId,
-      perfumeName: name, //!
-      brandName,
-      imageUrl,
-      averageScore,
-      accordName: accordNames?.[0] ?? "", //!
-    });
     router.push(`detail?perfumeId=${perfumeId}`);
   };
 

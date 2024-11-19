@@ -19,12 +19,20 @@ const pretendardFont = localFont({
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body
-        suppressHydrationWarning={true}
-        className={`${pretendardFont.className}`}
-      >
+      <head>
+        <link
+          rel="stylesheet"
+          as="style"
+          crossOrigin="anonymous"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+        />
+      </head>
+      <body suppressHydrationWarning={true}>
         <ReactQueryProviders>
-          <EmotionThemeProvider>{children}</EmotionThemeProvider>
+          <EmotionThemeProvider>
+            <div id="portal" />
+            {children}
+          </EmotionThemeProvider>
           <MobileBottomNav />
         </ReactQueryProviders>
       </body>

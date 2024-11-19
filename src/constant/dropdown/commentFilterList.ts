@@ -48,3 +48,17 @@ export const COMMENT_BOX_FILTER: DropdownType[] = [
     code: "DELETE_COMMENT",
   },
 ];
+
+export const COMMENT_BOX_FILTER_WITH_REPORT: DropdownType[] = [
+  {
+    title: "코멘트 신고",
+    code: "REPORT_COMMENT",
+  },
+];
+
+export const COMMENT_BOX_FILTER_WITH_CANCEL_REPORT: DropdownType[] = [
+  {
+    title: "코멘트 신고 취소",
+    code: "CANCEL_REPORT_COMMENT",
+  },
+];

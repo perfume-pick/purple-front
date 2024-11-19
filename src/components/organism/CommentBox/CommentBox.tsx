@@ -1,14 +1,19 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { S } from "./styles";
 import dayjs from "dayjs";
 import StarIcon from "@mui/icons-material/Star";
-import { COMMENT_BOX_FILTER } from "@/constant/dropdown/commentFilterList";
+import {
+  COMMENT_BOX_FILTER,
+  COMMENT_BOX_FILTER_WITH_CANCEL_REPORT,
+  COMMENT_BOX_FILTER_WITH_REPORT,
+} from "@/constant/dropdown/commentFilterList";
 import { Review } from "@/types/res/review";
 import { EvaluationType } from "@/constant/detail.const";
 import {
+  complainReview,
   deleteCommentLike,
   deleteReview,
   setCommentLike,
@@ -16,6 +21,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import FavoritButtons from "../../atom/FavoriteButton/FavoritButtons";
 import MoreButton from "@/components/molecule/MoreButton/MoreButton";
+import OneLineTextToast from "../../toast/OneLineTextToast";
 
 type Props = {
   reviewInfo: Review;
@@ -30,13 +36,15 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [favoriteCount, setFavoriteCount] = useState(0);
   const [isTextOverflow, setIsTextOverflow] = useState(false);
+  const [toast, setToast] = useState(false);
+  const [toastText, setToastText] = useState("");
   const reviewTextRef = useRef<HTMLDivElement | null>(null);
 
   const {
     content,
     date,
     imageUrl,
-    // isComplained,
+    isComplained,
     isCurrentUserReview,
     isLiked,
     likeCount,
@@ -106,6 +114,14 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
     return () => clearTimeout(timer);
   }, [isShowAllText]);
 
+  const madeSelectList = useMemo(() => {
+    return isCurrentUserReview
+      ? COMMENT_BOX_FILTER
+      : isComplained
+        ? COMMENT_BOX_FILTER_WITH_CANCEL_REPORT
+        : COMMENT_BOX_FILTER_WITH_REPORT;
+  }, [reviewInfo]);
+
   const handleFavoriteClick = async () => {
     try {
       if (isFavorite) {
@@ -141,14 +157,13 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
     setFavoriteCount(prev => (isFavorite ? prev - 1 : prev + 1));
   };
 
-  const handleDeleteComment = async (typeText: string) => {
-    if (!isCurrentUserReview) {
-      return;
-    }
-
+  const handleClickSelectBox = async (typeText: string) => {
     if (typeText === "EDIT_COMMENT") {
       router.push(`/commentPage?perfumeId=${perfumeId}`, { scroll: false });
     } else if (typeText === "DELETE_COMMENT") {
+      {
+        /** TODO: 오류 시 무한 호출 체크 */
+      }
       try {
         await deleteReview(reviewId);
         if (perfumeId) {
@@ -159,86 +174,113 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
       } catch (error) {
         console.error("코멘트 처리 중 오류가 발생했습니다:", error);
       }
+    } else if (typeText === "REPORT_COMMENT") {
+      try {
+        complainReview(reviewId).then(() => {
+          queryClient.invalidateQueries({
+            queryKey: ["myReviewInfo", perfumeId as string],
+          });
+          setToastText("신고가 정상적으로 등록되었습니다.");
+          setToast(true);
+        });
+      } catch (error) {
+        console.error("리뷰 신고 처리 중 오류가 발생했습니다:", error);
+      }
+    } else if (typeText === "CANCEL_REPORT_COMMENT") {
+      try {
+        // api 추가
+        setToastText("코멘트 신고가 취소되었습니다.");
+        setToast(true);
+      } catch (error) {
+        console.error("리뷰 신고 취소 처리 중 오류가 발생했습니다:", error);
+      }
     }
   };
 
   return (
-    <S.Wrapper>
-      <S.BrandCommentTopArea>
-        <S.ProfileArea>
-          <img
-            src={imageUrl ?? "/assets/images/user_avatar.png"}
-            alt="purfume image"
+    <>
+      <S.Wrapper>
+        <S.BrandCommentTopArea>
+          <S.ProfileArea>
+            <img
+              src={
+                imageUrl
+                  ? `${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}${imageUrl}`
+                  : "/assets/images/user_avatar.png"
+              }
+              alt="purfume image"
+            />
+            <S.ProfileTextWrap>
+              <p>
+                {nickname}
+                <span>{formattedDate(date)}</span>
+              </p>
+              <S.StarWrap>
+                {[...Array(score)].map((_, index) => {
+                  return (
+                    <li key={index}>
+                      <StarIcon
+                        sx={{ fontSize: "1.672rem", color: "#F7B158" }}
+                      ></StarIcon>
+                    </li>
+                  );
+                })}
+              </S.StarWrap>
+            </S.ProfileTextWrap>
+          </S.ProfileArea>
+          <MoreButton
+            selectList={madeSelectList}
+            handleDropdown={handleClickSelectBox}
           />
-          <S.ProfileTextWrap>
-            <p>
-              {nickname}
-              <span>{formattedDate(date)}</span>
-            </p>
-            <S.StarWrap>
-              {[...Array(score)].map((_, index) => {
-                return (
-                  <li key={index}>
-                    <StarIcon
-                      sx={{ fontSize: "1.672rem", color: "#F7B158" }}
-                    ></StarIcon>
-                  </li>
-                );
-              })}
-            </S.StarWrap>
-          </S.ProfileTextWrap>
-        </S.ProfileArea>
-        <MoreButton
-          selectList={COMMENT_BOX_FILTER}
-          handleDropdown={handleDeleteComment}
-        />
-      </S.BrandCommentTopArea>
-      {reviewType === "DETAIL" && (
-        <>
-          <S.CommentInfoWrap>
-            <S.InfoWrap>
-              {Object.values(EvaluationType).map(item => {
-                const options = extractOptionName(item);
+        </S.BrandCommentTopArea>
+        {reviewType === "DETAIL" && (
+          <>
+            <S.CommentInfoWrap>
+              <S.InfoWrap>
+                {Object.values(EvaluationType).map(item => {
+                  const options = extractOptionName(item);
 
-                return (
-                  <S.InfoContent key={item}>
-                    <span>{item}</span>
-                    <div>
-                      {options.length > 0 &&
-                        options.map(innerItem => (
-                          <span
-                            className="info-text"
-                            key={innerItem.optionName}
-                          >
-                            {innerItem.optionName}
-                          </span>
-                        ))}
-                    </div>
-                  </S.InfoContent>
-                );
-              })}
-            </S.InfoWrap>
-          </S.CommentInfoWrap>
-          <S.Keyword>
-            {moodNames?.length > 0 &&
-              moodNames.map((data, idx) => <div key={idx}>#{data}</div>)}
-          </S.Keyword>
-        </>
-      )}
-      <S.ReviewText ref={reviewTextRef}>“{content}”</S.ReviewText>
-      <S.BottomButtons>
-        <FavoritButtons
-          clickFavorite={handleFavoriteClick}
-          isClicked={isFavorite}
-          favoriteCount={favoriteCount}
-        />
-        {isTextOverflow && (
-          <span onClick={() => setIsShowAllText(prev => !prev)}>
-            {isShowAllText ? "간략히" : "더보기"}
-          </span>
+                  return (
+                    <S.InfoContent key={item}>
+                      <span>{item}</span>
+                      <div>
+                        {options.length > 0 &&
+                          options.map(innerItem => (
+                            <span
+                              className="info-text"
+                              key={innerItem.optionName}
+                            >
+                              {innerItem.optionName}
+                            </span>
+                          ))}
+                      </div>
+                    </S.InfoContent>
+                  );
+                })}
+              </S.InfoWrap>
+            </S.CommentInfoWrap>
+            <S.Keyword>
+              {moodNames?.length > 0 &&
+                moodNames.map((data, idx) => <div key={idx}>#{data}</div>)}
+            </S.Keyword>
+          </>
         )}
-      </S.BottomButtons>
-    </S.Wrapper>
+        <S.ReviewText ref={reviewTextRef}>“{content}”</S.ReviewText>
+        <S.BottomButtons>
+          <FavoritButtons
+            clickFavorite={handleFavoriteClick}
+            isClicked={isFavorite}
+            favoriteCount={favoriteCount}
+          />
+          {isTextOverflow && (
+            <span onClick={() => setIsShowAllText(prev => !prev)}>
+              {isShowAllText ? "간략히" : "더보기"}
+            </span>
+          )}
+        </S.BottomButtons>
+      </S.Wrapper>
+      {toast && <OneLineTextToast text={toastText} setToast={setToast} />}
+    </>
   );
 };
 

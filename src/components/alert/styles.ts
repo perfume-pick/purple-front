@@ -80,6 +80,13 @@ const AlertButtonWrap = styled.div`
   width: 100%;
   height: 4.8rem;
 
+  &.two-btn {
+    justify-content: space-between;
+    button {
+      width: calc(50% - 0.4rem);
+    }
+  }
+
   & > button {
     width: 100%;
     color: ${theme.color.white};
