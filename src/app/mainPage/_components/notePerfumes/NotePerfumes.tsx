@@ -8,6 +8,7 @@ import Perfume from "../perfume/Perfume";
 import { getRecommendPerfumesByAccord } from "@/service/client/recommendPerfume";
 import { useRecommendPerfumeType } from "@/store/recommendPerfumeTypeStore";
 import { getUserProfile } from "@/service/client/userInfo";
+import NotAccordPerfumes from "../notAccordPerfumes/NotAccordPerfumes";
 
 function formatDateString(dateString: string) {
   const date = new Date(dateString);
@@ -32,6 +33,8 @@ function NotePerfumes() {
     queryFn: getUserProfile,
   });
 
+  console.log(profile);
+
   const {
     timeStamp,
     responseData: { userAccords, perfumes },
@@ -41,32 +44,41 @@ function NotePerfumes() {
   };
 
   return (
-    <S.Wrapper>
-      {userAccords.length > 0 && (
-        <S.PreferenceNoteWrap onClick={() => route.push("/myPage")}>
-          <S.LikeNote>
-            <span>{profile?.nickname}</span>님이 좋아하는 노트 계열은?
-          </S.LikeNote>
-          <S.NoteRanking>
-            {userAccords
-              .sort((a, b) => a.order - b.order)
-              .map(({ accordName, order }) => (
-                <span key={order}>{accordName}</span>
-              ))}
-          </S.NoteRanking>
-          <S.PreferenceInfo>
-            <div>{timeStamp ? `${formatDateString(timeStamp)}기준` : ""}</div>
-            <S.MyPreference>
-              <div>내 취향 보기</div>
-              <KeyboardArrowRightIcon />
-            </S.MyPreference>
-          </S.PreferenceInfo>
-        </S.PreferenceNoteWrap>
+    <>
+      {userAccords.length > 0 ? (
+        <S.Wrapper>
+          {
+            <S.PreferenceNoteWrap onClick={() => route.push("/myPage")}>
+              <S.LikeNote>
+                <span>{profile?.nickname}</span>님이 좋아하는 노트 계열은?
+              </S.LikeNote>
+              <S.NoteRanking>
+                {userAccords
+                  .sort((a, b) => a.order - b.order)
+                  .map(({ accordName, order }) => (
+                    <span key={order}>{accordName}</span>
+                  ))}
+              </S.NoteRanking>
+              <S.PreferenceInfo>
+                <div>
+                  {timeStamp ? `${formatDateString(timeStamp)}기준` : ""}
+                </div>
+                <S.MyPreference>
+                  <div>내 취향 보기</div>
+                  <KeyboardArrowRightIcon />
+                </S.MyPreference>
+              </S.PreferenceInfo>
+            </S.PreferenceNoteWrap>
+          }
+
+          {perfumes.map(perfume => (
+            <Perfume key={perfume.perfumeId} {...perfume} />
+          ))}
+        </S.Wrapper>
+      ) : (
+        <NotAccordPerfumes />
       )}
-      {perfumes.map(perfume => (
-        <Perfume key={perfume.perfumeId} {...perfume} />
-      ))}
-    </S.Wrapper>
+    </>
   );
 }
 export default NotePerfumes;
