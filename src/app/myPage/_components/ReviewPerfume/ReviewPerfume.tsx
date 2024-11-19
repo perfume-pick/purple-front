@@ -12,9 +12,10 @@ const ReviewPerfume = () => {
 
   const userReviewCount = review?.currentUserReviewCounts ?? 0;
   const hasUserReview = userReviewCount > 0;
+  console.log(hasUserReview);
 
   const handleReviewButtonClick = () => {
-    if (hasUserReview) router.push("/myPage/myCommentsPage");
+    if (hasUserReview) return router.push("/myPage/myCommentsPage");
 
     router.push("/");
   };

@@ -36,7 +36,7 @@ export const USER_COMMENT_FILTER_LIST: DropdownType[] = [
     title: "별점낮은순",
     code: "STAR_RATING_LOW",
   },
-];
+] as const;
 
 export const COMMENT_BOX_FILTER: DropdownType[] = [
   {
