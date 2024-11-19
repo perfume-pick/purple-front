@@ -6,7 +6,15 @@ const Wrapper = styled.div`
 
 const ReviewBox = styled.div`
   display: flex;
+  position: relative;
   gap: 0.4rem;
+`;
+
+const MoreButtonBox = styled.div`
+  position: absolute;
+  right: 1rem;
+  top: 1.5rem;
+  cursor: pointer;
 `;
 
 const PerfumeImage = styled.img`
@@ -25,6 +33,7 @@ const ReviewBoxRightSection = styled.div`
 export const S = {
   Wrapper,
   ReviewBox,
+  MoreButtonBox,
   PerfumeImage,
   ReviewBoxRightSection,
 };
