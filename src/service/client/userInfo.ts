@@ -32,8 +32,6 @@ async function getUserReviews(sortType: SortType) {
 
   const { timeStamp, responseData } = data;
 
-  console.log(data);
-
   return { timeStamp, ...responseData };
 }
 

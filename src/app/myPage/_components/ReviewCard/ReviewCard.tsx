@@ -79,9 +79,6 @@ const ReviewCard = ({
     checkTextOverflow();
   }, []);
 
-  console.log(perfumeEvaluations);
-  console.log();
-
   return (
     <S.Wrapper>
       <S.ReviewBox>

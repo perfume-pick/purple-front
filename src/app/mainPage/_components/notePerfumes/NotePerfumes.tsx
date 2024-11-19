@@ -33,8 +33,6 @@ function NotePerfumes() {
     queryFn: getUserProfile,
   });
 
-  console.log(profile);
-
   const {
     timeStamp,
     responseData: { userAccords, perfumes },
