@@ -11,8 +11,11 @@ import {
   UserAccords,
   Top3ReviewBrands,
 } from "@/types/res/profile";
+import { UserReviews } from "@/types/res/userReview";
+import { USER_COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
 
 const endPoint = {
+  GET_REVIEWS: "/perpicks/users/my/reviews",
   GET_PROFILE: "/perpicks/users/my/profile",
   GET_REVIEW_COUNT: "/perpicks/users/my/review-counts",
   GET_USER_ACCORDS: "/perpicks/users/my/user-accords",
@@ -20,6 +23,19 @@ const endPoint = {
   UPDATE_NICKNAME: "/perpicks/users/my/profile",
   UPDATE_PROFILE: "/perpicks/users/my/profile",
 };
+
+type SortType = (typeof USER_COMMENT_FILTER_LIST)[number]["code"];
+
+async function getUserReviews(sortType: SortType) {
+  const url = `${endPoint.GET_REVIEWS}?sort-type=${sortType}`;
+  const { data } = await clientHttp.get<UserReviews>(url);
+
+  const { timeStamp, responseData } = data;
+
+  console.log(data);
+
+  return { timeStamp, ...responseData };
+}
 
 async function updateUserNickname(payload: {
   nickname: string;
@@ -102,6 +118,7 @@ async function patchProfile({
 }
 
 export {
+  getUserReviews,
   updateUserNickname,
   patchProfile,
   getUserProfile,
