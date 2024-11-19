@@ -3,6 +3,7 @@
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import NavHeaderInner from "@/components/navHeaderLayout/NavHeaderInner";
 import { S } from "./styles";
+import { logout } from "../../../service/client/logout";
 
 const Setting = () => {
   return (
@@ -21,7 +22,9 @@ const Setting = () => {
               향수 요청하기
             </S.Anchor>
           </S.Block>
-          <S.Block as="button">로그아웃</S.Block>
+          <S.Block as="button" onClick={logout}>
+            로그아웃
+          </S.Block>
           <S.Block as="button">계정 삭제</S.Block>
         </S.HeaderBottomContents>
       </S.Layout>
