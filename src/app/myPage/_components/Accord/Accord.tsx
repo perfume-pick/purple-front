@@ -1,13 +1,24 @@
 import { useState } from "react";
 import { S } from "./styles";
+import { useQuery } from "@tanstack/react-query";
+import { getUserAccords } from "@/service/client/userInfo";
 
 const Accord = () => {
+  const { data: userAccords } = useQuery({
+    queryKey: ["userAccords"],
+    queryFn: getUserAccords,
+  });
   const [selectedId, setSelectedId] = useState<"like" | "dislike">(tabs[0].id);
 
-  const accordPerfumeTotal = accords.reduce(
-    (acc, cur) => acc + cur.perfumeCount,
-    0,
-  );
+  const currentAccords =
+    userAccords?.userAccord[
+      selectedId === "like" ? "preferredAccord" : "dislikedAccord"
+    ];
+
+  const hasAccords = (currentAccords?.length ?? 0) > 0;
+
+  const accordPerfumeTotal =
+    currentAccords?.reduce((acc, cur) => acc + cur.count, 0) ?? 0;
 
   return (
     <S.Wrapper>
@@ -26,36 +37,41 @@ const Accord = () => {
         </S.TabContainer>
       </S.TitleTabContainer>
       <S.ProgressBarTitle>
-        평가한 향수에서 주로 이런 어코드를 좋아했어요!
+        {hasAccords
+          ? "평가한 향수에서 주로 이런 어코드를 좋아했어요!"
+          : "작성한 항목이 아직 없습니다."}
       </S.ProgressBarTitle>
-      <S.ProgressBarContainer>
-        {accords.map(({ perfumeCount, id }) => (
-          <S.ProgressBar
-            key={id}
-            width={`${(perfumeCount / accordPerfumeTotal) * 100}%`}
-            backgroundColor={accordColors[id]}
-          />
-        ))}
-      </S.ProgressBarContainer>
-      <S.ProgressBarSegmentContainer>
-        {accords.map(({ perfumeCount, label, id }) => (
-          <S.ProgressBarSegment key={id}>
-            <S.ProgressBarSegmentLabelBox>
-              <S.ProgressBarSegmentColorCircle
-                backgroundColor={accordColors[id]}
+      {hasAccords && (
+        <>
+          <S.ProgressBarContainer>
+            {currentAccords?.map(({ accordName, count }, index) => (
+              <S.ProgressBar
+                key={accordName}
+                width={`${(count / accordPerfumeTotal) * 100}%`}
+                backgroundColor={accordColors[index]}
               />
-              <span>{label}</span>
-            </S.ProgressBarSegmentLabelBox>
-            <S.ProgressBarSegmentCountText>
-              {perfumeCount}개 (
-              {Math.floor((perfumeCount / accordPerfumeTotal) * 100)})
-            </S.ProgressBarSegmentCountText>
-          </S.ProgressBarSegment>
-        ))}
-        <S.ProgressBarSegmentDescription>
-          * 어코드가 포함된 향수 개수(선호/불호 어코드 비중)
-        </S.ProgressBarSegmentDescription>
-      </S.ProgressBarSegmentContainer>
+            ))}
+          </S.ProgressBarContainer>
+          <S.ProgressBarSegmentContainer>
+            {currentAccords?.map(({ count, accordName, percentage }, index) => (
+              <S.ProgressBarSegment key={accordName}>
+                <S.ProgressBarSegmentLabelBox>
+                  <S.ProgressBarSegmentColorCircle
+                    backgroundColor={accordColors[index]}
+                  />
+                  <span>{accordName}</span>
+                </S.ProgressBarSegmentLabelBox>
+                <S.ProgressBarSegmentCountText>
+                  {count}개 ({Math.floor(percentage)})
+                </S.ProgressBarSegmentCountText>
+              </S.ProgressBarSegment>
+            ))}
+            <S.ProgressBarSegmentDescription>
+              * 어코드가 포함된 향수 개수(선호/불호 어코드 비중)
+            </S.ProgressBarSegmentDescription>
+          </S.ProgressBarSegmentContainer>
+        </>
+      )}
     </S.Wrapper>
   );
 };
@@ -65,16 +81,6 @@ const tabs = [
   { id: "dislike", label: "불호" },
 ] as const;
 
-const accords = [
-  { perfumeCount: 7, label: "플로랄", id: "floral1" },
-  { perfumeCount: 2, label: "플로랄", id: "floral2" },
-  { perfumeCount: 1, label: "플로랄", id: "floral3" },
-] as const;
-
-const accordColors = {
-  floral1: "#ff4647",
-  floral2: "#6bc060",
-  floral3: "#c446ff",
-} as const;
+const accordColors = ["#ff4647", "#6bc060", "#c446ff"] as const;
 
 export default Accord;

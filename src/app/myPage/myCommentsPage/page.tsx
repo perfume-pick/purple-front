@@ -1,91 +1,68 @@
 "use client";
 
-// import styled from "@emotion/styled";
-// import { COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
-// import CommentBox from "../../../components/organism/CommentBox/CommentBox";
-// import FilterBox from "@/components/organism/FilterBox/FilterBox";
-// import MoreButton from "../../../components/molecule/MoreButton/MoreButton";
-import NavHeaderInner from "../../../components/navHeaderLayout/NavHeaderInner";
-// import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
-// import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
-// import EditableRating from "../../../components/atom/Rating/EditableRating";
+import NavHeaderInner from "@/components/navHeaderLayout/NavHeaderInner";
+import { useQuery } from "@tanstack/react-query";
+import { getUserReviews } from "@/service/client/userInfo";
+import { useState } from "react";
+import { USER_COMMENT_FILTER_LIST } from "@/constant/dropdown/commentFilterList";
+
+import { S } from "./styles";
+import ReviewCard from "../_components/ReviewCard/ReviewCard";
+import Dropdown from "@/components/molecule/Dropdown/Dropdown";
 
 const MyCommentsPage = () => {
-  // const [rating, setRating] = useState(1.5);
+  const [sortFilterCode, setSortFilterCode] = useState(
+    USER_COMMENT_FILTER_LIST[0].code,
+  );
+  const { data } = useQuery({
+    queryKey: ["userReviews", sortFilterCode],
+    queryFn: async () => await getUserReviews(sortFilterCode),
+  });
 
-  // const handleRateChange = (newRate: number) => {
-  //   setRating(newRate);
-  // };
+  const { reviews } = data ?? { timeStamp: null, reviews: [] };
+  const reviewCount = reviews.length;
 
-  // const handleDeleteComment = () => {
-  //   console.log("delete");
-  // };
+  const handleSelectDropBox = (selectedCode: string) => {
+    setSortFilterCode(selectedCode);
+  };
 
   return (
     <>
-      <NavHeader style={{ justifyContent: "center" }}>
-        <NavHeaderInner text="작성한 코멘트" />
-      </NavHeader>
-      {/* <HeaderBottomContents>
-        <FilterBox filterList={COMMENT_FILTER_LIST} />
-        <CommentBox />
-        <S.BrandCommentTopArea>
-            <div>
-              <img
-                src="https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9&s=dd060fe209b4a56733a1dcc9b5aea53a"
-                alt="perfume image"
-              />
-              <S.RatingWrap>
-                <p>{`${"브랜드명"}﹒${"브랜드명"}`}</p>
-                <ReadonlyRating rate={2.5} size={33} gap={0} />
-                <EditableRating
-                  rate={rating}
-                  size={33}
-                  gap={0.35}
-                  onRateChange={handleRateChange}
-                />
-              </S.RatingWrap>
-            </div>
-
-            <MoreButton
-              selectList={COMMENT_BOX_FILTER}
-              handleDropdown={handleDeleteComment}
-            />
-          </S.BrandCommentTopArea>
-      </HeaderBottomContents> */}
+      <S.Wrapper>
+        <NavHeader style={{ justifyContent: "center" }}>
+          <NavHeaderInner text="평가향수" />
+        </NavHeader>
+        {reviewCount > 0 ? (
+          <>
+            <S.SnackbarBox>
+              <S.Snackbar>
+                <div>
+                  <span>
+                    전체 <S.NumberEmphasize>{reviewCount}</S.NumberEmphasize>건
+                  </span>
+                </div>
+                <S.DropdownBox>
+                  <Dropdown
+                    selectedCode={sortFilterCode}
+                    handleChangeSelectedFilter={handleSelectDropBox}
+                    filterList={USER_COMMENT_FILTER_LIST}
+                  />
+                </S.DropdownBox>
+              </S.Snackbar>
+            </S.SnackbarBox>
+            <S.Container>
+              {reviews.map(review => (
+                <ReviewCard key={review.reviewId} {...review} />
+              ))}
+            </S.Container>
+          </>
+        ) : (
+          <S.NothingReviews>평가한 향수가 없어요.</S.NothingReviews>
+        )}
+      </S.Wrapper>
     </>
   );
 };
 
 export default MyCommentsPage;
-
-// const BrandCommentTopArea = styled.div`
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-
-//   img {
-//     width: 5.4rem;
-//     height: 5.4rem;
-//     border-radius: 0.54rem;
-//     object-fit: cover;
-//     margin-right: 0.4rem;
-//   }
-//   & > div {
-//     display: flex;
-//   }
-// `;
-
-// const RatingWrap = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
-
-// const MoreButtonWrap = styled.div``;
-
-// const S = {
-//   BrandCommentTopArea,
-//   RatingWrap,
-//   MoreButtonWrap,
-// };

@@ -1,10 +1,4 @@
-interface ValidationRule {
-  text: string;
-  type: string;
-  pattern?: RegExp;
-}
-
-export const VALIDATED_PROFILE_NICKNAME: ValidationRule[] = [
+export const VALIDATED_PROFILE_NICKNAME = [
   {
     text: "닉네임을 입력해주세요!",
     type: "REQUIRED",
@@ -18,4 +12,4 @@ export const VALIDATED_PROFILE_NICKNAME: ValidationRule[] = [
     type: "NO_WHITESPACE",
     pattern: /^[^\s]+$/,
   },
-];
+] as const;

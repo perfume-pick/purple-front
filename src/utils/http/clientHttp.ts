@@ -2,6 +2,7 @@
 import axios, { AxiosError } from "axios";
 import { httpConfigHelper, httpParserHelper } from "@/utils/http/helper";
 import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
+import { logout } from "./logout";
 
 let isRefreshing = false; // 리프레시 토큰이 진행 중인지 여부
 let refreshSubscribers: ((token: string) => void)[] = []; // 대기 중인 요청을 저장하는 큐
@@ -33,20 +34,6 @@ const getRefreshToken = async (): Promise<string | void> => {
   } catch (e) {
     logout();
   }
-};
-
-const logout = () => {
-  localStorage.removeItem(TOKEN_SAVE_KEY);
-  fetch("/api/delete-token", {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  // 미들웨어에서 인식 못히는지 확인
-  setTimeout(() => {
-    window.location.href = "/signin";
-  }, 1000);
 };
 
 // 리프레시가 완료되면 대기 중인 요청들을 처리

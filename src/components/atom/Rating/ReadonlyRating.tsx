@@ -27,7 +27,7 @@ export default ReadonlyRating;
 
 const RatingWrap = styled.div<{ size: number; gap: number }>`
   position: relative;
-  display: flex;
+  display: inline-flex;
   justify-content: space-between;
   padding: 0;
   margin: 0;

@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
+import { S as AccordStyles } from "../Accord/styles";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ hasBrand: boolean }>`
   margin-top: 2.1rem;
-  margin-top: 2.8rem;
+  ${props => !props.hasBrand && `margin-top: 5.1rem;`};
 `;
 
 const Title = styled.h3`
@@ -60,4 +61,5 @@ export const S = {
   BrandCount,
   BrandRatio,
   BrandDescription,
+  ProgressBarTitle: AccordStyles.ProgressBarTitle,
 };

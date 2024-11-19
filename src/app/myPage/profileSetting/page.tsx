@@ -7,36 +7,70 @@ import { theme } from "@/styles/theme";
 import { S } from "./styles";
 import Profile from "@/components/Profile/Profile";
 import ValidatedInput from "./_components/ValidatedInput/ValidatedInput";
-import { VALIDATED_PROFILE_NICKNAME } from "@/constant/validation/validatedProfileText";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 import ProfileAlert from "@/components/alert/profileAlert";
 import { EDIT_PROFILE_ALERT } from "@/constant/alert/alertText";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getUserProfile, patchProfile } from "@/service/client/userInfo";
+import { UpdateProfileBody, UpdateProfileParams } from "@/types/req/userInfo";
+import { useRouter } from "next/navigation";
 
-type FormValues = {
+export type FormValues = {
   nickname: string;
 };
 
-const ProfileSettingPage = () => {
-  {
-    /* TODO: 임시 이미지 코드 */
-  }
-  // const [profileImage, setProfileImage] = useState(
-  //   "https://images.unsplash.com/profile-1446404465118-3a53b909cc82?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=128&w=128&s=27a346c2362207494baa7b76f5d606e5",
-  // );
-  const {
-    register,
-    handleSubmit,
-    // setError,
-    formState: { errors },
-  } = useForm<FormValues>();
+type UpdateProfile = {
+  params: UpdateProfileParams;
+  body: UpdateProfileBody["picture"];
+};
 
+export type ImageForm = {
+  isChange: boolean;
+  imgUrl: FormData | null;
+  previewImgUrl: string | null;
+};
+
+const ProfileSettingPage = () => {
+  const router = useRouter();
+  const { mutate: updateProfile } = useMutation({
+    mutationFn: (newProfile: UpdateProfile) => patchProfile(newProfile),
+  });
+  const { data: profile } = useQuery({
+    queryKey: ["userProfile"],
+    queryFn: getUserProfile,
+  });
+
+  const { control, handleSubmit } = useForm<FormValues>({
+    mode: "onChange",
+    defaultValues: {
+      nickname: "",
+    },
+    values: {
+      nickname: profile?.nickname ?? "",
+    },
+  });
+
+  const [image, setImage] = useState<ImageForm>({
+    isChange: false,
+    imgUrl: null,
+    previewImgUrl: null,
+  });
   const [openAlert, setOpenAlert] = useState(false);
 
-  const onSubmit: SubmitHandler<FormValues> = data => {
-    console.log(data);
+  const imageUrl = image.isChange
+    ? image.previewImgUrl || ""
+    : profile && profile.imageUrl
+      ? `${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}${profile?.imageUrl}`
+      : "";
+
+  const onSubmit: SubmitHandler<FormValues> = ({ nickname }) => {
+    const body = image.imgUrl;
+    const params = { nickname, isChanged: image.isChange };
+
+    updateProfile({ params, body });
+    router.back();
   };
   const handleClickProfile = () => {
-    console.log("click profile");
     setOpenAlert(true);
   };
 
@@ -58,9 +92,7 @@ const ProfileSettingPage = () => {
           <Profile
             width="8rem"
             height="8rem"
-            image={
-              "https://images.unsplash.com/profile-1446404465118-3a53b909cc82?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=128&w=128&s=27a346c2362207494baa7b76f5d606e5"
-            }
+            image={imageUrl}
             isEdit
             onClick={handleClickProfile}
           />
@@ -68,27 +100,11 @@ const ProfileSettingPage = () => {
             <ProfileAlert
               message={EDIT_PROFILE_ALERT}
               setOpenAlert={setOpenAlert}
+              setImage={setImage}
             />
           )}
           <form onSubmit={handleSubmit(onSubmit)}>
-            <ValidatedInput
-              labelText="닉네임"
-              id="nickname"
-              register={register}
-              errors={errors}
-              // setError={setError}
-              validation={{
-                required: VALIDATED_PROFILE_NICKNAME.filter(
-                  item => item.type === "REQUIRED",
-                )[0].text,
-                pattern: {
-                  value: /^[^\s]+$/,
-                  message: VALIDATED_PROFILE_NICKNAME.filter(
-                    item => item.type === "NO_WHITESPACE",
-                  )[0].text,
-                },
-              }}
-            />
+            <ValidatedInput label="닉네임" name="nickname" control={control} />
             <button type="submit">적용하기</button>
           </form>
         </S.Contents>
