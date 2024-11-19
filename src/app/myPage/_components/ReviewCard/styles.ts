@@ -60,6 +60,35 @@ const OverflowText = styled.span`
   cursor: pointer;
 `;
 
+const PerfumeInfoContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  gap: 1.2rem;
+  margin: 1rem 0;
+`;
+
+const PerfumeInfoBox = styled.div`
+  display: flex;
+  gap: 1.1rem;
+  font-size: ${props => props.theme.fontSize.sm};
+`;
+
+const PerfumeFieldName = styled.span`
+  color: ${props => props.theme.color.textColor[200]};
+`;
+
+const PerfumeFieldValue = styled.span`
+  color: ${props => props.theme.color.textColor[100]};
+  font-weight: ${props => props.theme.fontWeight.bold};
+`;
+
+const Keyword = styled.div`
+  display: flex;
+  gap: 0.4rem;
+  font-size: ${props => props.theme.fontSize.sm};
+`;
+
 export const S = {
   Wrapper,
   ReviewBox,
@@ -69,4 +98,9 @@ export const S = {
   InteractionBox,
   OverflowText,
   ReviewBoxRightSection,
+  PerfumeInfoContainer,
+  PerfumeInfoBox,
+  PerfumeFieldName,
+  PerfumeFieldValue,
+  Keyword,
 };

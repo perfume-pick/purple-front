@@ -2,7 +2,6 @@ import { FiberManualRecord } from "@mui/icons-material";
 import { UserReview } from "@/types/res/userReview";
 import ReadonlyRating from "@/components/atom/Rating/ReadonlyRating";
 import { S } from "./styles";
-import DetailReviewCard from "./DetailReviewCard";
 import {
   deleteCommentLike,
   deleteReview,
@@ -26,6 +25,8 @@ const ReviewCard = ({
   perfumeImageUrl,
   brandName,
   perfumeName,
+  moodNames,
+  perfumeEvaluations,
 }: ReviewCardProps) => {
   const queryClient = useQueryClient();
   const contentRef = useRef<HTMLParagraphElement>(null);
@@ -78,7 +79,8 @@ const ReviewCard = ({
     checkTextOverflow();
   }, []);
 
-  console.log(isOverflowContent);
+  console.log(perfumeEvaluations);
+  console.log();
 
   return (
     <S.Wrapper>
@@ -106,7 +108,27 @@ const ReviewCard = ({
         </S.ReviewBoxRightSection>
       </S.ReviewBox>
       {reviewType === "DETAIL" ? (
-        <DetailReviewCard />
+        <div>
+          <>
+            <S.PerfumeInfoContainer>
+              {perfumeEvaluations.map(({ fieldName, options }) => (
+                <S.PerfumeInfoBox key={fieldName}>
+                  <S.PerfumeFieldName>{fieldName}</S.PerfumeFieldName>
+                  <S.PerfumeFieldValue>
+                    {options.map(({ optionName }) => (
+                      <span key={optionName}>{optionName}</span>
+                    ))}
+                  </S.PerfumeFieldValue>
+                </S.PerfumeInfoBox>
+              ))}
+            </S.PerfumeInfoContainer>
+            <S.Keyword>
+              {moodNames.map((data, idx) => (
+                <div key={idx}>#{data}</div>
+              ))}
+            </S.Keyword>
+          </>
+        </div>
       ) : reviewType === "SIMPLE" ? (
         <div>
           <S.Content showOverflowContent={showOverflowContent} ref={contentRef}>
