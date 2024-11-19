@@ -1,7 +1,7 @@
 "use client";
 
 export const logout = () => {
-  const baseUrl = "http://localhost:3000";
+  const baseUrl = window.location.origin;
   fetch(`${baseUrl}/api/delete-token`, {
     method: "DELETE",
     headers: {
