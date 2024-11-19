@@ -102,13 +102,10 @@ const ReviewPerfumeButton = styled.button<{ disabled: boolean }>`
   margin-top: 2.8rem;
   border-radius: 1rem;
 
-  ${props =>
-    props.disabled &&
-    `
-    color: ${props.theme.color.textDisabled};
-    border: 1px solid #dfdfdf;
-    cursor: not-allowed;
-  `}
+  color: ${props => props.theme.color.textDisabled};
+  border: 1px solid #dfdfdf;
+
+  ${props => props.disabled && `cursor: not-allowed;`}
 `;
 
 export const S = {
