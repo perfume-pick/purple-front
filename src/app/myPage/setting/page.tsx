@@ -3,14 +3,25 @@
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import NavHeaderInner from "@/components/navHeaderLayout/NavHeaderInner";
 import { S } from "./styles";
-import { logout } from "@/service/client/auth";
+import { logout, withdraw } from "@/service/client/auth";
+import WithdrawAlert from "./_components/WithdrawAlert";
+import { useState } from "react";
 
 const Setting = () => {
+  const [checked, setChecked] = useState(false);
+
+  const handleCheckboxChange = () => setChecked(!checked);
+
   return (
     <>
       <NavHeader>
         <NavHeaderInner text="설정" />
       </NavHeader>
+      <WithdrawAlert
+        checked={checked}
+        onCheckboxChange={handleCheckboxChange}
+        onWithdrawClick={withdraw}
+      />
       <S.Layout>
         <S.HeaderBottomContents>
           <S.Block>
