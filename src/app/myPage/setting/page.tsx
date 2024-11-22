@@ -3,7 +3,7 @@
 import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 import NavHeaderInner from "@/components/navHeaderLayout/NavHeaderInner";
 import { S } from "./styles";
-import { logout } from "../../../service/client/logout";
+import { logout } from "@/service/client/auth";
 
 const Setting = () => {
   return (
