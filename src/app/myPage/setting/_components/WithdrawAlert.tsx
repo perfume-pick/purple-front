@@ -10,7 +10,7 @@ interface WithdrawAlertProps {
 const WithdrawAlert = ({
   checked,
   onCheckboxChange,
-  // onWithdrawClick,
+  onWithdrawClick,
 }: WithdrawAlertProps) => {
   return (
     <ModalLayout>
@@ -35,7 +35,9 @@ const WithdrawAlert = ({
               </p>
             </S.DescriptionBox>
           </S.DescriptionContainer>
-          <S.WithdrawButton disabled={!checked}>계정 삭제</S.WithdrawButton>
+          <S.WithdrawButton disabled={!checked} onClick={onWithdrawClick}>
+            계정 삭제
+          </S.WithdrawButton>
           <S.ConfirmTextBox>
             <S.CheckboxLabel>
               <S.CheckboxInput
