@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 const Wrapper = styled.li`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: space-between;
   width: 14.1rem;
 
@@ -22,6 +22,10 @@ const ImageBox = styled.div`
     content: "";
     display: block;
     padding-bottom: 100%;
+  }
+
+  &.type-scroll {
+    width: 14.1rem;
   }
 
   & > img {
@@ -58,7 +62,7 @@ const TextBox = styled.div`
 
   &.type-scroll {
     width: 100%;
-    height: 8.2rem;
+    /* height: 8.2rem; */
     box-sizing: border-box;
 
     & > span {
@@ -72,7 +76,7 @@ const TextBox = styled.div`
   }
 
   &.type-grid {
-    height: 8.2rem;
+    /* height: 8.2rem; */
   }
 `;
 

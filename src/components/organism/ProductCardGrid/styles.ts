@@ -21,7 +21,7 @@ const Wrapper = styled.div`
     background: ${theme.color.white};
 
     & > li {
-      width: 50vw;
+      width: 50%;
 
       & > div {
         width: 100%;

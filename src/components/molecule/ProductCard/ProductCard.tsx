@@ -25,7 +25,7 @@ const ProductCard = ({ perfumeInfo, type = "GRID" }: Props) => {
   return (
     <S.Wrapper className={TYPE_CLASS} onClick={handleClickProduct}>
       <S.Card>
-        <S.ImageBox>
+        <S.ImageBox className={TYPE_CLASS}>
           <img src={imageUrl} alt={perfumeName} />
         </S.ImageBox>
         <S.TextBox className={TYPE_CLASS}>

@@ -1,6 +1,11 @@
 import styled from "@emotion/styled";
 import { theme } from "@/styles/theme";
 
+const Wrapper = styled.div`
+  & > .contents-wrap {
+    height: calc(100vh - 58px);
+  }
+`;
 const HeaderInner = styled.div`
   text-align: center;
   span {
@@ -42,4 +47,5 @@ const Contents = styled.div`
 export const S = {
   HeaderInner,
   Contents,
+  Wrapper,
 };

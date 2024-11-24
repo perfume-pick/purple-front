@@ -2,9 +2,14 @@ import { theme } from "@/styles/theme";
 import styled from "@emotion/styled";
 
 const contentsWrap = styled.div`
-  height: calc(100vh - 8.1rem);
+  height: calc(100vh - 13.9rem);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   &.change {
     height: auto;
+  }
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 
