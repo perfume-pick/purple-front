@@ -72,6 +72,29 @@ jobs:
       - name: Logout of Amazon ECR
         run: docker logout ${{ env.ECR_REGISTRY }}
 
+      - name: Install Docker if not present
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST_2 }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_2 }}
+          script: |
+            if ! command -v docker >/dev/null 2>&1; then
+              echo "Installing Docker..."
+              sudo apt-get update
+              sudo apt-get install -y docker.io
+            else
+              echo "Docker already installed."
+            fi
+            if ! command -v docker-compose >/dev/null 2>&1; then
+              echo "Installing Docker Compose..."
+              sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
+            else
+              echo "Docker Compose already installed."
+            fi
+
+
       - name: SSH to EC2 Instance and Update Docker Container
         uses: appleboy/ssh-action@master
         env:
@@ -79,7 +102,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST_2 }}
           username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_2 }}
           envs: TAG
           script: |
             CONTAINER_ID=$(docker ps -q --filter ancestor=$TAG)
