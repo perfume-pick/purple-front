@@ -105,7 +105,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY_2 }}
           envs: TAG
           script: |
-            # CONTAINER_ID=$(docker ps -q --filter ancestor=$TAG)
             CONTAINER_ID=$(docker ps -q --filter "publish=3000")
             IMAGE_ID=$(docker images --format "{{.ID}}" $TAG)
             if [ ! -z "$CONTAINER_ID" ]; then
