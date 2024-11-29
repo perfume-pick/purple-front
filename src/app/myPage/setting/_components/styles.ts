@@ -69,8 +69,9 @@ const WithdrawButton = styled.button`
   }
 `;
 
-const ConfirmTextBox = styled.div`
-  display: flex;
+const ConfirmTextBox = styled.label`
+  cursor: pointer;
+  display: inline-flex;
   gap: 8px;
 `;
 
