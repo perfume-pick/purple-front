@@ -92,7 +92,7 @@ function NickNameOnBoarding() {
             </S.ErrorText>
             <S.ButtonWrap>
               <Button
-                type="submit"
+                type="button"
                 disabled={nickName.length === 0}
                 buttonText="다음으로"
                 size="primary"
