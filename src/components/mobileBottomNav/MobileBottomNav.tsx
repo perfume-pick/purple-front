@@ -19,7 +19,7 @@ const MobileBottomNav = () => {
     "/onBoarding",
     "/commentPage",
     "/detail/comments",
-    "/perpicks/auth",
+    "/auth",
     "/detail",
   ];
 

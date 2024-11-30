@@ -3,7 +3,7 @@ import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 import { getCookie } from "cookies-next";
 
 // 로그인이 필요 없는 페이지 경로
-const AUTH_PAGES = ["/signin", "/perpicks/auth/"];
+const AUTH_PAGES = ["/signin", "/auth/"];
 
 export async function middleware(req: NextRequest) {
   const { nextUrl } = req;
@@ -33,9 +33,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/((?!api|_next|static|favicon.ico).*)",
-    "/signin",
-    "/perpicks/auth/:path*",
-  ],
+  matcher: ["/((?!api|_next|static|favicon.ico).*)", "/signin", "/auth/:path*"],
 };
