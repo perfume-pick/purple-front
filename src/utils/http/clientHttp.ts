@@ -6,6 +6,7 @@ import { logout } from "./logout";
 
 let isRefreshing = false; // 리프레시 토큰이 진행 중인지 여부
 let refreshSubscribers: ((token: string) => void)[] = []; // 대기 중인 요청을 저장하는 큐
+let refreshAttempts = 0; // 리프레시 시도 횟수
 
 const getRefreshToken = async (): Promise<string | void> => {
   try {
@@ -30,9 +31,15 @@ const getRefreshToken = async (): Promise<string | void> => {
         jwtToken,
       });
     }
+
+    refreshAttempts = 0;
     return jwtToken;
   } catch (e) {
-    logout();
+    refreshAttempts += 1;
+    if (refreshAttempts >= 2) {
+      logout(); // 최대 시도 횟수 초과 시 로그아웃
+    }
+    throw e;
   }
 };
 
@@ -66,7 +73,7 @@ clientHttp.interceptors.response.use(
 
     // 토큰 만료 시, status 코드가 403 || 500로 옴
     // 데이터가 없는 경우(review) 상태값이 404로 와서 리프레쉬 토큰 api를 호출하게 됨. 예외처리
-    if (status === 404) {
+    if (status === 404 || status === 403) {
       return Promise.reject(error);
     }
 
@@ -80,12 +87,14 @@ clientHttp.interceptors.response.use(
 
         if (jwtToken) {
           onTokenRefreshed(jwtToken);
-          isRefreshing = false;
+          // isRefreshing = false;
         }
       } catch (refreshError) {
         isRefreshing = false;
-        logout();
+        // logout();
         return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
       }
     }
 
