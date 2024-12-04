@@ -11,6 +11,7 @@ html {
   justify-content: center;
   align-items: center;
   background: #e8e8e8;
+  overflow: hidden;
 
   @media (min-width: 1200px) {
     font-size: 62.5%;
