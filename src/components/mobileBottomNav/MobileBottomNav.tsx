@@ -81,7 +81,7 @@ const MobileBottomNav = () => {
 export default MobileBottomNav;
 
 const Wrapper = styled.div`
-  position: sticky;
+  position: fixed;
   bottom: 0;
   width: 100%;
   max-width: 440px;
