@@ -21,6 +21,8 @@ const MobileBottomNav = () => {
     "/detail/comments",
     "/auth",
     "/detail",
+    "/myPage/profileSetting",
+    "/myPage/setting",
   ];
 
   // TODO: router경로는 페이지가 만들어지면 수정 필요.
@@ -81,7 +83,7 @@ const MobileBottomNav = () => {
 export default MobileBottomNav;
 
 const Wrapper = styled.div`
-  position: sticky;
+  position: fixed;
   bottom: 0;
   width: 100%;
   max-width: 440px;

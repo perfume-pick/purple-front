@@ -19,6 +19,7 @@ const Wrapper = styled.div`
     margin: 0;
     padding-bottom: 1rem;
     background: ${theme.color.white};
+    padding-bottom: 7.2rem;
 
     & > li {
       width: 50%;

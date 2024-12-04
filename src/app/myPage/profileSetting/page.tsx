@@ -75,7 +75,7 @@ const ProfileSettingPage = () => {
   };
 
   return (
-    <S.Wrapper>
+    <>
       <NavHeader
         iconColor={theme.color.white}
         style={{
@@ -109,7 +109,7 @@ const ProfileSettingPage = () => {
           </form>
         </S.Contents>
       </HeaderBottomContents>
-    </S.Wrapper>
+    </>
   );
 };
 

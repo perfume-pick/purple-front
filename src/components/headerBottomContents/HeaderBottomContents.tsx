@@ -7,7 +7,7 @@ type Props = {
 };
 
 const HeaderBottomContents = ({ children }: Props) => {
-  return <S.Wrapper className="contents-wrap">{children}</S.Wrapper>;
+  return <S.Wrapper>{children}</S.Wrapper>;
 };
 
 export default HeaderBottomContents;

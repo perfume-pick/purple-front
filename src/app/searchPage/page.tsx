@@ -132,13 +132,7 @@ const SearchPage = () => {
       )}
       {/* {isLoading && <p>로딩중...</p>} */}
       {keyword && (
-        <S.contentsWrap
-          className={
-            resultData && resultData?.responseData?.perfumes?.length > 0
-              ? "change"
-              : ""
-          }
-        >
+        <S.contentsWrap>
           {/* TODO : 메인의 scroll 위치를 기억해야하는 경우 */}
           {resultData && resultData.responseData.perfumes.length < 1 ? (
             <S.EmptyWrap>
