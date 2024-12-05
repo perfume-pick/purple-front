@@ -1,34 +1,31 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import IosShareIcon from "@mui/icons-material/IosShare";
+import { getIsMobile } from "@/utils/utils";
 
-// type Props = {
-//   description: string;
-// };
+type Props = {
+  // description: string;
+  perfumeId: string;
+  handleClick: () => void;
+};
 
-// const ShareButton = ({ description }: Props) => {
-const ShareButton = () => {
-  // const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      // const { Kakao } = window;
-      // if (!Kakao.isInitialized()) {
-      //   Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
-      // }
-    }
-  }, []);
-
+const ShareButton = ({ perfumeId, handleClick }: Props) => {
   const handleShare = () => {
-    // if (shareUrl) return;
-    // const { Kakao } = window;
-    // Kakao.Share.sendScrap({
-    //   requestUrl: shareUrl,
-    // });
-    // console.log(location.href);
-    // console.log(Kakao);
-    // console.log("Kakao API Key:", process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+    const isMobile = getIsMobile();
+    const { Kakao, location } = window;
+    if (!perfumeId) {
+      return;
+    }
+
+    if (isMobile && Kakao?.Share) {
+      Kakao.Share.sendScrap({
+        requestUrl: `${location.href}?shareUrl=${location.href}?perfumeId=${perfumeId}`,
+      });
+    } else {
+      navigator.clipboard.writeText(location.href);
+      handleClick();
+    }
   };
 
   return (
