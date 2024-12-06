@@ -14,15 +14,21 @@ import {
 import ShareButton from "@/components/atom/ShareButton/ShareButton";
 import OneLineTextToast from "@/components/toast/OneLineTextToast";
 import { useQuery } from "@tanstack/react-query";
+import { PerfumeDetailInfo } from "../../types/res/perfumeDetail";
 
 function DetailPage() {
   const searchParams = useSearchParams();
   const perfumeId = searchParams.get("perfumeId");
   const [toast, setToast] = useState(false);
 
-  const { data: perfumeDetailInfo } = useQuery({
+  const { data: perfumeDetailInfo } = useQuery<PerfumeDetailInfo | undefined>({
     queryKey: ["perfumeDetailInfo", perfumeId],
-    queryFn: () => getPerfumeDetail(perfumeId),
+    queryFn: () => {
+      if (!perfumeId) {
+        return undefined;
+      }
+      return getPerfumeDetail(perfumeId);
+    },
     enabled: !!perfumeId,
     retry: false,
   });
@@ -30,7 +36,6 @@ function DetailPage() {
 
   useEffect(() => {
     perfumeId && postVisitHistory(perfumeId);
-    return () => {};
   }, [perfumeId]);
 
   const handleToast = () => {
@@ -51,18 +56,20 @@ function DetailPage() {
           }}
         >
           {/* <FavoriteBorderIcon sx={{ fontSize: "2.4rem" }} /> */}
-          {perfumeId && (
+          {perfumeId && perfumeDetailInfo && (
             <ShareButton
               perfumeId={perfumeId}
-              imageUrl={perfumeDetailInfo?.imageUrl ?? ""}
-              perfumeName={perfumeDetailInfo?.perfumeName ?? "향수"}
+              imageUrl={perfumeDetailInfo.imageUrl}
+              perfumeName={perfumeDetailInfo.perfumeName}
               handleClick={handleToast}
             />
           )}
         </div>
       </NavHeader>
       <HeaderBottomContents>
-        {perfumeId && <DetailPageContent perfumeId={perfumeId} />}
+        {perfumeId && perfumeDetailInfo && (
+          <DetailPageContent perfumeId={perfumeId} />
+        )}
       </HeaderBottomContents>
       {toast && <OneLineTextToast text="복사되었습니다." setToast={setToast} />}
     </S.Wrapper>
