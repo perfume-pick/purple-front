@@ -7,20 +7,30 @@ import NavHeader from "@/components/navHeaderLayout/navHeaderLayout";
 // import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import DetailPageContent from "./_components";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
-import { postVisitHistory } from "@/service/client/perfumeDetail";
+import {
+  getPerfumeDetail,
+  postVisitHistory,
+} from "@/service/client/perfumeDetail";
 import ShareButton from "@/components/atom/ShareButton/ShareButton";
 import OneLineTextToast from "@/components/toast/OneLineTextToast";
+import { useQuery } from "@tanstack/react-query";
 
 function DetailPage() {
   const searchParams = useSearchParams();
   const perfumeId = searchParams.get("perfumeId");
   const [toast, setToast] = useState(false);
 
+  const { data: perfumeDetailInfo } = useQuery({
+    queryKey: ["perfumeDetailInfo", perfumeId],
+    queryFn: () => getPerfumeDetail(perfumeId),
+    enabled: !!perfumeId,
+    retry: false,
+  });
+  console.log(perfumeDetailInfo);
+
   useEffect(() => {
     perfumeId && postVisitHistory(perfumeId);
-    return () => {
-      // 컴포넌트가 언마운트되기 직전에 향수 상세정보 데이터 삭제
-    };
+    return () => {};
   }, [perfumeId]);
 
   const handleToast = () => {
@@ -42,7 +52,12 @@ function DetailPage() {
         >
           {/* <FavoriteBorderIcon sx={{ fontSize: "2.4rem" }} /> */}
           {perfumeId && (
-            <ShareButton perfumeId={perfumeId} handleClick={handleToast} />
+            <ShareButton
+              perfumeId={perfumeId}
+              imageUrl={perfumeDetailInfo?.imageUrl ?? ""}
+              perfumeName={perfumeDetailInfo?.perfumeName ?? "향수"}
+              handleClick={handleToast}
+            />
           )}
         </div>
       </NavHeader>
