@@ -10,7 +10,7 @@ import ValidatedInput from "./_components/ValidatedInput/ValidatedInput";
 import HeaderBottomContents from "@/components/headerBottomContents/HeaderBottomContents";
 import ProfileAlert from "@/components/alert/profileAlert";
 import { EDIT_PROFILE_ALERT } from "@/constant/alert/alertText";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserProfile, patchProfile } from "@/service/client/userInfo";
 import { UpdateProfileBody, UpdateProfileParams } from "@/types/req/userInfo";
 import { useRouter } from "next/navigation";
@@ -32,8 +32,12 @@ export type ImageForm = {
 
 const ProfileSettingPage = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { mutate: updateProfile } = useMutation({
     mutationFn: (newProfile: UpdateProfile) => patchProfile(newProfile),
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ["userProfile"] });
+    },
   });
   const { data: profile } = useQuery({
     queryKey: ["userProfile"],
