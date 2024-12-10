@@ -165,6 +165,10 @@ const CommentPage = () => {
         });
       }
 
+      await queryClient.invalidateQueries({
+        queryKey: ["reviewsInDetail"],
+      });
+
       // 이전 페이지로
       router.back();
     } catch (e) {
@@ -179,7 +183,7 @@ const CommentPage = () => {
       });
     }
 
-    if (myReviewInfo?.review) {
+    if (myReviewInfo?.review.reviewId) {
       if (myReviewInfo.review.reviewType === "DETAIL") {
         setSelectedCommentIdx(1);
       }
@@ -209,21 +213,25 @@ const CommentPage = () => {
       }
 
       const persistenceOption =
-        perfumeEvaluation &&
-        commentEvaluationForm.evaluationFields[0].evaluationOptions?.find(
-          (item: OptionFields) =>
-            item.optionName === perfumeEvaluation[0].options[0]?.optionName,
-        );
+        (perfumeEvaluation &&
+          perfumeEvaluation.length > 0 &&
+          commentEvaluationForm.evaluationFields[0].evaluationOptions?.find(
+            (item: OptionFields) =>
+              item.optionName === perfumeEvaluation[0]?.options[0]?.optionName,
+          )) ||
+        null;
 
       const residualScentOption =
         perfumeEvaluation &&
+        perfumeEvaluation.length > 0 &&
         commentEvaluationForm.evaluationFields[1].evaluationOptions.find(
           (item: OptionFields) =>
-            item.optionName === perfumeEvaluation[1].options[0]?.optionName,
+            item.optionName === perfumeEvaluation[1]?.options[0]?.optionName,
         );
 
       const selectedSeasonOptions =
         (perfumeEvaluation &&
+          perfumeEvaluation.length > 0 &&
           perfumeEvaluation[2]?.options.map(
             (option: { optionName: string }) => option.optionName,
           )) ||
@@ -237,18 +245,21 @@ const CommentPage = () => {
 
       const genderOption =
         perfumeEvaluation &&
-        commentEvaluationForm.evaluationFields[3].evaluationOptions.find(
+        perfumeEvaluation.length > 0 &&
+        commentEvaluationForm.evaluationFields[3]?.evaluationOptions.find(
           (item: OptionFields) =>
-            item.optionName === perfumeEvaluation[3].options[0]?.optionName,
+            item.optionName === perfumeEvaluation[3]?.options[0]?.optionName,
         );
 
       const formValues: FieldDefinitionsType = {
         rating: score,
         textReview: content,
         persistence: persistenceOption?.optionCode || "",
-        residualScent: residualScentOption?.optionCode || "",
+        residualScent: residualScentOption
+          ? residualScentOption.optionCode
+          : "",
         season: seasonCodes,
-        gender: genderOption?.optionCode || "",
+        gender: genderOption ? genderOption.optionCode : "",
         mood: moodNames || [],
       };
 
