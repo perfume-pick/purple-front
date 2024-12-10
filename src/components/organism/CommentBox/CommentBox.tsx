@@ -15,6 +15,7 @@ import { EvaluationType } from "@/constant/detail.const";
 import {
   complainReview,
   deleteCommentLike,
+  deleteComplainReview,
   deleteReview,
   setCommentLike,
 } from "@/service/client/commentRegistration";
@@ -178,7 +179,7 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
       try {
         complainReview(reviewId).then(() => {
           queryClient.invalidateQueries({
-            queryKey: ["myReviewInfo", perfumeId as string],
+            queryKey: ["reviewsInDetail"],
           });
           setToastText("신고가 정상적으로 등록되었습니다.");
           setToast(true);
@@ -188,9 +189,13 @@ const CommentBox = ({ reviewInfo, perfumeId }: Props) => {
       }
     } else if (typeText === "CANCEL_REPORT_COMMENT") {
       try {
-        // api 추가
-        setToastText("코멘트 신고가 취소되었습니다.");
-        setToast(true);
+        deleteComplainReview(reviewId).then(() => {
+          queryClient.invalidateQueries({
+            queryKey: ["reviewsInDetail"],
+          });
+          setToastText("코멘트 신고가 취소되었습니다.");
+          setToast(true);
+        });
       } catch (error) {
         console.error("리뷰 신고 취소 처리 중 오류가 발생했습니다:", error);
       }

@@ -15,7 +15,7 @@ const endPoint = {
   POST_DETAIL_REVIEW: "/perpicks/reviews/detail",
   PATCH_SIMPLE_REVIEW: "/perpicks/reviews/{REVIEW_ID}/simple",
   PATCH_DETAIL_REVIEW: "/perpicks/reviews/{REVIEW_ID}/detail",
-  POST_COMPLAIN_REVIEW: "/perpicks/reviews/{REVIEW_ID}/complain",
+  COMPLAIN_REVIEW: "/perpicks/reviews/{REVIEW_ID}/complain",
   DELETE_REVIEW: "/perpicks/reviews/{REVIEW_ID}",
 
   POST_COMMENT_LIKE: "/perpicks/reviews/{REVIEW_ID}/like",
@@ -119,12 +119,26 @@ async function deleteReview(queryParams: string) {
 
 // 리뷰 신고
 async function complainReview(queryParams: string) {
-  const changedEndPoint = endPoint.POST_COMPLAIN_REVIEW.replace(
+  const changedEndPoint = endPoint.COMPLAIN_REVIEW.replace(
     "{REVIEW_ID}",
     queryParams,
   );
 
   const response = await clientHttp.post<never, FullRestResponse>(
+    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`,
+  );
+
+  return response;
+}
+
+// 리뷰 신고 취소
+async function deleteComplainReview(queryParams: string) {
+  const changedEndPoint = endPoint.COMPLAIN_REVIEW.replace(
+    "{REVIEW_ID}",
+    queryParams,
+  );
+
+  const response = await clientHttp.delete<never, FullRestResponse>(
     `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${changedEndPoint}`,
   );
 
@@ -169,4 +183,5 @@ export {
   complainReview,
   setCommentLike,
   deleteCommentLike,
+  deleteComplainReview,
 };
