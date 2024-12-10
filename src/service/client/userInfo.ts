@@ -104,11 +104,15 @@ async function patchProfile({
     .map(([key, value]) => `${key}=${value}`)
     .join("&");
   const url = `${endPoint.UPDATE_PROFILE}?${paramString}`;
-  const { data } = await clientHttp.patch<Profile>(url, body, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const boundary = "----CustomWebKitFormBoundary673&%##*521654";
+  const headers = {
+    "Content-Type":
+      body === null
+        ? `multipart/form-data; boundary=${boundary}`
+        : `multipart/form-data`,
+  };
+
+  const { data } = await clientHttp.patch<Profile>(url, body, { headers });
 
   const { timeStamp, responseData } = data;
 
