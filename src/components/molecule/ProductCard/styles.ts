@@ -72,6 +72,7 @@ const TextBox = styled.div`
     & > p {
       padding: 0.4rem 0;
       font-weight: ${theme.fontWeight.regular};
+      min-height: 4.2rem;
     }
   }
 
