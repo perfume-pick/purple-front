@@ -12,11 +12,13 @@ export interface AccordInfo {
   order: number;
   accordName: string;
   accordValue: number;
+  accordKoreanName: string;
 }
 
 export interface NoteInfo {
   name: string;
   type: NoteType;
+  koreanName: string;
 }
 
 export type NoteType = "TOP" | "MIDDLE" | "BASE";

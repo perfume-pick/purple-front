@@ -2,6 +2,7 @@
 
 import React from "react";
 import styled from "@emotion/styled";
+import { theme } from "@/styles/theme";
 
 type Props = {
   rate: number;
@@ -27,6 +28,7 @@ export default ReadonlyRating;
 
 const RatingWrap = styled.div<{ size: number; gap: number }>`
   position: relative;
+  background: ${theme.color.white};
   display: inline-flex;
   justify-content: space-between;
   padding: 0;
