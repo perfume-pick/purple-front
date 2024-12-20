@@ -74,7 +74,7 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
       perfumeDetailInfo.notes.forEach((note: NoteInfo) => {
         const target = tempNoteObjList.find(item => item.type === note.type);
         if (target) {
-          target.notes.push(note.name);
+          target.notes.push(note.koreanName);
         }
       });
 
@@ -103,7 +103,7 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
                     }}
                     key={item.order}
                   >
-                    <span>{item.accordName}</span>
+                    <span>{item.accordKoreanName}</span>
                   </div>
                 );
               })}

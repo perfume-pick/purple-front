@@ -18,7 +18,7 @@ function DetailPageBanner({ perfumeId }: Props) {
   });
 
   const accordName = useMemo((): string => {
-    return perfumeDetailInfo?.accords[0]?.accordName ?? "";
+    return perfumeDetailInfo?.accords[0]?.accordKoreanName ?? "";
   }, [perfumeDetailInfo]);
 
   return (

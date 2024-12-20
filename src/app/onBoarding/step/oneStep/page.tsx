@@ -41,7 +41,11 @@ const OneStep = () => {
         selectedBrandList.filter(item => item !== brandName),
       );
     } else {
-      setSelectedBrandList(prev => [...prev, brandName]);
+      const selectedName: string = perfumeBrands.filter(
+        (item: BrandPerfumeInfo) => item.koreanName === brandName,
+      )[0].name;
+
+      setSelectedBrandList(prev => [...prev, selectedName]);
     }
   };
 
@@ -91,14 +95,14 @@ const OneStep = () => {
           </S.StepTitleWrap>
         </S.Wrapper>
         <S.CardWrap>
-          {perfumeBrands.map(({ name, imageUrl, order }) => {
+          {perfumeBrands.map(({ name, imageUrl, order, koreanName }) => {
             return (
               <Card
                 key={order}
                 brandName={name}
                 imageUrl={imageUrl}
                 isSelected={selectedBrandList.some(item => item === name)}
-                handleClickCard={() => handleClickCard(name)}
+                handleClickCard={() => handleClickCard(koreanName)}
               />
             );
           })}

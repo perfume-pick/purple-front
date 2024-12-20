@@ -26,4 +26,5 @@ export interface BrandPerfumeInfo {
   name: string;
   imageUrl: string;
   order?: number;
+  koreanName: string;
 }
