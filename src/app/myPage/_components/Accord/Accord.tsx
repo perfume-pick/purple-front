@@ -2,6 +2,7 @@ import { useState } from "react";
 import { S } from "./styles";
 import { useQuery } from "@tanstack/react-query";
 import { getUserAccords } from "@/service/client/userInfo";
+import { PERFUME_ACCORD_COLORS } from "@/constant/perfumeAccord/perfumeAccordColors";
 
 const Accord = () => {
   const { data: userAccords } = useQuery({
@@ -14,6 +15,8 @@ const Accord = () => {
     userAccords?.userAccord[
       selectedId === "like" ? "preferredAccord" : "dislikedAccord"
     ];
+
+  console.log(currentAccords);
 
   const hasAccords = (currentAccords?.length ?? 0) > 0;
 
@@ -62,7 +65,7 @@ const Accord = () => {
                   <span>{accordName}</span>
                 </S.ProgressBarSegmentLabelBox>
                 <S.ProgressBarSegmentCountText>
-                  {count}개 ({Math.floor(percentage)})
+                  {count}개 ({Math.floor(percentage)}%)
                 </S.ProgressBarSegmentCountText>
               </S.ProgressBarSegment>
             ))}
