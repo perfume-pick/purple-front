@@ -4,9 +4,21 @@ import { httpConfigHelper, httpParserHelper } from "@/utils/http/helper";
 import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 import { logout } from "./logout";
 
+interface ErrorResponse {
+  responseCode: string;
+}
+
+function isErrorResponse(data: unknown): data is ErrorResponse {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "responseCode" in data &&
+    typeof (data as any).responseCode === "string"
+  );
+}
+
 let isRefreshing = false; // 리프레시 토큰이 진행 중인지 여부
 let refreshSubscribers: ((token: string) => void)[] = []; // 대기 중인 요청을 저장하는 큐
-let refreshAttempts = 0; // 리프레시 시도 횟수
 
 const getRefreshToken = async (): Promise<string | void> => {
   try {
@@ -31,14 +43,9 @@ const getRefreshToken = async (): Promise<string | void> => {
         jwtToken,
       });
     }
-
-    refreshAttempts = 0;
     return jwtToken;
   } catch (e) {
-    refreshAttempts += 1;
-    if (refreshAttempts >= 2) {
-      logout(); // 최대 시도 횟수 초과 시 로그아웃
-    }
+    logout();
     throw e;
   }
 };
@@ -70,13 +77,17 @@ clientHttp.interceptors.response.use(
 
     // 토큰 문제가 아닌 단순 에러일 경우
     if (status !== 404 && status !== 403) {
-      if (error.response.data.responseCode !== "C002") {
-        return Promise.reject(error);
+      if (error.response && isErrorResponse(error.response.data)) {
+        if (error.response.data.responseCode !== "C002") {
+          return Promise.reject(error);
+        }
       }
     }
     if (status === 400) {
-      if (error.response.data.responseCode !== "J003") {
-        return Promise.reject(error);
+      if (error.response && isErrorResponse(error.response.data)) {
+        if (error.response.data.responseCode !== "J003") {
+          return Promise.reject(error);
+        }
       }
     }
 
