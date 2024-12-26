@@ -47,28 +47,38 @@ const Accord = () => {
       {hasAccords && (
         <>
           <S.ProgressBarContainer>
-            {currentAccords?.map(({ accordName, count }, index) => (
+            {currentAccords?.map(({ accordName, count }) => (
               <S.ProgressBar
                 key={accordName}
                 width={`${(count / accordPerfumeTotal) * 100}%`}
-                backgroundColor={accordColors[index]}
+                backgroundColor={
+                  PERFUME_ACCORD_COLORS.find(
+                    accord => accord.accordName === accordName,
+                  )?.hexColor || ""
+                }
               />
             ))}
           </S.ProgressBarContainer>
           <S.ProgressBarSegmentContainer>
-            {currentAccords?.map(({ count, accordName, percentage }, index) => (
-              <S.ProgressBarSegment key={accordName}>
-                <S.ProgressBarSegmentLabelBox>
-                  <S.ProgressBarSegmentColorCircle
-                    backgroundColor={accordColors[index]}
-                  />
-                  <span>{accordName}</span>
-                </S.ProgressBarSegmentLabelBox>
-                <S.ProgressBarSegmentCountText>
-                  {count}개 ({Math.floor(percentage)}%)
-                </S.ProgressBarSegmentCountText>
-              </S.ProgressBarSegment>
-            ))}
+            {currentAccords?.map(
+              ({ accordNameKor, count, accordName, percentage }) => (
+                <S.ProgressBarSegment key={accordName}>
+                  <S.ProgressBarSegmentLabelBox>
+                    <S.ProgressBarSegmentColorCircle
+                      backgroundColor={
+                        PERFUME_ACCORD_COLORS.find(
+                          accord => accord.accordName === accordName,
+                        )?.hexColor || ""
+                      }
+                    />
+                    <span>{accordNameKor}</span>
+                  </S.ProgressBarSegmentLabelBox>
+                  <S.ProgressBarSegmentCountText>
+                    {count}개 ({Math.floor(percentage)}%)
+                  </S.ProgressBarSegmentCountText>
+                </S.ProgressBarSegment>
+              ),
+            )}
             <S.ProgressBarSegmentDescription>
               * 어코드가 포함된 향수 개수(선호/불호 어코드 비중)
             </S.ProgressBarSegmentDescription>
@@ -83,7 +93,5 @@ const tabs = [
   { id: "like", label: "선호" },
   { id: "dislike", label: "불호" },
 ] as const;
-
-const accordColors = ["#ff4647", "#6bc060", "#c446ff"] as const;
 
 export default Accord;
