@@ -65,9 +65,11 @@ const NormalText = styled.h2`
 
 const ButtonWrap = styled.div`
   width: 100%;
+  max-width: 440px;
   position: fixed;
   bottom: 0;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   margin-bottom: 1.6rem;
 
   button {
