@@ -12,6 +12,7 @@ import { COMMENT_DELETE_FILTER } from "@/constant/dropdown/commentFilterList";
 import { useQueryClient } from "@tanstack/react-query";
 import FavoritButtons from "@/components/atom/FavoriteButton/FavoritButtons";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface ReviewCardProps extends UserReview {}
 
@@ -22,6 +23,7 @@ const ReviewCard = ({
   likeCount,
   reviewId,
   reviewType,
+  perfumeId,
   perfumeImageUrl,
   brandName,
   perfumeName,
@@ -29,6 +31,7 @@ const ReviewCard = ({
   perfumeEvaluations,
 }: ReviewCardProps) => {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const contentRef = useRef<HTMLParagraphElement>(null);
   const [isOverflowContent, setIsOverflowContent] = useState(false);
   const [showOverflowContent, setShowOverflowContent] = useState(false);
@@ -75,12 +78,21 @@ const ReviewCard = ({
     setIsOverflowContent(isOverflowing);
   };
 
+  const handleCommentClick = () => {
+    router.push(`detail?perfumeId=${perfumeId}`);
+  };
+
   useEffect(() => {
     checkTextOverflow();
   }, []);
 
   return (
-    <S.Wrapper>
+    <S.Wrapper
+      onClick={e => {
+        e.stopPropagation();
+        handleCommentClick();
+      }}
+    >
       <S.ReviewBox>
         <S.MoreButtonBox>
           <MoreButton
