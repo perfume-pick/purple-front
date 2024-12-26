@@ -68,13 +68,16 @@ clientHttp.interceptors.response.use(
     const { config } = error;
     const status = error.response ? error.response.status : null;
 
-    // console.log(status);
-    // console.log(config);
-
-    // 토큰 만료 시, status 코드가 403 || 500로 옴
-    // 데이터가 없는 경우(review) 상태값이 404로 와서 리프레쉬 토큰 api를 호출하게 됨. 예외처리
-    if (status === 404 || status === 403) {
-      return Promise.reject(error);
+    // 토큰 문제가 아닌 단순 에러일 경우
+    if (status !== 404 && status !== 403) {
+      if (error.response.data.responseCode !== "C002") {
+        return Promise.reject(error);
+      }
+    }
+    if (status === 400) {
+      if (error.response.data.responseCode !== "J003") {
+        return Promise.reject(error);
+      }
     }
 
     // 토큰 만료일 때
