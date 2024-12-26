@@ -358,7 +358,7 @@ const CommentPage = () => {
                 {watch("textReview") === undefined ||
                 watch("textReview")?.length === 0
                   ? "0 "
-                  : `${watch("textReview")?.length} `}
+                  : `${watch("textReview")?.length ?? 0} `}
                 / {TEXTAREA_LENGTH}자
               </div>
             </S.TextAreaWrap>
