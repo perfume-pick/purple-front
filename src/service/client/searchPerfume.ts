@@ -5,8 +5,7 @@ import { SearchHistory, VisitHistory } from "@/types/res/searchPerfume";
 
 const endPoint = {
   GET_SEARCH_PERFUME: "/perpicks/search/perfumes",
-  GET_CURRENT_SEARCH_HISTORY: "/perpicks/users/my/search-histories",
-  DELETE_CURRENT_SEARCH_HISTORY: "/perpicks/users/my/search-histories",
+  CURRENT_SEARCH_HISTORY: "/perpicks/users/my/search-histories",
   GET_CURRENT_VISIT_HISTORY: "/perpicks/users/my/visit-histories",
   DELETE_CURRENT_VISIT_HISTORY: "/perpicks/users/my/visit-histories",
 };
@@ -27,7 +26,7 @@ async function getCurrentSearchHistory() {
     never,
     FullRestResponse<RestResponseType<{ searchHistories: SearchHistory[] }>>
   >(
-    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.GET_CURRENT_SEARCH_HISTORY}`,
+    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.CURRENT_SEARCH_HISTORY}`,
   );
 
   return response.data;
@@ -35,7 +34,15 @@ async function getCurrentSearchHistory() {
 
 async function deleteCurrentSearchHistory() {
   const response = await clientHttp.delete(
-    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.DELETE_CURRENT_SEARCH_HISTORY}`,
+    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.CURRENT_SEARCH_HISTORY}`,
+  );
+
+  return response;
+}
+
+async function postCurrentSearchHistory(keyword: string) {
+  const response = await clientHttp.post(
+    `${process.env.NEXT_PUBLIC_ENDPOINT_EXTERNAL}${endPoint.CURRENT_SEARCH_HISTORY}?keyword=${keyword}`,
   );
 
   return response;
@@ -66,4 +73,5 @@ export {
   deleteCurrentSearchHistory,
   getCurrentVisitHistory,
   deleteCurrentVisitHistory,
+  postCurrentSearchHistory,
 };

@@ -9,6 +9,7 @@ type Props = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: () => void;
   isReadonly?: boolean;
+  onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
 function SearchBar({
@@ -16,6 +17,7 @@ function SearchBar({
   inputValue,
   onChange,
   onClick,
+  onKeyUp,
   isReadonly = false,
 }: Props) {
   return (
@@ -28,6 +30,7 @@ function SearchBar({
           onChange={onChange}
           onClick={onClick}
           readOnly={isReadonly}
+          onKeyUp={onKeyUp}
         />
       </S.SearchWrap>
     </S.Wrapper>

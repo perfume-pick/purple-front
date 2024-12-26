@@ -16,6 +16,7 @@ import {
   getCurrentSearchHistory,
   getCurrentVisitHistory,
   getSearchPerfumes,
+  postCurrentSearchHistory,
 } from "@/service/client/searchPerfume";
 
 const SearchPage = () => {
@@ -83,6 +84,13 @@ const SearchPage = () => {
     });
   };
 
+  const saveCurrentSearchText = () => {
+    // 엔터, 검색 결과 클릭 시, 최근 검색어 저장
+    if (debouncedKeyword?.length > 0) {
+      postCurrentSearchHistory(debouncedKeyword);
+    }
+  };
+
   const handleClickDeleteCurrentVisitHistory = () => {
     if (visitHistories && visitHistories.length < 1) {
       return;
@@ -95,6 +103,17 @@ const SearchPage = () => {
     });
   };
 
+  const handleKeyup = (key: string) => {
+    if (key !== "Enter") {
+      return;
+    }
+    saveCurrentSearchText();
+  };
+
+  const handleClickProductCard = async () => {
+    return saveCurrentSearchText();
+  };
+
   return (
     <>
       <S.SearchBarWrap>
@@ -102,6 +121,7 @@ const SearchPage = () => {
           placeholderText="브랜드, 제품명, 리뷰로 찾아보세요"
           inputValue={keyword}
           onChange={e => setKeyword(e.target.value)}
+          onKeyUp={e => handleKeyup(e.key)}
         />
         <button onClick={() => router.push("/")}>취소</button>
       </S.SearchBarWrap>
@@ -133,7 +153,6 @@ const SearchPage = () => {
       {/* {isLoading && <p>로딩중...</p>} */}
       {keyword && (
         <S.contentsWrap>
-          {/* TODO : 메인의 scroll 위치를 기억해야하는 경우 */}
           {resultData && resultData.responseData.perfumes.length < 1 ? (
             <S.EmptyWrap>
               <div>
@@ -153,6 +172,7 @@ const SearchPage = () => {
           ) : (
             <ProductCardGrid
               dataList={resultData?.responseData.perfumes || []}
+              handleClickProductCard={handleClickProductCard}
             />
           )}
         </S.contentsWrap>
