@@ -27,9 +27,13 @@ const ProductCard = ({
   const router = useRouter();
 
   const handleClickProduct = () => {
-    handleClickProductCard?.().finally(() => {
+    if (handleClickProductCard) {
+      handleClickProductCard().finally(() => {
+        router.push(`/detail?perfumeId=${perfumeId}`, { scroll: false });
+      });
+    } else {
       router.push(`/detail?perfumeId=${perfumeId}`, { scroll: false });
-    });
+    }
   };
 
   return (
