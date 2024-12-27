@@ -3,9 +3,17 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 import { useRouter } from "next/navigation";
 import { DetailPerfumeInfo } from "@/types/res/perfume";
 
-type Props = { perfumeInfo: DetailPerfumeInfo; type?: "SCROLL" | "GRID" };
+type Props = {
+  perfumeInfo: DetailPerfumeInfo;
+  type?: "SCROLL" | "GRID";
+  handleClickProductCard?: () => Promise<void>;
+};
 
-const ProductCard = ({ perfumeInfo, type = "GRID" }: Props) => {
+const ProductCard = ({
+  perfumeInfo,
+  type = "GRID",
+  handleClickProductCard,
+}: Props) => {
   const TYPE_CLASS = type === "SCROLL" ? "type-scroll" : "type-grid";
 
   const {
@@ -19,7 +27,13 @@ const ProductCard = ({ perfumeInfo, type = "GRID" }: Props) => {
   const router = useRouter();
 
   const handleClickProduct = () => {
-    router.push(`/detail?perfumeId=${perfumeId}`, { scroll: false });
+    if (handleClickProductCard) {
+      handleClickProductCard().finally(() => {
+        router.push(`/detail?perfumeId=${perfumeId}`, { scroll: false });
+      });
+    } else {
+      router.push(`/detail?perfumeId=${perfumeId}`, { scroll: false });
+    }
   };
 
   return (

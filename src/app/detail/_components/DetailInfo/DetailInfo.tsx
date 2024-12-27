@@ -69,6 +69,11 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
           name: "베이스 노트",
           notes: [],
         },
+        {
+          type: "NOT_DEFINED",
+          name: "노트",
+          notes: [],
+        },
       ];
 
       perfumeDetailInfo.notes.forEach((note: NoteInfo) => {
@@ -116,12 +121,14 @@ const DetailInfo = forwardRef<HTMLDivElement, DetailInfoProps>(
           </S.InfoTitle>
           <S.NoteInfo>
             {noteInfoList.map((item: TempNoteObj, index) => {
-              return (
-                <S.NoteContent key={index}>
-                  <span>{item.name} :</span>
-                  <div>{item.notes.join(", ")}</div>
-                </S.NoteContent>
-              );
+              if (item.notes.length > 0) {
+                return (
+                  <S.NoteContent key={index}>
+                    <span>{item.name} :</span>
+                    <div>{item.notes.join(", ")}</div>
+                  </S.NoteContent>
+                );
+              }
             })}
           </S.NoteInfo>
         </S.NoteInfoWrap>

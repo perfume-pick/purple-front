@@ -21,7 +21,7 @@ export interface NoteInfo {
   koreanName: string;
 }
 
-export type NoteType = "TOP" | "MIDDLE" | "BASE";
+export type NoteType = "TOP" | "MIDDLE" | "BASE" | "NOT_DEFINED";
 
 export interface FragranticaEvaluation {
   fragranticaEvaluation: FragranticaEvaluationItem[];
