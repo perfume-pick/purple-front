@@ -79,7 +79,7 @@ const ReviewCard = ({
   };
 
   const handleCommentClick = () => {
-    router.push(`detail?perfumeId=${perfumeId}`);
+    router.push(`/detail?perfumeId=${perfumeId}`);
   };
 
   useEffect(() => {
