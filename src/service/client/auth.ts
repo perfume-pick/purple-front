@@ -3,6 +3,7 @@ import { TOKEN_SAVE_KEY } from "@/constant/auth.const";
 
 const endPoint = {
   POST_LOGOUT: "/perpicks/auth/logout",
+  DELETE_USER_ACCOUNT: "/perpicks/users/my/withdraw",
 };
 
 // 코멘트 전체 조회
@@ -21,4 +22,8 @@ async function logout() {
   }, 1000);
 }
 
-export { logout };
+async function withdraw() {
+  await clientHttp.delete(endPoint.DELETE_USER_ACCOUNT);
+}
+
+export { logout, withdraw };

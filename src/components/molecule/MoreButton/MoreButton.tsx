@@ -62,7 +62,10 @@ const MoreButton = ({ selectList, handleDropdown }: Props) => {
       <S.MoreButtonWrap>
         <MoreHorizIcon
           sx={{ fontSize: "2.4rem", color: "#212124" }}
-          onClick={() => setIsShowDropdown(prev => !prev)}
+          onClick={e => {
+            e.stopPropagation();
+            setIsShowDropdown(prev => !prev);
+          }}
         />
         <S.DropdownWrap
           className={isShowDropdown ? "active" : ""}

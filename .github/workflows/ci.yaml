@@ -21,8 +21,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_2 }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_2 }}
           aws-region: ap-northeast-2
 
       - name: Create .env file with secrets
@@ -38,7 +38,7 @@ jobs:
       - name: Add GitHub Actions IP
         run: |
           aws ec2 authorize-security-group-ingress \
-            --group-id ${{ secrets.SECURITY_GROUP_ID }} \
+            --group-id ${{ secrets.SECURITY_GROUP_ID_2 }} \
             --protocol tcp \
             --port 22 \
             --cidr ${{ steps.publicip.outputs.ip }}/32
@@ -72,34 +72,57 @@ jobs:
       - name: Logout of Amazon ECR
         run: docker logout ${{ env.ECR_REGISTRY }}
 
+      - name: Install Docker if not present
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST_2 }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_2 }}
+          script: |
+            if ! command -v docker >/dev/null 2>&1; then
+              echo "Installing Docker..."
+              sudo apt-get update
+              sudo apt-get install -y docker.io
+            else
+              echo "Docker already installed."
+            fi
+            if ! command -v docker-compose >/dev/null 2>&1; then
+              echo "Installing Docker Compose..."
+              sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
+            else
+              echo "Docker Compose already installed."
+            fi
+
+
       - name: SSH to EC2 Instance and Update Docker Container
         uses: appleboy/ssh-action@master
         env:
           TAG: ${{ steps.docker-builder.outputs.DOCKER_TAG }}
         with:
-          host: ${{ secrets.EC2_HOST }}
+          host: ${{ secrets.EC2_HOST_2 }}
           username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY_2 }}
           envs: TAG
           script: |
-            CONTAINER_ID=$(docker ps -q --filter ancestor=$TAG)
+            CONTAINER_ID=$(docker ps -q --filter "publish=3000")
             IMAGE_ID=$(docker images --format "{{.ID}}" $TAG)
             if [ ! -z "$CONTAINER_ID" ]; then
               echo "Already run docker exist, stop this container"
-              docker stop $CONTAINER_ID
-              docker rm $CONTAINER_ID
+              sudo docker stop $CONTAINER_ID
+              sudo docker rm $CONTAINER_ID
             fi
             if [ ! -z "$IMAGE_ID" ]; then
               echo "Already docker images exist, remove"
-              docker rmi $IMAGE_ID
+              sudo docker rmi $IMAGE_ID
             fi
-            docker pull $TAG
-            docker run -d -p 3000:3000 $TAG
+            sudo docker pull $TAG
+            sudo docker run -d -p 3000:3000 $TAG
 
       - name: Remove GitHub Actions IP
         run: |
           aws ec2 revoke-security-group-ingress \
-            --group-id ${{ secrets.SECURITY_GROUP_ID }} \
+            --group-id ${{ secrets.SECURITY_GROUP_ID_2 }} \
             --protocol tcp \
             --port 22 \
             --cidr ${{ steps.publicip.outputs.ip }}/32

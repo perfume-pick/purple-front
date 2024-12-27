@@ -10,6 +10,7 @@ const HeaderInner = styled.div`
 `;
 
 const Contents = styled.div`
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;

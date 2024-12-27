@@ -1,34 +1,54 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import IosShareIcon from "@mui/icons-material/IosShare";
+import { getIsMobile } from "@/utils/utils";
 
-// type Props = {
-//   description: string;
-// };
+type Props = {
+  imageUrl: string;
+  perfumeId: string;
+  perfumeName: string;
+  handleClick: () => void;
+};
 
-// const ShareButton = ({ description }: Props) => {
-const ShareButton = () => {
-  // const shareUrl = typeof window !== "undefined" ? window.location.href : "";
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      // const { Kakao } = window;
-      // if (!Kakao.isInitialized()) {
-      //   Kakao.init(process.env.NEXT_PUBLIC_KAKAO_API_KEY);
-      // }
-    }
-  }, []);
-
+const ShareButton = ({
+  perfumeId,
+  imageUrl,
+  perfumeName,
+  handleClick,
+}: Props) => {
   const handleShare = () => {
-    // if (shareUrl) return;
-    // const { Kakao } = window;
-    // Kakao.Share.sendScrap({
-    //   requestUrl: shareUrl,
-    // });
-    // console.log(location.href);
-    // console.log(Kakao);
-    // console.log("Kakao API Key:", process.env.NEXT_PUBLIC_KAKAO_API_KEY);
+    const isMobile = getIsMobile();
+    const { Kakao, location } = window;
+    if (!perfumeId) {
+      return;
+    }
+    if (isMobile && Kakao?.Share) {
+      Kakao.Share.sendDefault({
+        objectType: "feed",
+        content: {
+          title: "perpick",
+          description: `${perfumeName}를 퍼픽에서 확인해보세요!`,
+          imageUrl,
+          link: {
+            mobileWebUrl: `${location.href}`,
+            webUrl: `${location.href}`,
+          },
+        },
+        buttons: [
+          {
+            title: "자세히 보기",
+            link: {
+              mobileWebUrl: `${location.href}`,
+              webUrl: `${location.href}`,
+            },
+          },
+        ],
+      });
+    } else {
+      navigator.clipboard.writeText(location.href);
+      handleClick();
+    }
   };
 
   return (

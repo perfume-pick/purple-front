@@ -1,9 +1,13 @@
 import styled from "@emotion/styled";
-import { ReactNode } from "react";
 
-const ModalLayout = ({ children }: { children: ReactNode }) => {
+interface ModalLayoutProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+}
+
+const ModalLayout = ({ children, onClick }: ModalLayoutProps) => {
   return (
-    <S.Wrapper>
+    <S.Wrapper onClick={onClick}>
       <div>{children}</div>
     </S.Wrapper>
   );
