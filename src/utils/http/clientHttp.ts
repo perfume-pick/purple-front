@@ -73,7 +73,7 @@ clientHttp.interceptors.response.use(
   httpParserHelper,
   async (error: AxiosError) => {
     const { config } = error;
-    // const status = error.response ? error.response.status : null;
+    const status = error.response ? error.response.status : null;
 
     // 토큰 문제가 아닌 단순 에러일 경우
     if (status !== 404 && status !== 403) {
