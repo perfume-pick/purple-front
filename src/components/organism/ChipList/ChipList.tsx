@@ -1,14 +1,30 @@
 import styled from "@emotion/styled";
 import Chip from "@/components/molecule/Chip/Chip";
 import { SearchHistory } from "@/types/res/searchPerfume";
+import useHorizontalScroll from "@/hook/useHorizontalScroll";
 
 type Props = {
   chipList: SearchHistory[];
   onChipClick: (text: string) => void;
 };
 const ChipList = ({ chipList, onChipClick }: Props) => {
+  const { containerRef, onDragStart, onDragMove, onDragEnd } =
+    useHorizontalScroll<HTMLDivElement>();
+
   return (
-    <S.Wrapper>
+    <S.Wrapper
+      style={{
+        display: "flex",
+        gap: "6px",
+        overflowX: "hidden",
+        textWrap: "nowrap",
+      }}
+      ref={containerRef}
+      onMouseDown={onDragStart}
+      onMouseLeave={onDragEnd}
+      onMouseMove={onDragMove}
+      onMouseUp={onDragEnd}
+    >
       <S.List>
         {chipList?.map((chip, index) => (
           <Chip key={index} text={chip.keyword} onChipClick={onChipClick} />
