@@ -75,17 +75,19 @@ clientHttp.interceptors.response.use(
     const { config } = error;
     const status = error.response ? error.response.status : null;
 
-    // 토큰 문제가 아닌 단순 에러일 경우
-    if (status !== 404 && status !== 403) {
+    // 토큰 문제가 아닌 단순 에러일 경우 에러 반환
+    if (status === 400) {
       if (error.response && isErrorResponse(error.response.data)) {
-        if (error.response.data.responseCode !== "C002") {
+        if (
+          !["J003", "J001", "J004"].includes(error.response.data.responseCode)
+        ) {
           return Promise.reject(error);
         }
       }
     }
-    if (status === 400) {
+    if (status !== 404 && status !== 403) {
       if (error.response && isErrorResponse(error.response.data)) {
-        if (error.response.data.responseCode !== "J003") {
+        if (error.response.data.responseCode !== "C002") {
           return Promise.reject(error);
         }
       }
