@@ -9,6 +9,7 @@ import { getRecommendPerfumesByAccord } from "@/service/client/recommendPerfume"
 import { useRecommendPerfumeType } from "@/store/recommendPerfumeTypeStore";
 import { getUserProfile } from "@/service/client/userInfo";
 import NotAccordPerfumes from "../notAccordPerfumes/NotAccordPerfumes";
+import { PERFUME_ACCORD_COLORS } from "@/constant/perfumeAccord/perfumeAccordColors";
 
 function formatDateString(dateString: string) {
   const date = new Date(dateString);
@@ -53,8 +54,18 @@ function NotePerfumes() {
               <S.NoteRanking>
                 {userAccords
                   .sort((a, b) => a.order - b.order)
-                  .map(({ accordName, order }) => (
-                    <span key={order}>{accordName}</span>
+                  .map(({ accordName, order, accordKoreanName }) => (
+                    <span
+                      key={order}
+                      style={{
+                        backgroundColor:
+                          PERFUME_ACCORD_COLORS.find(
+                            accord => accord.accordName === accordName,
+                          )?.hexColor || "",
+                      }}
+                    >
+                      {accordKoreanName}
+                    </span>
                   ))}
               </S.NoteRanking>
               <S.PreferenceInfo>
