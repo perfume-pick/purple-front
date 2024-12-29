@@ -61,7 +61,7 @@ const Accord = () => {
           </S.ProgressBarContainer>
           <S.ProgressBarSegmentContainer>
             {currentAccords?.map(
-              ({ accordNameKor, count, accordName, percentage }) => (
+              ({ accordKoreanName, count, accordName, percentage }) => (
                 <S.ProgressBarSegment key={accordName}>
                   <S.ProgressBarSegmentLabelBox>
                     <S.ProgressBarSegmentColorCircle
@@ -71,7 +71,7 @@ const Accord = () => {
                         )?.hexColor || ""
                       }
                     />
-                    <span>{accordNameKor}</span>
+                    <span>{accordKoreanName}</span>
                   </S.ProgressBarSegmentLabelBox>
                   <S.ProgressBarSegmentCountText>
                     {count}개 ({Math.floor(percentage)}%)
