@@ -80,8 +80,8 @@ function NotePerfumes() {
             </S.PreferenceNoteWrap>
           }
 
-          {perfumes.map(perfume => (
-            <Perfume key={perfume.perfumeId} {...perfume} />
+          {perfumes.map((perfume, index) => (
+            <Perfume key={perfume.perfumeId} index={index} {...perfume} />
           ))}
         </S.Wrapper>
       ) : (
