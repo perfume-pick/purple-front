@@ -16,8 +16,6 @@ const Accord = () => {
       selectedId === "like" ? "preferredAccord" : "dislikedAccord"
     ];
 
-  console.log(currentAccords);
-
   const hasAccords = (currentAccords?.length ?? 0) > 0;
 
   const accordPerfumeTotal =

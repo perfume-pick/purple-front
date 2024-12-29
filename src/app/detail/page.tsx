@@ -32,7 +32,6 @@ function DetailPage() {
     enabled: !!perfumeId,
     retry: false,
   });
-  console.log(perfumeDetailInfo);
 
   useEffect(() => {
     perfumeId && postVisitHistory(perfumeId);
