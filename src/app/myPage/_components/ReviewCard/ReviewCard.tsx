@@ -79,7 +79,7 @@ const ReviewCard = ({
   };
 
   const handleCommentClick = () => {
-    router.push(`/detail?perfumeId=${perfumeId}`);
+    router.push(`/detail?perfumeId=${perfumeId}`, { scroll: false });
   };
 
   useEffect(() => {
@@ -87,12 +87,7 @@ const ReviewCard = ({
   }, []);
 
   return (
-    <S.Wrapper
-      onClick={e => {
-        e.stopPropagation();
-        handleCommentClick();
-      }}
-    >
+    <S.Wrapper onClick={handleCommentClick}>
       <S.ReviewBox>
         <S.MoreButtonBox>
           <MoreButton

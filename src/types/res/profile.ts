@@ -22,7 +22,7 @@ export interface UserAccords {
       preferredAccord: [
         {
           accordName: string;
-          accordNameKor: string;
+          accordKoreanName: string;
           count: number;
           percentage: number;
         },
@@ -30,7 +30,7 @@ export interface UserAccords {
       dislikedAccord: [
         {
           accordName: string;
-          accordNameKor: string;
+          accordKoreanName: string;
           count: number;
           percentage: number;
         },
