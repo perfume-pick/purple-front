@@ -14,7 +14,7 @@ const SuccessPage = () => {
     <S.Wrapper>
       <S.ContentsWrap>
         <img src="/assets/images/icon_check_big.png" alt="체크아이콘" />
-        <S.BigText>향수 평가하기 성공</S.BigText>
+        <S.BigText>취향 분석 완료!</S.BigText>
         <S.NormalText>
           {/* 이제 <p>환급, 부가세, 양도세 상담</p> 등의 다양한 맞춤 서비스를 이용할
           수 있어요! */}
