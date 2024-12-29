@@ -34,17 +34,16 @@ const OneStep = () => {
   }, []);
 
   const handleClickCard = (brandName: string) => {
-    const hasValue = selectedBrandList.some(name => brandName === name);
+    const selectedName: string = perfumeBrands.filter(
+      (item: BrandPerfumeInfo) => item.koreanName === brandName,
+    )[0].name;
+    const hasValue = selectedBrandList.some(name => selectedName === name);
 
     if (hasValue) {
       setSelectedBrandList(
-        selectedBrandList.filter(item => item !== brandName),
+        selectedBrandList.filter(item => item !== selectedName),
       );
     } else {
-      const selectedName: string = perfumeBrands.filter(
-        (item: BrandPerfumeInfo) => item.koreanName === brandName,
-      )[0].name;
-
       setSelectedBrandList(prev => [...prev, selectedName]);
     }
   };
