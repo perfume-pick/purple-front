@@ -103,13 +103,6 @@ const SearchPage = () => {
     });
   };
 
-  const handleKeyup = (key: string) => {
-    if (key !== "Enter") {
-      return;
-    }
-    saveCurrentSearchText();
-  };
-
   const handleClickProductCard = async () => {
     return saveCurrentSearchText();
   };
@@ -121,7 +114,6 @@ const SearchPage = () => {
           placeholderText="브랜드, 제품명, 리뷰로 찾아보세요"
           inputValue={keyword}
           onChange={e => setKeyword(e.target.value)}
-          onKeyUp={e => handleKeyup(e.key)}
         />
         <button onClick={() => router.push("/")}>취소</button>
       </S.SearchBarWrap>

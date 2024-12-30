@@ -25,6 +25,7 @@ const PerfumeContainer = styled.div`
 const PerfumeImg = styled(Image)`
   width: 100%;
   height: 100%;
+  object-fit: contain;
 `;
 
 const ContentWrap = styled.div`

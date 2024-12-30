@@ -5,7 +5,9 @@ import { FiberManualRecord, Star } from "@mui/icons-material";
 import { Perfume as PerfumeType } from "@/types/res/recommend";
 import { useRouter } from "next/navigation";
 
-interface PerfumeProps extends PerfumeType {}
+interface PerfumeProps extends PerfumeType {
+  index: number;
+}
 
 function Perfume({
   perfumeId,
@@ -14,10 +16,14 @@ function Perfume({
   imageUrl,
   averageScore,
   accordNames,
+  index,
 }: PerfumeProps) {
   const router = useRouter();
 
   const handlePerfumeClick = () => {
+    if (!perfumeId) {
+      return;
+    }
     router.push(`detail?perfumeId=${perfumeId}`);
   };
 
@@ -26,9 +32,10 @@ function Perfume({
       <S.PerfumeContainer>
         <S.PerfumeImg
           src={imageUrl || ""}
-          objectFit="contain"
           alt="perfumeImage"
+          sizes="100%"
           fill
+          priority={index <= 3}
         />
       </S.PerfumeContainer>
       <S.ContentWrap>

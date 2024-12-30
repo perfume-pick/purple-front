@@ -90,8 +90,9 @@ const InfoWrap = styled.div`
         top: 0;
         width: 20%;
         height: 100%;
+        display: flex;
+        align-items: center;
         border-radius: 2rem;
-        align-content: center;
 
         p {
           text-indent: 1rem;

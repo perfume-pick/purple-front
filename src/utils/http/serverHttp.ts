@@ -37,13 +37,9 @@ const getRefreshToken = async (): Promise<string | void> => {
   }
 };
 const logout = async () => {
-  // console.log("cookie1 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
-
   await fetch(`${baseUrl}/api/delete-token`, {
     method: "DELETE",
-  }).then(() => {
-    // console.log("cookie2 -> " + getCookie(TOKEN_SAVE_KEY, { cookies }));
-  });
+  }).then(() => {});
 };
 
 const serverHttp = axios.create({
