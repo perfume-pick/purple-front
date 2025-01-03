@@ -21,8 +21,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_2 }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_2 }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
 
       - name: Create .env file with secrets
@@ -38,7 +38,7 @@ jobs:
       - name: Add GitHub Actions IP
         run: |
           aws ec2 authorize-security-group-ingress \
-            --group-id ${{ secrets.SECURITY_GROUP_ID_2 }} \
+            --group-id ${{ secrets.SECURITY_GROUP_ID }} \
             --protocol tcp \
             --port 22 \
             --cidr ${{ steps.publicip.outputs.ip }}/32
@@ -57,7 +57,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
           REGISTRY_ALIAS: ${{ secrets.ECR_REGISTRY_ALIAS }}
-          REPOSITORY: purple-front-ecr
+          REPOSITORY: perpick
           IMAGE_TAG: latest
         run: |
           export DOCKER_TAG=$REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG
@@ -75,9 +75,9 @@ jobs:
       - name: Install Docker if not present
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.EC2_HOST_2 }}
+          host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY_2 }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             if ! command -v docker >/dev/null 2>&1; then
               echo "Installing Docker..."
@@ -100,9 +100,9 @@ jobs:
         env:
           TAG: ${{ steps.docker-builder.outputs.DOCKER_TAG }}
         with:
-          host: ${{ secrets.EC2_HOST_2 }}
+          host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY_2 }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           envs: TAG
           script: |
             CONTAINER_ID=$(docker ps -q --filter "publish=3000")
@@ -122,7 +122,7 @@ jobs:
       - name: Remove GitHub Actions IP
         run: |
           aws ec2 revoke-security-group-ingress \
-            --group-id ${{ secrets.SECURITY_GROUP_ID_2 }} \
+            --group-id ${{ secrets.SECURITY_GROUP_ID }} \
             --protocol tcp \
             --port 22 \
             --cidr ${{ steps.publicip.outputs.ip }}/32
