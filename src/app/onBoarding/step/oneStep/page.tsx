@@ -98,7 +98,7 @@ const OneStep = () => {
             return (
               <Card
                 key={order}
-                brandName={name}
+                brandName={koreanName}
                 imageUrl={imageUrl}
                 isSelected={selectedBrandList.some(item => item === name)}
                 handleClickCard={() => handleClickCard(koreanName)}

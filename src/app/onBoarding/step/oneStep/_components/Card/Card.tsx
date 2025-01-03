@@ -15,7 +15,7 @@ const Card = ({ brandName, imageUrl, isSelected, handleClickCard }: Props) => {
       <S.ImgBox>
         <img
           src={`${process.env.NEXT_PUBLIC_IMAGE_DOMAIN}${imageUrl}`}
-          alt={`${brandName} image`}
+          alt={`${brandName} 이미지`}
         />
         {isSelected && (
           <img
