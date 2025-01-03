@@ -5,10 +5,19 @@ import { ReactNode } from "react";
 import MobileBottomNav from "@/components/mobileBottomNav/MobileBottomNav";
 import EmotionThemeProvider from "@/provider/EmotionThemeProvider";
 import KakaoScript from "@/utils/kakaoScript";
+import { META } from "@/constant/metadata.const";
 
 export const metadata: Metadata = {
-  title: "Perpick",
-  description: "Perpick",
+  metadataBase: new URL("https://perpick.org"),
+  title: META.title,
+  description: META.description,
+  keywords: META.keyword,
+  openGraph: {
+    title: META.title,
+    description: META.description,
+    url: META.url,
+    images: META.ogImage,
+  },
 };
 
 declare global {
