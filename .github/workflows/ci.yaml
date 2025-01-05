@@ -105,8 +105,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           envs: TAG
           script: |
-            CONTAINER_ID=$(docker ps -q --filter "publish=3000")
-            IMAGE_ID=$(docker images --format "{{.ID}}" $TAG)
+            CONTAINER_ID=$(sudo docker ps -q --filter "publish=3000")
+            IMAGE_ID=$(sudo docker images --format "{{.ID}}" $TAG)
             if [ ! -z "$CONTAINER_ID" ]; then
               echo "Already run docker exist, stop this container"
               sudo docker stop $CONTAINER_ID
